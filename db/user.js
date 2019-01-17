@@ -8,8 +8,12 @@ module.exports = function (sequelize, DataTypes) {
 	  userType: {
 		type: DataTypes.STRING,
 		notNull: true
-	  }
-	});
+		}
+	}, 
+	{
+		timestamps: false
+	}
+	);
   
 	users.associate = function (models) {
 	  // We're saying that a login should belong to an user
@@ -19,11 +23,11 @@ module.exports = function (sequelize, DataTypes) {
 	  //     allowNull: false
 	  //   }
 	  // });
-	  users.hasMany(models.inventory, {
-		foreignKey: {
-		  allowNull: false
-		}
-	  });
+	  // users.hasMany(models.inventory, {
+		// foreignKey: {
+		//   allowNull: false
+		// }
+	  // });
 	};
 	
 	
@@ -47,4 +51,5 @@ module.exports = function (sequelize, DataTypes) {
 	  phone1 varchar(300) NOT NULL, 
 	  phone2 varchar(300),
 	  PRIMARY KEY (id)
-  );
+	);
+	*/
