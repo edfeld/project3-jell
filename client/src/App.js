@@ -6,7 +6,8 @@ import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
 import Header from './components/Header'
 import Home from './components/Home'
-import Navbar from './components/Navbar/nav'
+import titleBar from './components/titleBar/titleBar'
+import Card from './components/Card/Card'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
 
@@ -130,9 +131,11 @@ class App extends Component {
 			backdrop = <BackDrop click={this.backDropClick}/>;
 		}
 		return (
+			
 			<div className="App" style={{height: '100%'}}>
+			
+				
 			<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
-			<Navbar toggleHandle={this.drawerToggle} />
 			
 			<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn}/>
 			{backdrop}
@@ -151,7 +154,12 @@ class App extends Component {
 						/>}
 				/>
 				<Route exact path="/signup" component={SignupForm} />
-				
+				<Card>
+				</Card>
+				<Card>
+				</Card>
+				<Card>
+				</Card>
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)
