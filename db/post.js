@@ -13,12 +13,6 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING
         },
 
-        user: {
-            type: sequelize.uuid,
-            primaryKey: true,
-            notNull: true
-        },
-
         //Added to help search feature on main page (delimit by #?)
         tags: {
             type: DataTypes.STRING
@@ -49,7 +43,17 @@ module.exports = function (sequelize, DataTypes) {
         }
 
 
-    })
+    });
+
+    posts.associate = function(models) {
+        // We're saying that a Post should belong to an Author
+        // A Post can't be created without an Author due to the foreign key constraint
+        posts.belongsTo(models.users, {
+          foreignKey: {
+            allowNull: false
+          }
+        });
+    };
 
   return posts;  
 }

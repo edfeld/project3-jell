@@ -18,18 +18,6 @@
                 type: DataTypes.BOOLEAN,
                 notNull: true
             },
-    
-            user: {
-                type: sequelize.uuid,
-                primaryKey: true,
-                notNull: true
-            },
-
-            post: {
-                type: sequelize.uuid,
-                primaryKey: true,
-                notNull: true
-            },
 
             //Concatonated string will contain all
             //children comments uuids for display
@@ -62,7 +50,22 @@
             }
     
     
-        })
+        });
+
+        comments.associate = function(models) {
+            // A Post can't be created without a user due to the foreign key constraint
+            posts.belongsTo(models.users, {
+              foreignKey: {
+                allowNull: false
+              }
+            });
+
+            posts.belongsTo(models.posts, {
+                foreignKey: {
+                  allowNull: false
+                }
+            });
+        };
     
       return comments;  
     }
