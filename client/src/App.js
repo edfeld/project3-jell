@@ -133,17 +133,19 @@ class App extends Component {
 		return (
 			
 			<div className="App" style={{height: '100%'}}>
-			
-				
-			<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
-			
-			<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn}/>
+
 			{backdrop}
-				<Header user={this.state.user} />
+				{/* <Header user={this.state.user} /> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
 				{/* <Route exact path="/" component={Home} /> */}
-				<Route exact path="/" render={() => <Home user={this.state.user} />} />
+				<Route exact path="/" render={() => 
+				<div>
+				<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn} toggleHandle={this.drawerToggle}/>
+				<Home user={this.state.user} />
+				</div>
+				} 
+				/>
 				<Route
 					exact
 					path="/login"
