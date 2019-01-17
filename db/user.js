@@ -4,16 +4,22 @@ module.exports = function (sequelize, DataTypes) {
 		type: DataTypes.STRING,
 		notNull: true
 	  },
-	  passwordHashSalt: DataTypes.STRING,
+		passwordHashSalt: DataTypes.STRING,
 	  userType: {
 		type: DataTypes.STRING,
 		notNull: true
+		},
+		createdAt: {
+			type: DataTypes.Date,
+			notNull: true,
+			defaultValue: DataTypes.NOW
+		},
+		updatedAt: {
+			type: DataTypes.Date,
+			notNull: true,
+			defaultValue: DataTypes.NOW
 		}
-	}, 
-	{
-		timestamps: false
-	}
-	);
+	});
   
 	users.associate = function (models) {
 	  // We're saying that a login should belong to an user

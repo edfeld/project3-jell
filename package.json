@@ -33,11 +33,8 @@
 		"if-env": "^1.0.4",
 		"mongoose": "^5.3.16",
 		"morgan": "^1.9.1",
-<<<<<<< HEAD
 		"npm": "^6.5.0",
-=======
 		"mysql2": "^1.6.4",
->>>>>>> 92bc2a0703ae4fc94ac38aa95bef2ec2599e421a
 		"passport": "^0.4.0",
 		"passport-google-oauth": "^1.0.0",
 		"passport-local": "^1.0.0",
