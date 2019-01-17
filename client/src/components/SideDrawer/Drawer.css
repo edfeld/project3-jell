@@ -12,6 +12,13 @@
     transition: transform 0.3s ease-out;
 }
 
+.search{
+    position: absolute;
+    bottom: 81%;
+    right: 8px;
+    width: 96%;
+}
+
 
 .side-drawer ul {
     height: 100%;
