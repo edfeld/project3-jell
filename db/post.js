@@ -19,10 +19,15 @@ module.exports = function (sequelize, DataTypes) {
             notNull: true
         },
 
+        //Added to help search feature on main page (delimit by #?)
+        tags: {
+            type: DataTypes.STRING
+        },
+
         upVotes: {
             type: DataTypes.INTEGER,
             notNull: true,
-            defaultValue: 1
+            defaultValue: 0
         },
 
         downVotes: {
