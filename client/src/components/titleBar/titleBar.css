@@ -1,42 +1,5 @@
-.navbar{
+.titleBar{
     width: 100%;
     position: sticky;
     background-color: purple;
-}
-
-.navnavigation{
-    display: flex;
-    align-items: center;
-}
-
-.navlogo {
-    color: white;
-    text-decoration: none;
-    font-size: 2rem;
-    margin-left: .5rem;
-}
-
-.navitems ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-.navitems li{
-    padding: 0.5rem;
-}
-.navitems a{
-    color: white;
-    text-decoration: none;
-    list-style: none;
-}
-
-.navitems a:hover,
-.navitems a:active{
-    color: red;
-    
-}
-
-.spacer{
-    flex: 1;
 }

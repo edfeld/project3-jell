@@ -6,7 +6,7 @@ import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
 import Header from './components/Header'
 import Home from './components/Home'
-import titleBar from './components/titleBar/titleBar'
+import TitleBar from './components/titleBar/index.js'
 import Card from './components/Card/Card'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
@@ -131,10 +131,9 @@ class App extends Component {
 			backdrop = <BackDrop click={this.backDropClick}/>;
 		}
 		return (
-			
+		
 			<div className="App" style={{height: '100%'}}>
-			
-				
+			<TitleBar />
 			<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
 			
 			<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn}/>
