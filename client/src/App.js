@@ -6,6 +6,9 @@ import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
 import Header from './components/Header'
 import Home from './components/Home'
+import Navbar from './components/Navbar/nav'
+import SideDrawer from './components/SideDrawer/SideDrawer'
+import BackDrop from './components/Backdrop/backdrop'
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
@@ -55,7 +58,8 @@ class App extends Component {
 		super()
 		this.state = {
 			loggedIn: false,
-			user: null
+			user: null,
+			sideOpen: false
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -110,13 +114,30 @@ class App extends Component {
 			})
 	}
 
+	drawerToggle = () => {
+		this.setState((prevState) => {
+			return {sideOpen: !prevState.sideOpen}
+		});
+	};
+
+	backDropClick = () => {
+		this.setState({sideOpen: false});
+	};
+
 	render() {
+		let backdrop;
+		if(this.state.sideOpen) {
+			backdrop = <BackDrop click={this.backDropClick}/>;
+		}
 		return (
-			<div className="App">
-				<h1>This is the main App component</h1>
+			<div className="App" style={{height: '100%'}}>
+			<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
+			<Navbar toggleHandle={this.drawerToggle} />
+			
+			<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn}/>
+			{backdrop}
 				<Header user={this.state.user} />
 				{/* LINKS to our different 'pages' */}
-				<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
 				{/*  ROUTES */}
 				{/* <Route exact path="/" component={Home} /> */}
 				<Route exact path="/" render={() => <Home user={this.state.user} />} />
@@ -130,6 +151,7 @@ class App extends Component {
 						/>}
 				/>
 				<Route exact path="/signup" component={SignupForm} />
+				
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)
