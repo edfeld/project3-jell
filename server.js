@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 require('dotenv').config()
 
+const db = require("./db");  // [ERE] for MySQL
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -23,14 +24,14 @@ app.use(
 	})
 )
 app.use(bodyParser.json())
-app.use(
-	session({
-		secret: process.env.APP_SECRET || 'this is the default passphrase',
-		store: new MongoStore({ mongooseConnection: dbConnection }),
-		resave: false,
-		saveUninitialized: false
-	})
-)
+// app.use(
+// 	session({
+// 		secret: process.env.APP_SECRET || 'this is the default passphrase',
+// 		store: new MongoStore({ mongooseConnection: dbConnection }),
+// 		resave: false,
+// 		saveUninitialized: false
+// 	})
+// )
 
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -84,7 +85,20 @@ app.use(function(err, req, res, next) {
 	res.status(500)
 })
 
+const syncOptions = { force: false };
 // ==== Starting Server ======
-app.listen(PORT, () => {
-	console.log(`App listening on PORT: ${PORT}`)
-})
+// app.listen(PORT, () => {
+// 	console.log(`App listening on PORT: ${PORT}`)
+// })
+db.sequelize.sync(syncOptions).then(function() {
+	app.listen(PORT, () => {
+		// console.log(`App listening on PORT: ${PORT}`)
+		  console.log(
+			"==> 🌎  App Listening on port %s. Visit http://localhost:%s/ in your browser.",
+			PORT,
+			PORT
+		  );
+	})
+	// app.listen(PORT, function() {
+	// });
+});
