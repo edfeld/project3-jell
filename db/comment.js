@@ -7,7 +7,7 @@
     Children will be a concatonated string to allow a search to get all children comments*/
 
     module.exports = function (sequelize, DataTypes) {
-        var commments = sequelize.define("comments", {
+        var comments = sequelize.define("comments", {
             content: {
                 type: DataTypes.STRING,
                 notNull: true
@@ -64,5 +64,5 @@
     
         })
     
-      return posts;  
+      return comments;  
     }
