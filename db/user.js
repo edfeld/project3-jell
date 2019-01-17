@@ -1,19 +1,31 @@
+/*USER MODULE
+	defines the USER table for authentication, badges, and moderator 
+	status*/
+
 module.exports = function (sequelize, DataTypes) {
 	var users = sequelize.define("users", {
 	  username: {
 		type: DataTypes.STRING,
 		notNull: true
-	  },
+		},
+		
 		passwordHashSalt: DataTypes.STRING,
+
 	  userType: {
 		type: DataTypes.STRING,
 		notNull: true
 		},
+
+		badges: {
+			type: DataTypes.STRING
+		},
+
 		createdAt: {
 			type: DataTypes.Date,
 			notNull: true,
 			defaultValue: DataTypes.NOW
 		},
+
 		updatedAt: {
 			type: DataTypes.Date,
 			notNull: true,
