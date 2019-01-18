@@ -131,10 +131,7 @@ class App extends Component {
 			backdrop = <BackDrop click={this.backDropClick}/>;
 		}
 		return (
-		
 			<div className="App" style={{height: '100%'}}>
-			
-			
 			{backdrop}
 				{/* <Header user={this.state.user} /> */}
 				{/* LINKS to our different 'pages' */}
@@ -144,6 +141,12 @@ class App extends Component {
 				<div style={{backgroundImage: "inherit"}}>
 				<TitleBar />
 				<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn} toggleHandle={this.drawerToggle}/>
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
 				{/* <Home user={this.state.user} /> */}
 				</div>
 				} 
@@ -157,25 +160,11 @@ class App extends Component {
 							_googleSignin={this._googleSignin}
 						/>}
 				/>
-				<Route exact path="/signup" component={SignupForm} />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				
-
+				<Route 
+					exact 
+					path="/signup" 
+					component={SignupForm} 
+				/>
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)
