@@ -1,5 +1,18 @@
 .titleBar{
-    width: 100%;
-    position: sticky;
-    background-color: purple;
+    width: 91em;
+    position: relative;
+    top: 5px;
+    left: 1.6%;
 }
+
+.jumbotron{
+    font-family: 'Libre Baskerville', serif;
+    background-image: url(https://images.pexels.com/photos/1093909/pexels-photo-1093909.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+    background-position: top right;
+    border-radius: 60px;
+    color: whitesmoke;
+    box-shadow: 1px 3px 14px 0px black;
+    height: 22em;
+    text-shadow: 1px 1px 5px black;
+}
+

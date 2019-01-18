@@ -133,7 +133,7 @@ class App extends Component {
 		return (
 		
 			<div className="App" style={{height: '100%'}}>
-			<TitleBar />
+			
 			
 			{backdrop}
 				{/* <Header user={this.state.user} /> */}
@@ -141,9 +141,10 @@ class App extends Component {
 				{/*  ROUTES */}
 				{/* <Route exact path="/" component={Home} /> */}
 				<Route exact path="/" render={() => 
-				<div>
+				<div style={{backgroundImage: "inherit"}}>
+				<TitleBar />
 				<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn} toggleHandle={this.drawerToggle}/>
-				<Home user={this.state.user} />
+				{/* <Home user={this.state.user} /> */}
 				</div>
 				} 
 				/>
@@ -157,12 +158,24 @@ class App extends Component {
 						/>}
 				/>
 				<Route exact path="/signup" component={SignupForm} />
-				<Card>
-				</Card>
-				<Card>
-				</Card>
-				<Card>
-				</Card>
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				
+
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)
