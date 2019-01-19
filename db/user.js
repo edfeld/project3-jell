@@ -14,20 +14,20 @@ module.exports = function (sequelize, DataTypes) {
 	  userType: {
 		type: DataTypes.STRING,
 		notNull: true
-		}
+		},
     
 		badges: {
 			type: DataTypes.STRING
 		},
 
 		createdAt: {
-			type: DataTypes.Date,
+			type: DataTypes.DATE,
 			notNull: true,
 			defaultValue: DataTypes.NOW
 		},
 
 		updatedAt: {
-			type: DataTypes.Date,
+			type: DataTypes.DATE,
 			notNull: true,
 			defaultValue: DataTypes.NOW
     },
