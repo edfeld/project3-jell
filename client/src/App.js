@@ -5,6 +5,7 @@ import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
 import TitleBar from './components/titleBar'
 import Card from './components/Card/Card'
+import Header from './components/Header'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
@@ -117,21 +118,15 @@ class App extends Component {
 	}
 
 	searchDb = () => {
-		console.log("this works");
-		// axios
-		// 	.get('/api/search', {
+		console.log("backend works");
+		axios
+			.get('/api/search', {
+				data: "debate"
+			})
+			.then(response => {
+				console.log('this is the response: ' + response.posts);
 				
-		// 	})
-		// 	.then(response => {
-		// 		console.log(response)
-		// 		if (response.status === 200) {
-		// 			// update the state
-		// 			this.setState({
-		// 				loggedIn: true,
-		// 				user: response.data.user
-		// 			})
-		// 		}
-		// 	})
+			})
 
 	}
 
@@ -153,7 +148,7 @@ class App extends Component {
 		return (
 			<div className="App" style={{height: '100%'}}>
 			{backdrop}
-				{/* <Header user={this.state.user} /> */}
+				<Header user={this.state.user} />
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
 				<Route 

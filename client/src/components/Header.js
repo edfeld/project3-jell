@@ -5,10 +5,10 @@ const Header = props => {
 	let Greeting
 	if (props.user === null) {
 		Greeting = <p>Hello guest</p>
-	} else if (props.user.firstname) {
+	} else if (props.user.firstName) {
 		Greeting = (
 			<p>
-				Welcome back, <strong>{props.user.firstname}</strong>
+				Welcome back, <strong>{props.user.firstName}</strong>
 			</p>
 		)
 	} else if (props.user.username) {
