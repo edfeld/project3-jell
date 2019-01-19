@@ -9,6 +9,11 @@
     cursor: pointer;
     padding: 0;
     box-sizing: border-box;
+    position: fixed;
+    left: 96%;
+    background: rgb(206, 167, 116);
+    top: 50%;
+    border-radius: 20%;
 
 }
 
@@ -19,5 +24,5 @@
 .toggle_line{
     width: 24px;
     height: 2px;
-    background-color: white;
+    background-color: black;
 }
