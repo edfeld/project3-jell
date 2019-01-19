@@ -13,6 +13,7 @@ const SideDrawer = props => {
         <ToggleButton click={props.toggleHandle}/>
         <ul>
             <input className="form-control search" type="text" placeholder="Search For A Debate"/>
+            <button type="button" class="btn btn-secondary searchBtn" onClick={props.search} style={{position: 'relative'}}>Search</button>
             <li><a href="/">Home</a></li>
             <li><a href="/">Top Debates</a></li>
             <li><a href="/">Relevant Debates</a></li>

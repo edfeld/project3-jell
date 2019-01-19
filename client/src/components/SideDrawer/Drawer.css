@@ -63,3 +63,10 @@
     font-size: 1.2rem
 
 }
+
+.searchBtn{
+  width: 6em;  
+  top: 50px;
+  left: -32px;
+  font-family: 'Libre Baskerville', serif;
+}
