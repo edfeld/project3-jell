@@ -24,14 +24,14 @@ app.use(
 	})
 )
 app.use(bodyParser.json())
-// app.use(
-// 	session({
-// 		secret: process.env.APP_SECRET || 'this is the default passphrase',
-// 		store: new MongoStore({ mongooseConnection: dbConnection }),
-// 		resave: false,
-// 		saveUninitialized: false
-// 	})
-// )
+app.use(
+	session({
+		secret: process.env.APP_SECRET || 'this is the default passphrase',
+		// store: new MongoStore({ mongooseConnection: dbConnection }),
+		resave: false,
+		saveUninitialized: false
+	})
+)
 
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -51,20 +51,23 @@ app.use(function(req, res, next) {
 	console.log('===== END =======')
 	next()
 })
+console.log("Google testing next --->");
 // testing
 app.get(
 	'/auth/google/callback',
 	(req, res, next) => {
 		console.log(`req.user: ${req.user}`)
-		console.log('======= /auth/google/callback was called! =====')
-		next()
+		console.log('======= /auth/google/callback was called! =====');
+		next();
 	},
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	(req, res) => {
+		console.log("server.js.  Are we there yet?");
 		res.redirect('/')
 	}
 )
 
+console.log("process.env.NODE_ENV:+:>  ", process.env.NODE_ENV);
 // ==== if its production environment!
 if (process.env.NODE_ENV === 'production') {
 	const path = require('path')
@@ -87,18 +90,17 @@ app.use(function(err, req, res, next) {
 
 const syncOptions = { force: false };
 // ==== Starting Server ======
-// app.listen(PORT, () => {
-// 	console.log(`App listening on PORT: ${PORT}`)
-// })
+
+
 db.sequelize.sync(syncOptions).then(function() {
-	app.listen(PORT, () => {
-		// console.log(`App listening on PORT: ${PORT}`)
-		  console.log(
-			"==> 🌎  App Listening on port %s. Visit http://localhost:%s/ in your browser.",
-			PORT,
-			PORT
-		  );
-	})
-	// app.listen(PORT, function() {
-	// });
+	console.log('Nice! Database looks fine')
+}).catch(function (err) {
+    console.log(err, "Something went wrong with the Database Update!")
 });
+
+app.listen(PORT, () => {
+		console.log(`App listening on PORT: ${PORT}`)
+	//   console.log(
+	// 	"==> 🌎  App Listening on port 3000. Visit http://localhost:3000/ in your browser.",
+	//   );
+})
