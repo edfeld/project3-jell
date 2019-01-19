@@ -67,18 +67,21 @@ class App extends Component {
 	}
 	componentDidMount() {
 		axios.get('/auth/user').then(response => {
-			console.log(response.data)
+			console.log("axios.get. response.data: ", response.data)
 			if (!!response.data.user) {
+				console.log("response.data.user.username ::>",response.data.user.username);
 				console.log('THERE IS A USER')
 				this.setState({
 					loggedIn: true,
-					user: response.data.user
+					user: response.user
+					// user: response.data.user
 				})
 			} else {
 				this.setState({
 					loggedIn: false,
 					user: null
 				})
+				console.log("componentDidMount. user: ", this.state.user);
 			}
 		})
 	}

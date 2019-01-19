@@ -22,13 +22,13 @@ if (config.use_env_variable) {
 console.log("----------+++++++> __Dirname", __dirname);
 fs.readdirSync(__dirname)
   .filter(function(file) {
-    console.log("Filter ====> file:", file)
+    // console.log("Filter ====> file:", file)
     return (
       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
       );
     })
     .forEach(function(file) {
-      console.log("====> file:", file)
+      // console.log("====> file:", file)
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });

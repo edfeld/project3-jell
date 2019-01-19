@@ -37,10 +37,12 @@ router.post(
 	(req, res) => {
 		console.log('POST to /login')
 		const user = JSON.parse(JSON.stringify(req.user)) // hack
+		console.log("at /login route.  user: ", user);
 		const cleanUser = Object.assign({}, user)
-		if (cleanUser.local) {
-			console.log(`Deleting ${cleanUser.local.password}`)
-			delete cleanUser.local.password
+		console.log("cleanUser: =======*******>", cleanUser);
+		if (cleanUser.passwordHashSalt) {
+			console.log(`Deleting ${cleanUser.passwordHashSalt}`)
+			delete cleanUser.passwordHashSalt
 		}
 		res.json({ user: cleanUser })
 	}
@@ -73,13 +75,16 @@ router.post('/signup', (req, res) => {
 			bcrypt.hash(password, saltRounds, function(err, hash) {
 				// Store hash in your password DB.
 				// console.log("-=--=-=-=-=-=> Hashed password::: ", hash);
+				// Display the unencrypted Hash
+				// const isMatch = bcrypt.compareSync(password, hash);
+				// console.log("check the hash match: ==============> it's ", isMatch);
 				const newUser = {
 					'username': username,
 					'passwordHashSalt': hash
 				}
 				// console.log("New User: ===>:", newUser);
 				User.create(newUser).then(function(newItemUser) {
-					res.json(newItemUser);
+					return res.json(newItemUser);
 				});
 			});
 		}
