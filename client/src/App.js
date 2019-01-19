@@ -6,7 +6,8 @@ import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
 import Header from './components/Header'
 import Home from './components/Home'
-import Navbar from './components/Navbar/nav'
+import TitleBar from './components/titleBar'
+import Card from './components/Card/Card'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
 
@@ -66,18 +67,21 @@ class App extends Component {
 	}
 	componentDidMount() {
 		axios.get('/auth/user').then(response => {
-			console.log(response.data)
+			console.log("axios.get. response.data: ", response.data)
 			if (!!response.data.user) {
+				console.log("response.data.user.username ::>",response.data.user.username);
 				console.log('THERE IS A USER')
 				this.setState({
 					loggedIn: true,
-					user: response.data.user
+					user: response.user
+					// user: response.data.user
 				})
 			} else {
 				this.setState({
 					loggedIn: false,
 					user: null
 				})
+				console.log("componentDidMount. user: ", this.state.user);
 			}
 		})
 	}
@@ -131,16 +135,25 @@ class App extends Component {
 		}
 		return (
 			<div className="App" style={{height: '100%'}}>
-			<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
-			<Navbar toggleHandle={this.drawerToggle} />
-			
-			<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn}/>
 			{backdrop}
-				<Header user={this.state.user} />
+				{/* <Header user={this.state.user} /> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
 				{/* <Route exact path="/" component={Home} /> */}
-				<Route exact path="/" render={() => <Home user={this.state.user} />} />
+				<Route exact path="/" render={() => 
+				<div style={{backgroundImage: "inherit"}}>
+				<TitleBar />
+				<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn} toggleHandle={this.drawerToggle}/>
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				{/* <Home user={this.state.user} /> */}
+				</div>
+				} 
+				/>
 				<Route
 					exact
 					path="/login"
@@ -150,8 +163,11 @@ class App extends Component {
 							_googleSignin={this._googleSignin}
 						/>}
 				/>
-				<Route exact path="/signup" component={SignupForm} />
-				
+				<Route 
+					exact 
+					path="/signup" 
+					component={SignupForm} 
+				/>
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)

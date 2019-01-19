@@ -1,26 +1,23 @@
-import React from 'react'
-// TODO - add proptypes
+// import React from 'react'
+// import './home.css';
+// // TODO - add proptypes
 
-const Home = props => {
-	if (props.user) {
-		return (
-			<div className="Home">
-				<p>Current User:</p>
-				<code>
-					{JSON.stringify(props)}
-				</code>
-			</div>
-		)
-	} else {
-		return (
-			<div className="Home">
-				<p>Current User:</p>
-				<code>
-					{JSON.stringify(props)}
-				</code>
-			</div>
-		)
-	}
-}
+// const Home = props => {
+// 	if (props.user) {
+// 		return (
+// 			<div className="header">
+// 			<h2>Top Debates</h2>
+// 			<p>logged in</p>
+// 			</div>
+// 		)
+// 	} else {
+// 		return (
+// 		    <div className="header">
+// 			<h2>Top Debates</h2>
+// 			<p>logged in</p>
+// 			</div>
+// 		)
+// 	}
+// }
 
-export default Home
+// export default Home
