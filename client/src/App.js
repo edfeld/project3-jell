@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
-import './App.css'
 import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
-import Header from './components/Header'
-import Home from './components/Home'
 import TitleBar from './components/titleBar'
 import Card from './components/Card/Card'
+import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
 
@@ -115,6 +113,25 @@ class App extends Component {
 			})
 	}
 
+	searchDb = () => {
+		console.log("this works");
+		// axios
+		// 	.get('/api/search', {
+				
+		// 	})
+		// 	.then(response => {
+		// 		console.log(response)
+		// 		if (response.status === 200) {
+		// 			// update the state
+		// 			this.setState({
+		// 				loggedIn: true,
+		// 				user: response.data.user
+		// 			})
+		// 		}
+		// 	})
+
+	}
+
 	drawerToggle = () => {
 		this.setState((prevState) => {
 			return {sideOpen: !prevState.sideOpen}
@@ -136,20 +153,15 @@ class App extends Component {
 				{/* <Header user={this.state.user} /> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
-				{/* <Route exact path="/" component={Home} /> */}
-				<Route exact path="/" render={() => 
-				<div style={{backgroundImage: "inherit"}}>
-				<TitleBar />
-				<SideDrawer show={this.state.sideOpen} _logout={this._logout} loggedIn={this.state.loggedIn} toggleHandle={this.drawerToggle}/>
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				{/* <Home user={this.state.user} /> */}
-				</div>
-				} 
+				<Route 
+					exact 
+					path="/" 
+					render={() => 
+						<div>
+						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
+						<Home user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						</div>
+					} 
 				/>
 				<Route
 					exact
