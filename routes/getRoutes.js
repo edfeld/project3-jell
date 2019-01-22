@@ -1,24 +1,24 @@
 const db = require("../db");
 
 module.exports = function(app) {
-    app.get("/api/search", function(req, res) {
-        console.log(req.body.data)
+    app.post("/api/search", function(req, res) {
+        console.log(req.body.sent, "this is req.body")
         db.posts
             .findAll({
                 where: {
-                    tags: "debate"
+                    tags: req.body.sent
                 }
             })
             .then(function(searchResults){
-                console.log(searchResults[0].dataValues.title)
-                res.json(searchResults)
+                console.log(searchResults);
+                res.json(searchResults);
                 
             });
     });
 
     //gets all of the posts
     app.get("/api/search/all", function(req, res) {
-        db.posts.findall({}).then(function(result) {
+        db.posts.findAll().then(function(result) {
             res.json(result);
         });
     });

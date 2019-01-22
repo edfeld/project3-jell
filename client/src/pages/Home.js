@@ -10,24 +10,22 @@ const Home = props => {
 		return (
             <div style={{backgroundImage: "inherit"}}>
             <TitleBar />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {props.posts.map(posts => (
+                  <Card 
+                  data={posts}
+                  />
+            ))}
             </div>
 		)
 	} else {
 		return (
             <div style={{backgroundImage: "inherit"}}>
             <TitleBar />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {props.posts.map(posts => (
+                  <Card 
+                  data={posts}
+                  />
+            ))}
             </div>
 		)
 	}

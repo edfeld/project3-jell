@@ -59,11 +59,14 @@ class App extends Component {
 		this.state = {
 			loggedIn: false,
 			user: null,
-			sideOpen: false
+			sideOpen: false,
+			searchBar: "",
+			posts: []
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
 	}
+	
 	componentDidMount() {
 		axios.get('/auth/user').then(response => {
 			console.log("axios.get. response.data: ", response.data)
@@ -82,7 +85,19 @@ class App extends Component {
 				})
 				console.log("componentDidMount. user: ", this.state.user);
 			}
+		}).then(
+
+		axios
+			.get('/api/search/all')
+			.then(response => {
+				console.log('this is the response: ', response.data);
+			this.setState({
+				searchBar: "",
+				posts: response.data
+		   })
 		})
+		)
+
 	}
 
 	_logout(event) {
@@ -117,18 +132,34 @@ class App extends Component {
 			})
 	}
 
-	searchDb = () => {
-		console.log("backend works");
+
+	handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+	searchDb = (e) => {
+		e.preventDefault();
+		const search = {
+		 searchBar: this.state.searchBar
+		}
 		axios
-			.get('/api/search', {
-				data: "debate"
+			.post('/api/search', {
+				sent: search.searchBar
 			})
 			.then(response => {
-				console.log('this is the response: ' + response.posts);
+				console.log('this is the response: ', response.data);
 				
-			})
-
+			
+			this.setState({
+				searchBar: "",
+				posts: response.data
+		   })
+		})
 	}
+
 
 	drawerToggle = () => {
 		this.setState((prevState) => {
@@ -136,9 +167,13 @@ class App extends Component {
 		});
 	};
 
+
 	backDropClick = () => {
 		this.setState({sideOpen: false});
 	};
+
+	
+	
 
 	render() {
 		let backdrop;
@@ -148,7 +183,9 @@ class App extends Component {
 		return (
 			<div className="App" style={{height: '100%'}}>
 			{backdrop}
-				<Header user={this.state.user} />
+				{/* <Header 
+					user={this.state.user} 
+				/> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
 				<Route 
@@ -156,8 +193,19 @@ class App extends Component {
 					path="/" 
 					render={() => 
 						<div>
-						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
-						<Home user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+							/>
+							<Home 
+								user={this.state.user}  
+								_logout={this._logout} 
+								loggedIn={this.state.loggedIn} 
+								posts={this.state.posts}
+							/>
 						</div>
 					} 
 				/>

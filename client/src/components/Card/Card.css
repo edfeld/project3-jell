@@ -11,10 +11,31 @@
     height: 15.5rem;
 }
 
+
+
 .card-body{
     font-family: 'Patua One', cursive;
     border: none;
     color: white;
+    
+}
+
+a:hover{
+    color:rgba(221, 109, 18, 0);
+}
+
+.card:hover{
+    text-decoration: none;
+    transition: transform 0.3s ease-out;
+    box-shadow: 20px 20px 20px 0px black;
+    
+    
+    
+}
+
+.wholeCard a:hover{
+ text-emphasis: none;
+ background: lightgray;
 }
 
 
