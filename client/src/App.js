@@ -8,6 +8,7 @@ import Card from './components/Card/Card'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
+import PosterQuiz from './pages/PosterQuiz'
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
@@ -71,8 +72,8 @@ class App extends Component {
 				console.log('THERE IS A USER')
 				this.setState({
 					loggedIn: true,
-					user: response.user
-					// user: response.data.user
+					// user: response.user
+					user: response.data.user
 				})
 			} else {
 				this.setState({
@@ -179,6 +180,17 @@ class App extends Component {
 					exact 
 					path="/signup" 
 					component={SignupForm} 
+				/>
+				<Route 
+					exact 
+					path="/posterquiz" 
+					render={() => 
+						<div>
+						<h3>Debate Poster Quiz</h3>
+						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
+						<PosterQuiz user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						</div>
+					} 
 				/>
 				{/* <LoginForm _login={this._login} /> */}
 			</div>

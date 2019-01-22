@@ -8,10 +8,10 @@ require('dotenv').config()
 const db = require("./db");  // [ERE] for MySQL
 const express = require('express')
 const bodyParser = require('body-parser')
-const morgan = require('morgan')
+const morgan = require('morgan')  // Morgan is HTTP request logger middleware for Node.js
 const session = require('express-session')
-const MongoStore = require('connect-mongo')(session)
-const dbConnection = require('./db') // loads our connection to the mongo database
+// const MongoStore = require('connect-mongo')(session)
+// const dbConnection = require('./db') // loads our connection to the mongo database
 const passport = require('./passport')
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -51,6 +51,7 @@ app.use(function(req, res, next) {
 	console.log('===== END =======')
 	next()
 })
+
 console.log("Google testing next --->");
 // testing
 app.get(
@@ -67,11 +68,11 @@ app.get(
 	}
 )
 
-console.log("process.env.NODE_ENV:+:>  ", process.env.NODE_ENV);
+console.log("process.env.NODE_ENV:+:+>  ", process.env.NODE_ENV);
 // ==== if its production environment!
 if (process.env.NODE_ENV === 'production') {
 	const path = require('path')
-	console.log('YOU ARE IN THE PRODUCTION ENV')
+	console.log('=============YOU ARE IN THE PRODUCTION ENV=====================');
 	app.use('/static', express.static(path.join(__dirname, './client/build/static')))
 	app.get('/', (req, res) => {
 		res.sendFile(path.join(__dirname, './client/build/'))

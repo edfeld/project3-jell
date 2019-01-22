@@ -8,7 +8,7 @@ passport.serializeUser((user, done) => {
 	console.log(user) // the whole raw user object!
 	console.log("user.datavalues::::::>>>>>>", user.dataValues);
 	console.log('---------')
-	console.log("_id may not be going to work -- passport/index.js");
+	// console.log("_id may not be going to work -- passport/index.js");
 	done(null, { _id: user.dataValues.id });
 })
 

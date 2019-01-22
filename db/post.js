@@ -31,13 +31,13 @@ module.exports = function (sequelize, DataTypes) {
         },
 
         createdAt: {
-            type: DataTypes.Date,
+            type: DataTypes.DATE,
             notNull: true,
             defaultValue: DataTypes.NOW
         },
 
         updatedAt: {
-            type: DataTypes.Date,
+            type: DataTypes.DATE,
             notNull: true,
             defaultValue: DataTypes.NOW
         }

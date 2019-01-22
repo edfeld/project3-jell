@@ -38,13 +38,13 @@
             },
     
             createdAt: {
-                type: DataTypes.Date,
+                type: DataTypes.DATE,
                 notNull: true,
                 defaultValue: DataTypes.NOW
             },
     
             updatedAt: {
-                type: DataTypes.Date,
+                type: DataTypes.DATE,
                 notNull: true,
                 defaultValue: DataTypes.NOW
             }
@@ -54,13 +54,13 @@
 
         comments.associate = function(models) {
             // A Post can't be created without a user due to the foreign key constraint
-            posts.belongsTo(models.users, {
+            comments.belongsTo(models.users, {
               foreignKey: {
                 allowNull: false
               }
             });
 
-            posts.belongsTo(models.posts, {
+            comments.belongsTo(models.posts, {
                 foreignKey: {
                   allowNull: false
                 }

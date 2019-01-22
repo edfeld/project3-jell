@@ -1,5 +1,5 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-const User = require('../db/user')
+const User = require('../db').users;
 
 const strategy = new GoogleStrategy(
 	{
@@ -30,22 +30,30 @@ const strategy = new GoogleStrategy(
 						googleId: id,
 						firstName: name.givenName,
 						lastName: name.familyName,
-						photos: photos
+						// photos: photos
 					})
 					// save this user
-					newGoogleUser.save((err, savedUser) => {
-						if (err) {
-							console.log('Error!! saving the new google user')
-							console.log(err)
-							return done(null, false)
-						} else {
-							return done(null, savedUser)
-						}
-					}) // closes newGoogleUser.save
+					newGoogleUser.save()
+						.then(savedUser =>{
+							console.log("savedUser:=:=:=:=:=:=", savedUser);
+							return done(null, savedUser);
+						})
+						.catch(err => {
+							return done(null, false);
+						})
+					// newGoogleUser.save((err, savedUser) => {
+					// 	if (err) {
+					// 		console.log('Error!! saving the new google user')
+					// 		console.log(err)
+					// 		return done(null, false)
+					// 	} else {
+					// 		return done(null, savedUser)
+					// 	}
+					// }) // closes newGoogleUser.save
 				}
 			}) // close .then()
 			.catch(err => {
-				console.log('Error!! trying to find user with googleId')
+				console.log('** Egregious Error!! trying to find user with googleId')
 				console.log(err)
 				return done(null, false)
 			})
