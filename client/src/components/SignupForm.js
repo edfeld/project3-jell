@@ -6,6 +6,9 @@ class SignupForm extends Component {
 	constructor() {
 		super()
 		this.state = {
+			firstName: '',
+			lastName: '',
+			email: '',
 			username: '',
 			password: '',
 			confirmPassword: '',
@@ -25,7 +28,10 @@ class SignupForm extends Component {
 		axios
 			.post('/auth/signup', {
 				username: this.state.username,
-				password: this.state.password
+				password: this.state.password,
+				firstName: this.state.firstName, // [ERE] 20190121
+				lastName: this.state.lastName,  // [ERE] 20190121
+				email: this.state.email  // [ERE] 20190121
 			})
 			.then(response => {
 				console.log(response)
@@ -49,6 +55,27 @@ class SignupForm extends Component {
 		return (
 			<div className="SignupForm">
 				<h1>Signup form</h1>
+				<label htmlFor="firstName">First Name: </label>
+				<input
+					type="text"
+					name="firstName"
+					value={this.state.firstName}
+					onChange={this.handleChange}
+				/>
+				<label htmlFor="lastName">Last Name: </label>
+				<input
+					type="text"
+					name="lastName"
+					value={this.state.lastName}
+					onChange={this.handleChange}
+				/>
+				<label htmlFor="email">Email address: </label>
+				<input
+					type="text"
+					name="email"
+					value={this.state.email}
+					onChange={this.handleChange}
+				/>
 				<label htmlFor="username">Username: </label>
 				<input
 					type="text"

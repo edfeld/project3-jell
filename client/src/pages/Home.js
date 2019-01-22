@@ -10,6 +10,12 @@ const Home = props => {
 		return (
             <div style={{backgroundImage: "inherit"}}>
             <TitleBar />
+            <div className="Home">
+                  <p>Current User:</p>
+                  <code>
+                        {JSON.stringify(props)}
+                  </code>
+            </div>
             <Card />
             <Card />
             <Card />
@@ -22,6 +28,12 @@ const Home = props => {
 		return (
             <div style={{backgroundImage: "inherit"}}>
             <TitleBar />
+            <div className="Home">
+                  <p>Current User:</p>
+                  <code>
+                        {JSON.stringify(props)}
+                  </code>
+            </div>
             <Card />
             <Card />
             <Card />
