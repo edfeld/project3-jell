@@ -9,23 +9,38 @@ const Home = props => {
 	if (props.user) {
 		return (
             <div style={{backgroundImage: "inherit"}}>
-            <TitleBar />
-            {props.posts.map(posts => (
-                  <Card 
-                  data={posts}
-                  />
-            ))}
+              <TitleBar />
+              {props.posts.map(posts => (
+                    <Card 
+                    data={posts}
+                    />
+              ))}
+
+              <div className="Home">
+                    <p>Current User:</p>
+                    <code>
+                          {JSON.stringify(props)}
+                    </code>
+              </div>
             </div>
 		)
 	} else {
 		return (
             <div style={{backgroundImage: "inherit"}}>
-            <TitleBar />
-            {props.posts.map(posts => (
-                  <Card 
-                  data={posts}
-                  />
-            ))}
+              <TitleBar />
+
+              {props.posts.map(posts => (
+                    <Card 
+                    data={posts}
+                    />
+              ))}
+
+              <div className="Home">
+                    <p>Current User:</p>
+                    <code>
+                          {JSON.stringify(props)}
+                    </code>
+              </div>
             </div>
 		)
 	}

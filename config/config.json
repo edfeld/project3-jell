@@ -1,7 +1,7 @@
 {
     "development": {
       "username": "root",
-      "password": "4321Mommy",
+      "password": null,
       "database": "project3_db",
       "host": "localhost",
       "dialect": "mysql"
@@ -15,6 +15,13 @@
       "logging": false
     },
     "production": {
+      "username": "root",
+      "password": null,
+      "database": "project3_db",
+      "host": "localhost",
+      "dialect": "mysql"
+    },
+    "real-production": {
       "use_env_variable": "JAWSDB_URL",
       "dialect": "mysql"
     }
