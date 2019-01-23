@@ -30,7 +30,7 @@ const SideDrawer = props => {
             <li><a href="/">Home</a></li>
             <li><a href="/">Top Debates</a></li>
             <li><a href="/">Relevant Debates</a></li>
-            <li><a href="/">Create A Post</a></li>
+            <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
         </ul>
     </nav>
    )

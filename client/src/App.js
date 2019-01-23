@@ -3,12 +3,10 @@ import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
 import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
-import TitleBar from './components/titleBar'
-import Card from './components/Card/Card'
-import Header from './components/Header'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
+import MasterModal from './components/AllModals/MasterModal'
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
@@ -60,6 +58,7 @@ class App extends Component {
 			loggedIn: false,
 			user: null,
 			sideOpen: false,
+			currentModal: "",
 			searchBar: "",
 			posts: []
 		}
@@ -85,7 +84,7 @@ class App extends Component {
 				})
 				console.log("componentDidMount. user: ", this.state.user);
 			}
-		}).then(
+		})
 
 		axios
 			.get('/api/search/all')
@@ -96,7 +95,7 @@ class App extends Component {
 				posts: response.data
 		   })
 		})
-		)
+		
 
 	}
 
@@ -172,6 +171,22 @@ class App extends Component {
 		this.setState({sideOpen: false});
 	};
 
+	changeModal = (type) => {
+		if(type === ''){
+			document.getElementsByClassName('opacityTransition')[0].style.opacity = '0';
+			let that = this;
+			function x (){
+				that.setState({currentModal: type});
+			}
+			setTimeout(function(){
+				x()
+			}, 300)
+		
+		}else{
+		 	this.setState({currentModal: type});
+		}
+	}
+
 	
 	
 
@@ -193,12 +208,19 @@ class App extends Component {
 					path="/" 
 					render={() => 
 						<div>
+							
+							<MasterModal 
+								currentModal={this.state.currentModal}
+								changeModal={this.changeModal}
+							/>
+				
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
 								value={this.state.searchBar} 
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
 							/>
 							<Home 
 								user={this.state.user}  
