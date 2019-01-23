@@ -59,7 +59,7 @@ router.post('/logout', (req, res) => {
 })
 
 router.post('/signup', (req, res) => {
-	const { username, password } = req.body
+	const { username, password, firstName, lastName, email } = req.body
 	// console.log("username, password: ", `${username} ${password}` )
 	// ADD VALIDATION
 	User.findOne({ where: { 'username': username }})
@@ -80,7 +80,10 @@ router.post('/signup', (req, res) => {
 				// console.log("check the hash match: ==============> it's ", isMatch);
 				const newUser = {
 					'username': username,
-					'passwordHashSalt': hash
+					'passwordHashSalt': hash,
+					'firstName': firstName,
+					'lastName': lastName,
+					'email': email
 				}
 				// console.log("New User: ===>:", newUser);
 				User.create(newUser).then(function(newItemUser) {
