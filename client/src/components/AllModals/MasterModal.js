@@ -25,13 +25,13 @@ const MasterModal = (props) => {
         <div className='opacityTransition' 
             style={{
                 height: '100%', 
-                position: 'absolute', 
+                position: 'fixed', 
                 top:props.currentModal?'0px':'-100000px', 
                 width: props.currentModal?'100%':'0px', 
                 opacity: props.currentModal?'1':'0',
                 zIndex: '300'
             }} 
-            onClick={() => props.changeModal('')}
+            
         >
             <div 
                 style={{
@@ -45,9 +45,12 @@ const MasterModal = (props) => {
                     padding: '10px', 
                     marginTop: '100px'
                 }}
+                // onClick={() => props.changeModal('')}
             >
                 {currentModal}
+                <span onClick={() => props.changeModal('')} style={{color: 'red', position: 'absolute' }}>X</span>
             </div>
+            
         </div>
     )
 };
