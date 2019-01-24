@@ -247,11 +247,6 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/signup" 
-					component={SignupForm} 
-				/>
-				<Route 
-					exact 
 					path="/posterquiz" 
 					render={() => 
 						<div>
