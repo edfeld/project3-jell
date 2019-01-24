@@ -6,6 +6,7 @@ import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
+import ArrPosterQuiz from "./posterquiz.json";
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 
@@ -60,6 +61,7 @@ class App extends Component {
 			loggedIn: false,
 			user: null,
 			sideOpen: false,
+			ArrPosterQuiz,
 			currentModal: "",
 			searchBar: "",
 			posts: []
@@ -88,6 +90,8 @@ class App extends Component {
 			}
 		})
 
+		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
+		
 		axios
 			.get('/api/search/all')
 			.then(response => {
@@ -98,7 +102,6 @@ class App extends Component {
 		   })
 		})
 		
-
 	}
 
 	_logout(event) {
@@ -254,7 +257,7 @@ class App extends Component {
 						<div>
 						<h3>Debate Poster Quiz</h3>
 						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
-						<PosterQuiz user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						<PosterQuiz ArrPosterQuiz={this.state.ArrPosterQuiz} user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
 						</div>
 					} 
 				/>
