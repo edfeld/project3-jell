@@ -3,13 +3,17 @@ import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
 import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
-import TitleBar from './components/titleBar'
-import Card from './components/Card/Card'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
+<<<<<<< HEAD
 import PosterQuiz from './pages/PosterQuiz'
 import ArrPosterQuiz from "./posterquiz.json";
+=======
+import MasterModal from './components/AllModals/MasterModal'
+import PosterQuiz from './pages/PosterQuiz';
+
+>>>>>>> cfcf95dc6ec35160bad027289393b1cf58e847f2
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
@@ -61,11 +65,18 @@ class App extends Component {
 			loggedIn: false,
 			user: null,
 			sideOpen: false,
+<<<<<<< HEAD
 			ArrPosterQuiz
+=======
+			currentModal: "",
+			searchBar: "",
+			posts: []
+>>>>>>> cfcf95dc6ec35160bad027289393b1cf58e847f2
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
 	}
+	
 	componentDidMount() {
 		axios.get('/auth/user').then(response => {
 			console.log("axios.get. response.data: ", response.data)
@@ -85,7 +96,22 @@ class App extends Component {
 				console.log("componentDidMount. user: ", this.state.user);
 			}
 		})
+<<<<<<< HEAD
 		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
+=======
+
+		axios
+			.get('/api/search/all')
+			.then(response => {
+				console.log('this is the response: ', response.data);
+			this.setState({
+				searchBar: "",
+				posts: response.data
+		   })
+		})
+		
+
+>>>>>>> cfcf95dc6ec35160bad027289393b1cf58e847f2
 	}
 
 	_logout(event) {
@@ -120,24 +146,34 @@ class App extends Component {
 			})
 	}
 
-	searchDb = () => {
-		console.log("this works");
-		// axios
-		// 	.get('/api/search', {
-				
-		// 	})
-		// 	.then(response => {
-		// 		console.log(response)
-		// 		if (response.status === 200) {
-		// 			// update the state
-		// 			this.setState({
-		// 				loggedIn: true,
-		// 				user: response.data.user
-		// 			})
-		// 		}
-		// 	})
 
+	handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+	searchDb = (e) => {
+		e.preventDefault();
+		const search = {
+		 searchBar: this.state.searchBar
+		}
+		axios
+			.post('/api/search', {
+				sent: search.searchBar
+			})
+			.then(response => {
+				console.log('this is the response: ', response.data);
+				
+			
+			this.setState({
+				searchBar: "",
+				posts: response.data
+		   })
+		})
 	}
+
 
 	drawerToggle = () => {
 		this.setState((prevState) => {
@@ -145,9 +181,29 @@ class App extends Component {
 		});
 	};
 
+
 	backDropClick = () => {
 		this.setState({sideOpen: false});
 	};
+
+	changeModal = (type) => {
+		if(type === ''){
+			document.getElementsByClassName('opacityTransition')[0].style.opacity = '0';
+			let that = this;
+			function x (){
+				that.setState({currentModal: type});
+			}
+			setTimeout(function(){
+				x()
+			}, 300)
+		
+		}else{
+		 	this.setState({currentModal: type});
+		}
+	}
+
+	
+	
 
 	render() {
 		let backdrop;
@@ -157,7 +213,9 @@ class App extends Component {
 		return (
 			<div className="App" style={{height: '100%'}}>
 			{backdrop}
-				{/* <Header user={this.state.user} /> */}
+				{/* <Header 
+					user={this.state.user} 
+				/> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
 				<Route 
@@ -165,8 +223,26 @@ class App extends Component {
 					path="/" 
 					render={() => 
 						<div>
-						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
-						<Home user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+							
+							<MasterModal 
+								currentModal={this.state.currentModal}
+								changeModal={this.changeModal}
+							/>
+				
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<Home 
+								user={this.state.user}  
+								_logout={this._logout} 
+								loggedIn={this.state.loggedIn} 
+								posts={this.state.posts}
+							/>
 						</div>
 					} 
 				/>
