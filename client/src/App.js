@@ -6,10 +6,7 @@ import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
-<<<<<<< HEAD
-import PosterQuiz from './pages/PosterQuiz'
 import ArrPosterQuiz from "./posterquiz.json";
-=======
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 
@@ -65,13 +62,10 @@ class App extends Component {
 			loggedIn: false,
 			user: null,
 			sideOpen: false,
-<<<<<<< HEAD
-			ArrPosterQuiz
-=======
+			ArrPosterQuiz,
 			currentModal: "",
 			searchBar: "",
 			posts: []
->>>>>>> cfcf95dc6ec35160bad027289393b1cf58e847f2
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -96,10 +90,9 @@ class App extends Component {
 				console.log("componentDidMount. user: ", this.state.user);
 			}
 		})
-<<<<<<< HEAD
-		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
-=======
 
+		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
+		
 		axios
 			.get('/api/search/all')
 			.then(response => {
@@ -110,8 +103,6 @@ class App extends Component {
 		   })
 		})
 		
-
->>>>>>> cfcf95dc6ec35160bad027289393b1cf58e847f2
 	}
 
 	_logout(event) {
