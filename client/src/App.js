@@ -89,8 +89,9 @@ class App extends Component {
 				console.log("componentDidMount. user: ", this.state.user);
 			}
 		})
-		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
 
+		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
+		
 		axios
 			.get('/api/search/all')
 			.then(response => {
@@ -101,7 +102,6 @@ class App extends Component {
 		   })
 		})
 		
-
 	}
 
 	_logout(event) {
