@@ -8,6 +8,7 @@ import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
+import ArrPosterQuiz from './posterquiz.json'
 
 
 const DisplayLinks = props => {

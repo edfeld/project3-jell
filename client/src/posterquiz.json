@@ -1,0 +1,140 @@
+[
+  {
+    "id": 1,
+    "questionText": "From the list below, select the name of the rhetorical device that attacks the arguer instead of the argument.",
+    "userAnswer": "",
+    "correctAnswer": "D) Ad hominem",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+	    "C) False dilemma",
+	    "D) Ad hominem",
+	    "E) Burden of proof",
+	    "F) Straw man"
+    ]
+  },
+  {
+    "id": 2,
+    "questionText": "From the list below, select the name of the rhetorical device that unfairly places the onus of providing evidence for a position on the wrong side of an issue.",
+    "userAnswer": "",
+    "correctAnswer": "E) Burden of proof",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+      "C) False dilemma",
+      "D) Ad hominem",
+      "E) Burden of proof",
+      "F) Straw man"
+    ]
+  },
+  {
+    "id": 3,
+    "questionText": "From the list below, select the name of the rhetorical device that ignores an opponent's actual position and instead presents and attacks a distorted, oversimplified, or misrepresented version of that position.",
+    "userAnswer": "",
+    "correctAnswer": "F) Straw man",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+      "C) False dilemma",
+      "D) Ad hominem",
+      "E) Burden of proof",
+      "F) Straw man"
+    ]
+  },
+  {
+    "id": 4,
+    "questionText": "From the list below, select the name of the rhetorical device that ignores an opponent's actual position and instead presents and attacks a distorted, oversimplified, or misrepresented version of that position.",
+    "userAnswer": "",
+    "correctAnswer": "F) Straw man",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+      "C) False dilemma",
+      "D) Ad hominem",
+      "E) Burden of proof",
+      "F) Straw man"
+    ]
+  },
+  {
+    "id": 5,
+    "questionText": "From the list below, select the name of the rhetorical device that claims we must continue a certain course of action since we have already begun that course.",
+    "userAnswer": "",
+    "correctAnswer": "A) Slippery slope",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+      "C) False dilemma",
+      "D) Ad hominem",
+      "E) Burden of proof",
+      "F) Straw man"
+    ]
+  },
+  {
+    "id": 6,
+    "questionText": "From the list below, select the name of the rhetorical device that tempts us to believe there is a necessary connection between one thing happening and some other thing happening when, in fact, there is no such necessary connection.",
+    "userAnswer": "",
+    "correctAnswer": "A) Slippery slope",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+      "C) False dilemma",
+      "D) Ad hominem",
+      "E) Burden of proof",
+      "F) Straw man"
+    ]
+  },
+  {
+    "id":7,
+    "questionText": "From the list below, select the name of the rhetorical device that asks us to accept premises that are as controversial as the conclusion being argued for and which are controversial on the same grounds.",
+    "userAnswer": "",
+    "correctAnswer": "B) Begging the question",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+      "C) False dilemma",
+      "D) Ad hominem",
+      "E) Burden of proof",
+      "F) Straw man"
+    ]
+  },
+  {
+    "id":8,
+    "questionText": "Poisoning the well and argument from inconsistency are versions of which of the following types of rhetorical devices?",
+    "userAnswer": "",
+    "correctAnswer": "D) Ad hominem",
+    "arrChoices": [
+      "A) Slippery slope",
+      "B) Begging the question",
+      "C) False dilemma",
+      "D) Ad hominem",
+      "E) Burden of proof",
+      "F) Straw man"
+    ]
+  },
+  {
+    "id":9,
+    "questionText": "Choose the fallacy at work in this example: Either join in political life or resign yourself to a lonely and meaningless existence.",
+    "userAnswer": "",
+    "correctAnswer": "C) False dilemma",
+    "arrChoices": [
+      "A) False dilemma",
+      "B) Circumstantial ad hominem",
+      "C) Appeal to ignorance",
+      "D) Poisoning the well",
+      "E) Genetic fallacy"
+    ]
+  },
+  {
+    "id":10,
+    "questionText": "Choose the fallacy at work in this example: You have to discount Mr. McGill's views on abortion. As a member of the Pre-Natal Liberation Organization, he can't help being prejudiced.",
+    "userAnswer": "",
+    "correctAnswer": "C) Circumstantial ad hominem",
+    "arrChoices": [
+      "A) Appeal to ignorance",
+      "B) Burden of proof",
+      "C) Circumstantial ad hominem",
+      "D) Line-drawing fallacy",
+      "E) Perfectionist fallacy"
+    ]
+  }
+]
