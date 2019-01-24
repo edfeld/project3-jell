@@ -1,9 +1,9 @@
 /* PosterQuiz CSS */
-.card-header {
+.quizcard-header {
     background-color: #544841;
     color: #ffffff;
 }
-.card {
+.quizcard {
     width: 96.4%;
     flex-direction: column;
 }
