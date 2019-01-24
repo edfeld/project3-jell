@@ -10,7 +10,6 @@ import ArrPosterQuiz from "./posterquiz.json";
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 
->>>>>>> cfcf95dc6ec35160bad027289393b1cf58e847f2
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
