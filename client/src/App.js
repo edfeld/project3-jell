@@ -6,9 +6,9 @@ import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
-import ArrPosterQuiz from "./posterquiz.json";
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
+import ArrPosterQuiz from './posterquiz.json'
 
 
 const DisplayLinks = props => {
