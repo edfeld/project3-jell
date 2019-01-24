@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
 import PosterQuiz from './pages/PosterQuiz'
+import ArrPosterQuiz from "./posterquiz.json";
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
@@ -59,7 +60,8 @@ class App extends Component {
 		this.state = {
 			loggedIn: false,
 			user: null,
-			sideOpen: false
+			sideOpen: false,
+			ArrPosterQuiz
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -83,6 +85,7 @@ class App extends Component {
 				console.log("componentDidMount. user: ", this.state.user);
 			}
 		})
+		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
 	}
 
 	_logout(event) {
@@ -188,7 +191,7 @@ class App extends Component {
 						<div>
 						<h3>Debate Poster Quiz</h3>
 						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
-						<PosterQuiz user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						<PosterQuiz ArrPosterQuiz={this.state.ArrPosterQuiz} user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
 						</div>
 					} 
 				/>
