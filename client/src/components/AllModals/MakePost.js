@@ -18,7 +18,7 @@ const MakePost = props => (
             <label class="form-check-label" for="defaultCheck1">
                 Default checkbox
             </label>
-    </div>
+        </div>
     </div>
 );
 
