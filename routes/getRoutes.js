@@ -19,9 +19,9 @@ module.exports = function(app) {
 
     //gets all of the posts
     app.get("/api/search/all", function(req, res) {
-        db.posts.findAll({
-            include: [{model: db.comment, as: 'comments'}]
-        }).then(function(result) {
+        db.posts.findAll(
+            // include: [{model: db.comment, as: 'comments'}]
+        ).then(function(result) {
             res.json(result);
         });
     });
