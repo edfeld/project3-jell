@@ -7,7 +7,7 @@ const MakePost = props => (
         <h2 style={{color: 'black'}}>Make A Post</h2>
         <div>
             <input 
-                class="form-control" 
+                className="form-control" 
                 type="text" 
                 placeholder="Whats Your Debate Title?"
                 name="debateTitle"
@@ -17,9 +17,9 @@ const MakePost = props => (
             />
         </div>
         <div>
-            <div class="input-group">
+            <div className="input-group">
                 <textarea 
-                    class="form-control" 
+                    className="form-control" 
                     aria-label="With textarea"
                     name="debateContext"
                     value2={props.value}
@@ -29,7 +29,7 @@ const MakePost = props => (
             </div>
             <div>
             <input 
-                class="form-control" 
+                className="form-control" 
                 type="text" 
                 placeholder="Whats Your Debate Title?"
                 name="debateTags"
