@@ -2,7 +2,7 @@
     width: 96%;
     position: relative;
     top: 5px;
-    left: 1.6%;
+    left: 1.9%;
 }
 
 .jumbotron{
@@ -14,5 +14,6 @@
     box-shadow: 1px 3px 14px 0px black;
     height: 22em;
     text-shadow: 1px 1px 5px black;
+    width: 100%;
 }
 
