@@ -16,7 +16,7 @@ app.post('/api/postRoute', (req, res) => {
 				}).catch(function (err) {
 	console.log("findOne Error: ", err);
   });
-})
+});
 
 app.post('/api/commentRoute', (req, res) => {
   const {content, isRebuttal} = req.body
@@ -30,7 +30,7 @@ app.post('/api/commentRoute', (req, res) => {
       db.comments.create(newComment).then(function(comment) {
         return res.json(comment);
       }).catch(function (err) {
-console.log("findOne Error: ", err);
-});
-})
-}
+      console.log("findOne Error: ", err);
+      });
+  });
+};
