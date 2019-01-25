@@ -80,6 +80,7 @@ if (process.env.NODE_ENV === 'production') {
 /* Express app ROUTING */
 app.use('/auth', require('./auth'))
 require('./routes/getRoutes')(app)
+require('./routes/postroutes')(app)
 
 // ====== Error handler ====
 app.use(function(err, req, res, next) {
