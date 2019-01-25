@@ -19,6 +19,12 @@
                 notNull: true
             },
 
+            //determines if post is a child
+            isChild: {
+                type: DataTypes.BOOLEAN,
+                notNull: true
+            },
+
             //Concatonated string will contain all
             //children comments uuids for display
             children: {
