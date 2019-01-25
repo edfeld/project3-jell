@@ -8,50 +8,7 @@ import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
-
-
-const DisplayLinks = props => {
-	if (props.loggedIn) {
-		return (
-			<nav className="navbar">
-				<ul className="nav">
-					<li className="nav-item">
-						<Link to="/" className="nav-link">
-							Home
-						</Link>
-					</li>
-					<li>
-						<Link to="#" className="nav-link" onClick={props._logout}>
-							Logout
-						</Link>
-					</li>
-				</ul>
-			</nav>
-		)
-	} else {
-		return (
-			<nav className="navbar">
-				<ul className="nav">
-					<li className="nav-item">
-						<Link to="/" className="nav-link">
-							Home
-						</Link>
-					</li>
-					<li className="nav-item">
-						<Link to="/login" className="nav-link">
-							login
-						</Link>
-					</li>
-					<li className="nav-item">
-						<Link to="/signup" className="nav-link">
-							sign up
-						</Link>
-					</li>
-				</ul>
-			</nav>
-		)
-	}
-}
+import ArrPosterQuiz from './posterquiz.json'
 
 class App extends Component {
 	constructor() {
@@ -60,9 +17,14 @@ class App extends Component {
 			loggedIn: false,
 			user: null,
 			sideOpen: false,
+			ArrPosterQuiz,
 			currentModal: "",
 			searchBar: "",
-			posts: []
+			posts: [],
+			debateTitle: "",
+			debateContext: "",
+			debateTags: ""
+			
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -88,6 +50,8 @@ class App extends Component {
 			}
 		})
 
+		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
+		
 		axios
 			.get('/api/search/all')
 			.then(response => {
@@ -98,7 +62,6 @@ class App extends Component {
 		   })
 		})
 		
-
 	}
 
 	_logout(event) {
@@ -189,6 +152,35 @@ class App extends Component {
 		}
 	}
 
+	postRoute = (e) => {
+		e.preventDefault();
+		const post = {
+		 debateTitle: this.state.debateTitle,
+		 debateContext: this.state.debateContext,
+		 debateTags: this.state.debateTags
+		}
+		axios
+			.post('/api/postRoute', {
+				title: post.debateTitle,
+				context: post.debateContext,
+				tags: post.debateTags
+				
+			})
+			.then(response => {
+				console.log('this is the response: ', response.data);
+				
+			
+			this.setState({
+				debateTitle: "",
+				debateContext: "",
+				debateTags: "",
+				currentModal: ""
+				
+		   })
+		})
+
+	}
+
 	
 	
 
@@ -214,6 +206,9 @@ class App extends Component {
 							<MasterModal 
 								currentModal={this.state.currentModal}
 								changeModal={this.changeModal}
+								value={this.state.debateTitle && this.state.debateContext && this.debateTags}
+								handleChange={this.handleChange}
+								post={this.postRoute}
 							/>
 				
 							<SideDrawer 
@@ -244,17 +239,12 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/signup" 
-					component={SignupForm} 
-				/>
-				<Route 
-					exact 
 					path="/posterquiz" 
 					render={() => 
 						<div>
 						<h3>Debate Poster Quiz</h3>
 						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
-						<PosterQuiz user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						<PosterQuiz ArrPosterQuiz={this.state.ArrPosterQuiz} user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
 						</div>
 					} 
 				/>
