@@ -2,8 +2,8 @@ import React from 'react';
 import "./QuizCard.css";
 
 const QuizCard = props => (
-    <div className="card">
-        <div className="card-header">
+    <div className="card outerDiv">
+        <div className="card-header headerDiv">
         {props.question}
         </div>
         <div className="card-body">
