@@ -1,28 +1,45 @@
-/* Mongo Database
-* - this is where we set up our connection to the mongo database
-*/
-const mongoose = require('mongoose')
-mongoose.Promise = global.Promise
-let MONGO_URL
-const MONGO_LOCAL_URL = 'mongodb://localhost/mern-passport'
+"use strict";
 
-if (process.env.MONGODB_URI) {
-	mongoose.connect(process.env.MONGODB_URI)
-	MONGO_URL = process.env.MONGODB_URI
+var fs = require("fs");
+var path = require("path");
+var Sequelize = require("sequelize");
+var basename = path.basename(module.filename);
+var env = process.env.NODE_ENV || "development";
+var config = require(__dirname + "/../config/config.json")[env];
+var db = {};
+
+if (config.use_env_variable) {
+  var sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
-	mongoose.connect(MONGO_LOCAL_URL) // local mongo url
-	MONGO_URL = MONGO_LOCAL_URL
+  var sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
 }
 
-// should mongoose.connection be put in the call back of mongoose.connect???
-const db = mongoose.connection
-db.on('error', err => {
-	console.log(`There was an error connecting to the database: ${err}`)
-})
-db.once('open', () => {
-	console.log(
-		`You have successfully connected to your mongo database: ${MONGO_URL}`
-	)
-})
+console.log("----------+++++++> __Dirname", __dirname);
+fs.readdirSync(__dirname)
+  .filter(function(file) {
+    // console.log("Filter ====> file:", file)
+    return (
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+      );
+    })
+    .forEach(function(file) {
+      // console.log("====> file:", file)
+    var model = sequelize.import(path.join(__dirname, file));
+    db[model.name] = model;
+  });
 
-module.exports = db
+Object.keys(db).forEach(function(modelName) {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;

@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
-import './App.css'
 import LoginForm from './components/Login/LoginForm'
 import SignupForm from './components/SignupForm'
-import Header from './components/Header'
-import Home from './components/Home'
+import TitleBar from './components/titleBar'
+import Card from './components/Card/Card'
+import Home from './pages/Home'
+import SideDrawer from './components/SideDrawer/SideDrawer'
+import BackDrop from './components/Backdrop/backdrop'
+import PosterQuiz from './pages/PosterQuiz'
 
 const DisplayLinks = props => {
 	if (props.loggedIn) {
@@ -55,18 +58,21 @@ class App extends Component {
 		super()
 		this.state = {
 			loggedIn: false,
-			user: null
+			user: null,
+			sideOpen: false
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
 	}
 	componentDidMount() {
 		axios.get('/auth/user').then(response => {
-			console.log(response.data)
+			console.log("axios.get. response.data: ", response.data)
 			if (!!response.data.user) {
+				console.log("response.data.user.username ::>",response.data.user.username);
 				console.log('THERE IS A USER')
 				this.setState({
 					loggedIn: true,
+					// user: response.user
 					user: response.data.user
 				})
 			} else {
@@ -74,6 +80,7 @@ class App extends Component {
 					loggedIn: false,
 					user: null
 				})
+				console.log("componentDidMount. user: ", this.state.user);
 			}
 		})
 	}
@@ -110,16 +117,56 @@ class App extends Component {
 			})
 	}
 
+	searchDb = () => {
+		console.log("this works");
+		// axios
+		// 	.get('/api/search', {
+				
+		// 	})
+		// 	.then(response => {
+		// 		console.log(response)
+		// 		if (response.status === 200) {
+		// 			// update the state
+		// 			this.setState({
+		// 				loggedIn: true,
+		// 				user: response.data.user
+		// 			})
+		// 		}
+		// 	})
+
+	}
+
+	drawerToggle = () => {
+		this.setState((prevState) => {
+			return {sideOpen: !prevState.sideOpen}
+		});
+	};
+
+	backDropClick = () => {
+		this.setState({sideOpen: false});
+	};
+
 	render() {
+		let backdrop;
+		if(this.state.sideOpen) {
+			backdrop = <BackDrop click={this.backDropClick}/>;
+		}
 		return (
-			<div className="App">
-				<h1>This is the main App component</h1>
-				<Header user={this.state.user} />
+			<div className="App" style={{height: '100%'}}>
+			{backdrop}
+				{/* <Header user={this.state.user} /> */}
 				{/* LINKS to our different 'pages' */}
-				<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
 				{/*  ROUTES */}
-				{/* <Route exact path="/" component={Home} /> */}
-				<Route exact path="/" render={() => <Home user={this.state.user} />} />
+				<Route 
+					exact 
+					path="/" 
+					render={() => 
+						<div>
+						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
+						<Home user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						</div>
+					} 
+				/>
 				<Route
 					exact
 					path="/login"
@@ -129,7 +176,22 @@ class App extends Component {
 							_googleSignin={this._googleSignin}
 						/>}
 				/>
-				<Route exact path="/signup" component={SignupForm} />
+				<Route 
+					exact 
+					path="/signup" 
+					component={SignupForm} 
+				/>
+				<Route 
+					exact 
+					path="/posterquiz" 
+					render={() => 
+						<div>
+						<h3>Debate Poster Quiz</h3>
+						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
+						<PosterQuiz user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						</div>
+					} 
+				/>
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)

@@ -5,12 +5,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 require('dotenv').config()
 
+const db = require("./db");  // [ERE] for MySQL
 const express = require('express')
 const bodyParser = require('body-parser')
-const morgan = require('morgan')
+const morgan = require('morgan')  // Morgan is HTTP request logger middleware for Node.js
 const session = require('express-session')
-const MongoStore = require('connect-mongo')(session)
-const dbConnection = require('./db') // loads our connection to the mongo database
 const passport = require('./passport')
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -26,7 +25,7 @@ app.use(bodyParser.json())
 app.use(
 	session({
 		secret: process.env.APP_SECRET || 'this is the default passphrase',
-		store: new MongoStore({ mongooseConnection: dbConnection }),
+		// store: new MongoStore({ mongooseConnection: dbConnection }),
 		resave: false,
 		saveUninitialized: false
 	})
@@ -50,24 +49,28 @@ app.use(function(req, res, next) {
 	console.log('===== END =======')
 	next()
 })
+
+console.log("Google testing next --->");
 // testing
 app.get(
 	'/auth/google/callback',
 	(req, res, next) => {
 		console.log(`req.user: ${req.user}`)
-		console.log('======= /auth/google/callback was called! =====')
-		next()
+		console.log('======= /auth/google/callback was called! =====');
+		next();
 	},
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	(req, res) => {
+		console.log("server.js.  Are we there yet?");
 		res.redirect('/')
 	}
 )
 
+console.log("process.env.NODE_ENV:+:+>  ", process.env.NODE_ENV);
 // ==== if its production environment!
 if (process.env.NODE_ENV === 'production') {
 	const path = require('path')
-	console.log('YOU ARE IN THE PRODUCTION ENV')
+	console.log('=============YOU ARE IN THE PRODUCTION ENV=====================');
 	app.use('/static', express.static(path.join(__dirname, './client/build/static')))
 	app.get('/', (req, res) => {
 		res.sendFile(path.join(__dirname, './client/build/'))
@@ -84,7 +87,19 @@ app.use(function(err, req, res, next) {
 	res.status(500)
 })
 
+const syncOptions = { force: false };
 // ==== Starting Server ======
+
+
+db.sequelize.sync(syncOptions).then(function() {
+	console.log('Nice! Database looks fine')
+}).catch(function (err) {
+    console.log(err, "Something went wrong with the Database Update!")
+});
+
 app.listen(PORT, () => {
-	console.log(`App listening on PORT: ${PORT}`)
+		console.log(`App listening on PORT: ${PORT}`)
+	//   console.log(
+	// 	"==> 🌎  App Listening on port 3000. Visit http://localhost:3000/ in your browser.",
+	//   );
 })

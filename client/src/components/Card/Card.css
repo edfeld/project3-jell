@@ -1,0 +1,20 @@
+.card{
+    width: 46.4%;
+    display: inline-flex;
+    flex-direction: row;
+    position: relative;
+    border: rgb(143, 143, 143) solid 3px;
+    margin: 1.5rem;
+    background-image: linear-gradient(to bottom right,rgba(221, 109, 18, 0.856), rgba(0, 0, 0, 0.753));
+    box-shadow: 1px 3px 14px 0px black;
+    text-align: left;
+    height: 15.5rem;
+}
+
+.card-body{
+    font-family: 'Patua One', cursive;
+    border: none;
+    color: white;
+}
+
+
