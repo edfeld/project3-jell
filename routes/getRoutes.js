@@ -66,4 +66,18 @@ module.exports = function(app) {
             });
         });
     })
+
+
+    //gets n posts with an offset of j support for pagination orders by upvotes
+    app.get("/api/top-posts/:n/:j", function(req, res) {
+        db.posts.findAll({
+            limit: req.params.n, 
+            offset: req.params.j,
+            order:  sequelize.fn('max', sequelize.col('upVotes'))
+        }).then(function(result){
+            res.json(result);
+        });
+    });
+
+    
 }
