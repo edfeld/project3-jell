@@ -15,7 +15,13 @@ const MasterModal = (props) => {
             currentModal = <Challenge />
             break;
         case 'MakePost':
-            currentModal = <MakePost />
+            currentModal = <MakePost 
+                                value1={props.value}
+                                value2={props.value} 
+                                value3={props.value}
+                                handleChange={props.handleChange}
+                                post={props.post}
+                            />
             break;
         default:
             currentModal = 'hey';

@@ -6,20 +6,44 @@ const MakePost = props => (
     <div className="postBackground">
         <h2 style={{color: 'black'}}>Make A Post</h2>
         <div>
-            <input class="form-control" type="text" placeholder="Default input"/>
+            <input 
+                class="form-control" 
+                type="text" 
+                placeholder="Whats Your Debate Title?"
+                name="debateTitle"
+                value1={props.value}
+                onChange={props.handleChange}
+
+            />
         </div>
         <div>
             <div class="input-group">
-                <textarea class="form-control" aria-label="With textarea"></textarea>
+                <textarea 
+                    class="form-control" 
+                    aria-label="With textarea"
+                    name="debateContext"
+                    value2={props.value}
+                    onChange={props.handleChange}
+                    >
+                </textarea>
             </div>
+            <div>
+            <input 
+                class="form-control" 
+                type="text" 
+                placeholder="Whats Your Debate Title?"
+                name="debateTags"
+                value3={props.value}
+                onChange={props.handleChange}
+
+            />
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-            <label class="form-check-label" for="defaultCheck1">
-                Default checkbox
-            </label>
+        
+        <button onClick={props.post}>POST</button>
         </div>
     </div>
+
+    
 );
 
 export default MakePost;
