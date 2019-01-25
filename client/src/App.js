@@ -9,6 +9,12 @@ import BackDrop from './components/Backdrop/backdrop'
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
+import socketIOClient from 'socket.io-client'
+import Chat from './components/Chat'
+var express = require('express');
+var socket = require('socket.io');
+var app = express();
+
 
 
 const DisplayLinks = props => {
@@ -267,4 +273,29 @@ class App extends Component {
 	}
 }
 
+// Making the SOCKET App component
+
+server = app.listen(8080, function(){
+    console.log('server is running on port 8080')
+});
+
+io = socket(server);
+
+io.on('connection', (socket) => {
+    console.log(socket.id);
+
+    socket.on('SEND_MESSAGE', function(data){
+        io.emit('RECEIVE_MESSAGE', data);
+    })
+});
+
+class App extends Component {
+	render() {
+		return (
+			<div>
+				<Chat/>
+			</div>
+		);
+	}
+}
 export default App
