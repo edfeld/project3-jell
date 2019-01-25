@@ -49,9 +49,12 @@ module.exports = function (sequelize, DataTypes) {
 		},
 
 		email: {
-			type: DataTypes.EMAIL,
-			notNull: false
-		}
+            type: DataTypes.STRING,
+            notNull: false,
+            validate: {
+                isEmail: true
+            }
+        }
 
 	});
   
