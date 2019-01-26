@@ -24,7 +24,6 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: ""
-			
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -61,7 +60,7 @@ class App extends Component {
 				posts: response.data
 		   })
 		})
-		
+
 	}
 
 	_logout(event) {
@@ -96,13 +95,11 @@ class App extends Component {
 			})
 	}
 
-
 	handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-
 
 	searchDb = (e) => {
 		e.preventDefault();
@@ -115,15 +112,12 @@ class App extends Component {
 			})
 			.then(response => {
 				console.log('this is the response: ', response.data);
-				
-			
 			this.setState({
 				searchBar: "",
 				posts: response.data
 		   })
 		})
 	}
-
 
 	drawerToggle = () => {
 		this.setState((prevState) => {
@@ -181,6 +175,46 @@ class App extends Component {
 
 	}
 
+	upvote = (key) => {
+		console.log('key click');
+		for(var i = 0; i < this.state.posts.length; i++) {
+			if(this.state.posts[i].id === key){
+				console.log(this.state.posts[i].upVotes);
+				const plusOne = this.state.posts[i].upVotes + 1;
+				console.log(this.state.posts[i].upVotes);
+			axios
+				.put('/api/upvote', {
+					post: this.state.posts[i].id,
+					upvotes: plusOne
+				})
+				.then(response => {
+					this.componentDidMount();
+				})
+			}
+		}
+		
+	}
+
+	downvote = (key) => {
+		console.log('key click');
+		for(var i = 0; i < this.state.posts.length; i++) {
+			if(this.state.posts[i].id === key){
+				console.log(this.state.posts[i].downVotes);
+				const minusOne = this.state.posts[i].downVotes + 1;
+				console.log(this.state.posts[i].downVotes);
+			axios
+				.put('/api/downvote', {
+					post: this.state.posts[i].id,
+					downvotes: minusOne
+				})
+				.then(response => {
+					this.componentDidMount();
+				})
+			}
+		}
+		
+	}
+
 	
 	
 
@@ -224,6 +258,8 @@ class App extends Component {
 								_logout={this._logout} 
 								loggedIn={this.state.loggedIn} 
 								posts={this.state.posts}
+								upvote={this.upvote}
+								downvote={this.downvote}
 							/>
 						</div>
 					} 

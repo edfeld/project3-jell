@@ -13,6 +13,8 @@ const Home = props => {
               {props.posts.map(posts => (
                     <Card 
                     data={posts}
+                    upvote={props.upvote}
+                    downvote={props.downvote}
                     />
               ))}
 
@@ -32,6 +34,8 @@ const Home = props => {
               {props.posts.map(posts => (
                     <Card 
                     data={posts}
+                    upvote={props.upvote}
+                    downvote={props.downvote}
                     />
               ))}
 

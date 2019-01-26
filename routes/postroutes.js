@@ -25,7 +25,7 @@ app.post('/api/commentRoute', (req, res) => {
                   'content': "comment",
                   'isRebuttal': true,
                   'userId': 1,
-                  'postId': 3
+                  'postId': 5
       }
       db.comments.create(newComment).then(function(comment) {
         return res.json(comment);
@@ -35,28 +35,28 @@ console.log("findOne Error: ", err);
 })
 
 
-app.post("/api/upvote/:id", function(req, res) {
-  const postId = req.params.id
+app.put("/api/upvote", function(req, res) {
+  const {post, upvotes} = req.body;
   db.posts.update({
-    upVotes: 1,
+    upVotes: upvotes,
   }, {
     where: {
-      id: postId
+      id: post
     }
   })
     .then(function(result) {
-      console.log("upVoteAdded ", req.body);
-      res.json(result);
+      console.log("upVoteAdded ", result);
+      res.json(req.body);
   });
 });
 
-app.post("/api/downvote/:id", function(req, res) {
-  const postId = req.params.id
+app.put("/api/downvote", function(req, res) {
+  const {post, downvotes} = req.body;
   db.posts.update({
-    downVotes: 1,
+    downVotes: downvotes
   }, {
     where: {
-      id: postId
+      id: post
     }
   })
     .then(function(result) {
