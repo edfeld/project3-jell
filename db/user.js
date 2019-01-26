@@ -49,13 +49,12 @@ module.exports = function (sequelize, DataTypes) {
 		},
 
 		email: {
-            type: DataTypes.STRING,
-            notNull: false,
-            validate: {
-                isEmail: true
-            }
-        }
-
+			type: DataTypes.STRING,
+			notNull: false,
+			validate: {
+				isEmail: true
+			}
+		}
 	});
   
 	users.associate = function (models) {

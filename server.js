@@ -94,7 +94,7 @@ app.get(
 	},
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	(req, res) => {
-		console.log("server.js.  Are we there yet?");
+		console.log("server.js.  Redirect to Home");
 		res.redirect('/')
 	}
 )
