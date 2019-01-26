@@ -9,6 +9,12 @@ import BackDrop from './components/Backdrop/backdrop'
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
+import socketIOClient from 'socket.io-client'
+import Chat from './components/Chat/Chat'
+var express = require('express');
+var socket = require('socket.io');
+var app = express();
+
 
 class App extends Component {
 	constructor() {
@@ -197,6 +203,11 @@ class App extends Component {
 				/> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
+				{/* Adding Chat box */}
+					<div>
+						<Chat/>
+					</div>
+		
 				<Route 
 					exact 
 					path="/" 
@@ -254,4 +265,34 @@ class App extends Component {
 	}
 }
 
-export default App
+// Making the SOCKET App component
+// class chat extends Component{
+// 	constructor() {
+// 		super()
+// 	}
+// }
+
+// render() {
+// 	return (
+// 		<div>
+// 			<p>Testing 100002</p>
+// 		</div>
+// 	)
+// }
+
+
+// server = app.listen(8080, function(){
+//     console.log('server is running on port 8080')
+// });
+
+// io = socket(server);
+
+// io.on('connection', (socket) => {
+//     console.log(socket.id);
+
+//     socket.on('SEND_MESSAGE', function(data){
+//         io.emit('RECEIVE_MESSAGE', data);
+//     })
+// });
+
+export default App;
