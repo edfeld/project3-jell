@@ -10,7 +10,7 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import socketIOClient from 'socket.io-client'
-import Chat from './components/Chat'
+import Chat from './components/Chat/Chat'
 var express = require('express');
 var socket = require('socket.io');
 var app = express();
@@ -214,6 +214,11 @@ class App extends Component {
 				/> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
+				{/* Adding Chat box */}
+					<div>
+						<Chat/>
+					</div>
+		
 				<Route 
 					exact 
 					path="/" 
@@ -274,28 +279,33 @@ class App extends Component {
 }
 
 // Making the SOCKET App component
+// class chat extends Component{
+// 	constructor() {
+// 		super()
+// 	}
+// }
 
-server = app.listen(8080, function(){
-    console.log('server is running on port 8080')
-});
+// render() {
+// 	return (
+// 		<div>
+// 			<p>Testing 100002</p>
+// 		</div>
+// 	)
+// }
 
-io = socket(server);
 
-io.on('connection', (socket) => {
-    console.log(socket.id);
+// server = app.listen(8080, function(){
+//     console.log('server is running on port 8080')
+// });
 
-    socket.on('SEND_MESSAGE', function(data){
-        io.emit('RECEIVE_MESSAGE', data);
-    })
-});
+// io = socket(server);
 
-class App extends Component {
-	render() {
-		return (
-			<div>
-				<Chat/>
-			</div>
-		);
-	}
-}
-export default App
+// io.on('connection', (socket) => {
+//     console.log(socket.id);
+
+//     socket.on('SEND_MESSAGE', function(data){
+//         io.emit('RECEIVE_MESSAGE', data);
+//     })
+// });
+
+export default App;
