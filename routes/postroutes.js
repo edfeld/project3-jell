@@ -25,12 +25,43 @@ app.post('/api/commentRoute', (req, res) => {
                   'content': "comment",
                   'isRebuttal': true,
                   'userId': 1,
-                  'postId': 1
+                  'postId': 5
       }
       db.comments.create(newComment).then(function(comment) {
         return res.json(comment);
       }).catch(function (err) {
-      console.log("findOne Error: ", err);
+        console.log("findOne Error: ", err);
       });
+})
+
+
+app.put("/api/upvote", function(req, res) {
+  const {post, upvotes} = req.body;
+  db.posts.update({
+    upVotes: upvotes,
+  }, {
+    where: {
+      id: post
+    }
+  })
+    .then(function(result) {
+      console.log("upVoteAdded ", result);
+      res.json(req.body);
   });
-};
+});
+
+app.put("/api/downvote", function(req, res) {
+  const {post, downvotes} = req.body;
+  db.posts.update({
+    downVotes: downvotes
+  }, {
+    where: {
+      id: post
+    }
+  })
+    .then(function(result) {
+      console.log("DownVoteAdded ", req.body);
+      res.json(result);
+  });
+});
+}

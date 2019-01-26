@@ -9,6 +9,10 @@ import BackDrop from './components/Backdrop/backdrop'
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
+import TitleBar from './components/titleBar'
+import socketIOClient from 'socket.io-client'
+import Chat from './components/Chat/Chat'
+
 
 class App extends Component {
 	constructor() {
@@ -24,7 +28,6 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: ""
-			
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -61,10 +64,10 @@ class App extends Component {
 				posts: response.data
 		   })
 		})
-		
+
 	}
 
-	_logout(event) {
+	_logout = (event) => {
 		event.preventDefault()
 		console.log('logging out')
 		axios.post('/auth/logout').then(response => {
@@ -78,7 +81,7 @@ class App extends Component {
 		})
 	}
 
-	_login(username, password) {
+	_login (username, password) {
 		axios
 			.post('/auth/login', {
 				username,
@@ -96,13 +99,11 @@ class App extends Component {
 			})
 	}
 
-
 	handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-
 
 	searchDb = (e) => {
 		e.preventDefault();
@@ -115,15 +116,12 @@ class App extends Component {
 			})
 			.then(response => {
 				console.log('this is the response: ', response.data);
-				
-			
 			this.setState({
 				searchBar: "",
 				posts: response.data
 		   })
 		})
 	}
-
 
 	drawerToggle = () => {
 		this.setState((prevState) => {
@@ -181,6 +179,46 @@ class App extends Component {
 
 	}
 
+	upvote = (key) => {
+		console.log('key click');
+		for(var i = 0; i < this.state.posts.length; i++) {
+			if(this.state.posts[i].id === key){
+				console.log(this.state.posts[i].upVotes);
+				const plusOne = this.state.posts[i].upVotes + 1;
+				console.log(this.state.posts[i].upVotes);
+			axios
+				.put('/api/upvote', {
+					post: this.state.posts[i].id,
+					upvotes: plusOne
+				})
+				.then(response => {
+					this.componentDidMount();
+				})
+			}
+		}
+		
+	}
+
+	downvote = (key) => {
+		console.log('key click');
+		for(var i = 0; i < this.state.posts.length; i++) {
+			if(this.state.posts[i].id === key){
+				console.log(this.state.posts[i].downVotes);
+				const minusOne = this.state.posts[i].downVotes + 1;
+				console.log(this.state.posts[i].downVotes);
+			axios
+				.put('/api/downvote', {
+					post: this.state.posts[i].id,
+					downvotes: minusOne
+				})
+				.then(response => {
+					this.componentDidMount();
+				})
+			}
+		}
+		
+	}
+
 	
 	
 
@@ -197,6 +235,11 @@ class App extends Component {
 				/> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
+				{/* Adding Chat box */}
+					<div>
+						<Chat/>
+					</div>
+		
 				<Route 
 					exact 
 					path="/" 
@@ -224,6 +267,8 @@ class App extends Component {
 								_logout={this._logout} 
 								loggedIn={this.state.loggedIn} 
 								posts={this.state.posts}
+								upvote={this.upvote}
+								downvote={this.downvote}
 							/>
 						</div>
 					} 
@@ -232,10 +277,28 @@ class App extends Component {
 					exact
 					path="/login"
 					render={() =>
+						<div className='container'>
+						<MasterModal 
+								currentModal={this.state.currentModal}
+								changeModal={this.changeModal}
+						/>
+						<TitleBar />
+						<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+						/>
 						<LoginForm
+							show={this.state.sideOpen} 
+							toggleHandle={this.drawerToggle}
 							_login={this._login}
 							_googleSignin={this._googleSignin}
-						/>}
+						/>
+						</div>
+					}
 				/>
 				<Route 
 					exact 
@@ -254,4 +317,34 @@ class App extends Component {
 	}
 }
 
-export default App
+// Making the SOCKET App component
+// class chat extends Component{
+// 	constructor() {
+// 		super()
+// 	}
+// }
+
+// render() {
+// 	return (
+// 		<div>
+// 			<p>Testing 100002</p>
+// 		</div>
+// 	)
+// }
+
+
+// server = app.listen(8080, function(){
+//     console.log('server is running on port 8080')
+// });
+
+// io = socket(server);
+
+// io.on('connection', (socket) => {
+//     console.log(socket.id);
+
+//     socket.on('SEND_MESSAGE', function(data){
+//         io.emit('RECEIVE_MESSAGE', data);
+//     })
+// });
+
+export default App;
