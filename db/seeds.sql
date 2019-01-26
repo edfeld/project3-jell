@@ -1,5 +1,4 @@
 
-
 use project3_db;
 
 -- drop table comments IF EXISTS;

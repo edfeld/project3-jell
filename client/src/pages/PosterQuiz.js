@@ -4,9 +4,7 @@ import TitleBar from '../components/titleBar'
 // import "./PosterQuiz.css"
 import QuizCard from '../components/QuizCard/QuizCard';
 
-
 // TODO - add proptypes
-
 const PosterQuiz = props => {
 	// if (props.user) {
 		return (

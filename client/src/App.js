@@ -10,50 +10,12 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
+import socketIOClient from 'socket.io-client'
+import Chat from './components/Chat/Chat'
+var express = require('express');
+var socket = require('socket.io');
+var app = express();
 
-
-const DisplayLinks = props => {
-	if (props.loggedIn) {
-		return (
-			<nav className="navbar">
-				<ul className="nav">
-					<li className="nav-item">
-						<Link to="/" className="nav-link">
-							Home
-						</Link>
-					</li>
-					<li>
-						<Link to="#" className="nav-link" onClick={props._logout}>
-							Logout
-						</Link>
-					</li>
-				</ul>
-			</nav>
-		)
-	} else {
-		return (
-			<nav className="navbar">
-				<ul className="nav">
-					<li className="nav-item">
-						<Link to="/" className="nav-link">
-							Home
-						</Link>
-					</li>
-					<li className="nav-item">
-						<Link to="/login" className="nav-link">
-							login
-						</Link>
-					</li>
-					<li className="nav-item">
-						<Link to="/signup" className="nav-link">
-							sign up
-						</Link>
-					</li>
-				</ul>
-			</nav>
-		)
-	}
-}
 
 class App extends Component {
 	constructor() {
@@ -65,7 +27,11 @@ class App extends Component {
 			ArrPosterQuiz,
 			currentModal: "",
 			searchBar: "",
-			posts: []
+			posts: [],
+			debateTitle: "",
+			debateContext: "",
+			debateTags: ""
+			
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -193,6 +159,35 @@ class App extends Component {
 		}
 	}
 
+	postRoute = (e) => {
+		e.preventDefault();
+		const post = {
+		 debateTitle: this.state.debateTitle,
+		 debateContext: this.state.debateContext,
+		 debateTags: this.state.debateTags
+		}
+		axios
+			.post('/api/postRoute', {
+				title: post.debateTitle,
+				context: post.debateContext,
+				tags: post.debateTags
+				
+			})
+			.then(response => {
+				console.log('this is the response: ', response.data);
+				
+			
+			this.setState({
+				debateTitle: "",
+				debateContext: "",
+				debateTags: "",
+				currentModal: ""
+				
+		   })
+		})
+
+	}
+
 	
 	
 
@@ -209,6 +204,11 @@ class App extends Component {
 				/> */}
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
+				{/* Adding Chat box */}
+					<div>
+						<Chat/>
+					</div>
+		
 				<Route 
 					exact 
 					path="/" 
@@ -218,6 +218,9 @@ class App extends Component {
 							<MasterModal 
 								currentModal={this.state.currentModal}
 								changeModal={this.changeModal}
+								value={this.state.debateTitle && this.state.debateContext && this.debateTags}
+								handleChange={this.handleChange}
+								post={this.postRoute}
 							/>
 				
 							<SideDrawer 
@@ -266,11 +269,6 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/signup" 
-					component={SignupForm} 
-				/>
-				<Route 
-					exact 
 					path="/posterquiz" 
 					render={() => 
 						<div>
@@ -286,4 +284,34 @@ class App extends Component {
 	}
 }
 
-export default App
+// Making the SOCKET App component
+// class chat extends Component{
+// 	constructor() {
+// 		super()
+// 	}
+// }
+
+// render() {
+// 	return (
+// 		<div>
+// 			<p>Testing 100002</p>
+// 		</div>
+// 	)
+// }
+
+
+// server = app.listen(8080, function(){
+//     console.log('server is running on port 8080')
+// });
+
+// io = socket(server);
+
+// io.on('connection', (socket) => {
+//     console.log(socket.id);
+
+//     socket.on('SEND_MESSAGE', function(data){
+//         io.emit('RECEIVE_MESSAGE', data);
+//     })
+// });
+
+export default App;

@@ -17,7 +17,8 @@ const SideDrawer = props => {
         <ul>
             <input 
                 className="form-control search" 
-                type="text" placeholder="Search For A Debate" 
+                type="text" 
+                placeholder="Search For A Debate" 
                 name="searchBar" 
                 value={props.value} 
                 onChange={props.handleChange}
@@ -34,7 +35,6 @@ const SideDrawer = props => {
            
             <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
      
-            <li><Link to="/" className="nav-link">Create A Post</Link></li>
             {/* Ed adding a link for logout -- testing routes */}
             <li><a href="/login" className='nav-link'>Login</a></li>
             {/* <li><Link to="/login" className="nav-link">Login </Link></li> */}

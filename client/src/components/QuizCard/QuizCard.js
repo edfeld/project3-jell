@@ -2,7 +2,7 @@ import React from 'react';
 import "./QuizCard.css";
 
 const QuizCard = props => (
-    <div className="quizcard">
+    <div className="card quizcard">
         <div className="card-header quizcard-header">
         {props.question}
         </div>
