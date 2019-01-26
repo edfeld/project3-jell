@@ -1,13 +1,14 @@
 const db = require("../db");
 
 module.exports = function(app) {
-    app.post("/api/search", function(req, res) {
+    app.get("/api/search", function(req, res) {
         console.log(req.body.sent, "this is req.body")
         db.posts
             .findAll({
                 where: {
                     tags: req.body.sent
                 }
+                
             })
             .then(function(searchResults){
                 console.log(searchResults);
@@ -18,7 +19,9 @@ module.exports = function(app) {
 
     //gets all of the posts
     app.get("/api/search/all", function(req, res) {
-        db.posts.findAll().then(function(result) {
+        db.posts.findAll(
+            // include: [{model: db.comment, as: 'comments'}]
+        ).then(function(result) {
             res.json(result);
         });
     });
@@ -63,4 +66,18 @@ module.exports = function(app) {
             });
         });
     })
+
+
+    //gets n posts with an offset of j support for pagination orders by upvotes
+    app.get("/api/top-posts/:n/:j", function(req, res) {
+        db.posts.findAll({
+            limit: req.params.n, 
+            offset: req.params.j,
+            order:  sequelize.fn('max', sequelize.col('upVotes'))
+        }).then(function(result){
+            res.json(result);
+        });
+    });
+
+    
 }

@@ -1,11 +1,10 @@
 import React from 'react';
+import SignupForm from '../SignupForm'
+import './signup.css'
 
 
 const SignUp = props => (
-    
-    <div>
-        this is my signup modal
-    </div>
+    <SignupForm />
 );
 
 export default SignUp;
