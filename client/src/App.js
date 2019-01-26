@@ -236,9 +236,9 @@ class App extends Component {
 				{/* LINKS to our different 'pages' */}
 				{/*  ROUTES */}
 				{/* Adding Chat box */}
-					<div>
+					{/* <div>
 						<Chat/>
-					</div>
+					</div> */}
 		
 				<Route 
 					exact 
