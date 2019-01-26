@@ -11,9 +11,7 @@ import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import socketIOClient from 'socket.io-client'
 import Chat from './components/Chat/Chat'
-var express = require('express');
-var socket = require('socket.io');
-var app = express();
+// var socket = require('socket.io');
 
 
 class App extends Component {

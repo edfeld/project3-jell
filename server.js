@@ -14,38 +14,10 @@ const passport = require('./passport')
 const app = express()
 const PORT = process.env.PORT || 3001
 
-//SOCKET SERVER
-
 // const express = require('express')
-const http = require('http')
 const socketIO = require('socket.io')
 
-// our localhost port
-const port1 = 4001
-
 // const app = express()
-
-// our server instance
-const server = http.createServer(app)
-
-// This creates our socket using the instance of the server
-const io = socketIO(server)
-
-// This is what the socket.io syntax is like
-io.on('connection', socket => {
-	console.log('New client connected')
-	
-	socket.on('SEND_MESSAGE', function(data){
-		io.emit('RECEIVE_MESSAGE', data);
-	})
-	
-	// disconnect is fired when a client leaves the server
-	socket.on('disconnect', () => {
-	  console.log('user disconnected')
-	})
-  })
-
-server.listen(port1, () => console.log(`Listening on port ${port1}`))
 
 // ===== Middleware ====
 app.use(morgan('dev'))
@@ -54,6 +26,7 @@ app.use(
 		extended: false
 	})
 )
+
 app.use(bodyParser.json())
 app.use(
 	session({
@@ -126,15 +99,32 @@ const syncOptions = { force: false };
 // ==== Starting Server ======
 
 
-db.sequelize.sync(syncOptions).then(function() {
-	console.log('Nice! Database looks fine')
-}).catch(function (err) {
-    console.log(err, "Something went wrong with the Database Update!")
-});
-
-app.listen(PORT, () => {
+const server = db.sequelize.sync(syncOptions).then(function() {
+	app.listen(PORT, () => {
 		console.log(`App listening on PORT: ${PORT}`)
 	//   console.log(
 	// 	"==> 🌎  App Listening on port 3000. Visit http://localhost:3000/ in your browser.",
 	//   );
-})
+	})
+}).catch(function (err) {
+    console.log(err, "Something went wrong with the Database Update!")
+});
+
+// This creates our socket using the instance of the server
+const io = socketIO(server)
+
+// server.listen(port1, () => console.log(`Listening on port ${port1}`))
+
+// This is what the socket.io syntax is like
+io.on('connection', socket => {
+	console.log('New client connected')
+	
+	socket.on('SEND_MESSAGE', function(data){
+		io.emit('RECEIVE_MESSAGE', data);
+	})
+	
+	// disconnect is fired when a client leaves the server
+	socket.on('disconnect', () => {
+	  console.log('user disconnected')
+	})
+  });
