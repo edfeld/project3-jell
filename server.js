@@ -12,6 +12,7 @@ const morgan = require('morgan')  // Morgan is HTTP request logger middleware fo
 const session = require('express-session')
 const passport = require('./passport')
 const app = express()
+var cors = require('cors');
 const PORT = process.env.PORT || 3001
 
 
@@ -40,10 +41,18 @@ app.use(
 )
 
 app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Origin", "http://localhost:3001");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header('Access-Control-Allow-Credentials: true')
 	next();
   });
+
+// CORS unblock
+app.use(cors({
+	credentials: true,
+	origin: ['http://localhost:3001/socket.io/?EIO=3&transport=polling&t=*'], // add in production link here after deployment: 'https://radiant-atoll-34503.herokuapp.com/'],
+	Vary: Origin
+}));
 
 // ===== Passport ====
 app.use(passport.initialize())
@@ -114,6 +123,7 @@ const server = db.sequelize.sync(syncOptions).then(function() {
 
 // This creates our socket using the instance of the server
 const io = socketIO(server)
+io.set('origins', 'http://localhost:3000');
 
 // server.listen(port1, () => console.log(`Listening on port ${port1}`))
 
