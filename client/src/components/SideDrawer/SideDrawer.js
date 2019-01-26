@@ -36,9 +36,10 @@ const SideDrawer = props => {
             <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
      
             {/* Ed adding a link for logout -- testing routes */}
-            <li><a onClick={() =>{props.changeModal('SignUp'); props.toggleHandle()}}>Signup</a></li>
-            <li><Link to="/login" >Login </Link></li>
-            <li><Link to="/posterquiz" >Poster Quiz</Link></li>
+            <li><a href="/login" className='nav-link'>Login</a></li>
+            {/* <li><Link to="/login" className="nav-link">Login </Link></li> */}
+            <li><Link to="/signup" className="nav-link">Signup</Link></li>
+            <li><Link to="/posterquiz" className="nav-link" >Poster Quiz</Link></li>
         </ul>
     </nav>
    )

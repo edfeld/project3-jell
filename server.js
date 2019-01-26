@@ -14,6 +14,13 @@ const passport = require('./passport')
 const app = express()
 const PORT = process.env.PORT || 3001
 
+
+// const express = require('express')
+const socketIO = require('socket.io')
+
+// const app = express()
+
+
 // ===== Middleware ====
 app.use(morgan('dev'))
 app.use(
@@ -21,6 +28,7 @@ app.use(
 		extended: false
 	})
 )
+
 app.use(bodyParser.json())
 app.use(
 	session({
@@ -61,7 +69,7 @@ app.get(
 	},
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	(req, res) => {
-		console.log("server.js.  Are we there yet?");
+		console.log("server.js.  Redirect to Home");
 		res.redirect('/')
 	}
 )
@@ -93,15 +101,32 @@ const syncOptions = { force: false };
 // ==== Starting Server ======
 
 
-db.sequelize.sync(syncOptions).then(function() {
-	console.log('Nice! Database looks fine')
-}).catch(function (err) {
-    console.log(err, "Something went wrong with the Database Update!")
-});
-
-app.listen(PORT, () => {
+const server = db.sequelize.sync(syncOptions).then(function() {
+	app.listen(PORT, () => {
 		console.log(`App listening on PORT: ${PORT}`)
 	//   console.log(
 	// 	"==> 🌎  App Listening on port 3000. Visit http://localhost:3000/ in your browser.",
 	//   );
-})
+	})
+}).catch(function (err) {
+    console.log(err, "Something went wrong with the Database Update!")
+});
+
+// This creates our socket using the instance of the server
+const io = socketIO(server)
+
+// server.listen(port1, () => console.log(`Listening on port ${port1}`))
+
+// This is what the socket.io syntax is like
+io.on('connection', socket => {
+	console.log('New client connected')
+	
+	socket.on('SEND_MESSAGE', function(data){
+		io.emit('RECEIVE_MESSAGE', data);
+	})
+	
+	// disconnect is fired when a client leaves the server
+	socket.on('disconnect', () => {
+	  console.log('user disconnected')
+	})
+  });
