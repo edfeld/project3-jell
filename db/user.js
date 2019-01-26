@@ -56,16 +56,18 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
 
+	}, 
+	{
+		deletedAt: 'destroyTime',
+		paranoid: true
 	});
   
 	users.associate = function (models) {
 	  // We're saying that a login should belong to an user
 	  // A login can't be created without an user due to the foreign key constraint
-	  users.hasMany(models.posts, {
-			//do stuff
-		});
+	  users.hasMany(models.posts, {});
 		
-		users.hasMany(models.comments, {});
+	  users.hasMany(models.comments, {});
 	};
 	
 	
