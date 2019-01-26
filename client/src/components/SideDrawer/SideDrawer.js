@@ -36,9 +36,10 @@ const SideDrawer = props => {
      
             <li><Link to="/" className="nav-link">Create A Post</Link></li>
             {/* Ed adding a link for logout -- testing routes */}
-            <li><Link to="/login" className="nav-link">Login </Link></li>
+            <li><a href="/login" className='nav-link'>Login</a></li>
+            {/* <li><Link to="/login" className="nav-link">Login </Link></li> */}
             <li><Link to="/signup" className="nav-link">Signup</Link></li>
-            <li><Link to="/posterquiz" className="nav-link">Poster Quiz</Link></li>
+            <li><Link to="/posterquiz" className="nav-link" >Poster Quiz</Link></li>
         </ul>
     </nav>
    )

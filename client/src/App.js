@@ -9,6 +9,7 @@ import BackDrop from './components/Backdrop/backdrop'
 import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
+import TitleBar from './components/titleBar'
 
 
 const DisplayLinks = props => {
@@ -104,7 +105,7 @@ class App extends Component {
 		
 	}
 
-	_logout(event) {
+	_logout = (event) => {
 		event.preventDefault()
 		console.log('logging out')
 		axios.post('/auth/logout').then(response => {
@@ -118,7 +119,7 @@ class App extends Component {
 		})
 	}
 
-	_login(username, password) {
+	_login (username, password) {
 		axios
 			.post('/auth/login', {
 				username,
@@ -240,10 +241,28 @@ class App extends Component {
 					exact
 					path="/login"
 					render={() =>
+						<div className='container'>
+						<MasterModal 
+								currentModal={this.state.currentModal}
+								changeModal={this.changeModal}
+						/>
+						<TitleBar />
+						<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+						/>
 						<LoginForm
+							show={this.state.sideOpen} 
+							toggleHandle={this.drawerToggle}
 							_login={this._login}
 							_googleSignin={this._googleSignin}
-						/>}
+						/>
+						</div>
+					}
 				/>
 				<Route 
 					exact 

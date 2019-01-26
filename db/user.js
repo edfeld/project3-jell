@@ -45,6 +45,14 @@ module.exports = function (sequelize, DataTypes) {
 		googleId: {
 				type: DataTypes.STRING,
 				notNull: false
+		},
+
+		email: {
+			type: DataTypes.STRING,
+			notNull: false,
+			validate: {
+				isEmail: true
+			}
 		}
 	});
   

@@ -2,16 +2,23 @@ import React from 'react';
 import "./QuizCard.css";
 
 const QuizCard = props => (
-    <div className="card quizcard">
+    <div className="quizcard">
         <div className="card-header quizcard-header">
         {props.question}
         </div>
-        <div className="card-body">
-        <blockquote className="blockquote mb-0">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer className="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-        </blockquote>
-        </div>
+        <ul key={props.id} className="card-body">
+            <ul className="list-choices">
+                {props.arrChoices.map(answer => (
+                    <li className='quiz-choice' key={answer.charAt(0)}>
+                        <input type="checkbox"  checked='' id={answer.charAt(0)}/><span>&nbsp;{answer}</span>
+                    </li>
+                    ))}
+            </ul>
+            {/* <blockquote className="blockquote mb-0">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <footer className="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+            </blockquote> */}
+        </ul>
     </div>
 );
 // const Card = props => (
