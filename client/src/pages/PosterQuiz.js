@@ -25,6 +25,7 @@ const PosterQuiz = props => {
                   </div> */}
                   {props.ArrPosterQuiz.map(quiz => (
                         < QuizCard 
+                              quizid={quiz.id}
                               question={quiz.questionText}
                               // question={props.ArrPosterQuiz.questionText}
                               arrChoices={quiz.arrChoices}
