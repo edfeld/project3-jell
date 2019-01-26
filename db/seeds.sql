@@ -1,4 +1,9 @@
+
 use project3_db;
+
+-- drop table comments IF EXISTS;
+-- drop table posts IF EXISTS;
+-- drop table users IF EXISTS;
 
 INSERT INTO users (username, userType, firstName, lastName, googleId, email)
 VALUES ("dardin-dale", "admin", "Logan", "Crecraft", "5c3bcfc11f47fc8c57a5e868", "dardinsouffle@gmail.com");

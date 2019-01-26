@@ -1,0 +1,27 @@
+/* LoginForm.css */
+
+.login-form {
+    font-family: 'Patua One', cursive;
+    width: 350px;
+    height: 250px;
+    margin: 0 auto 0 auto;
+    border: rgb(143, 143, 143) solid 3px;
+    /* margin: 1.5rem; */
+    color: #fff;
+    background-image: linear-gradient(to bottom right,
+    rgba(221, 109, 18, 0.856), rgba(0, 0, 0, 0.753));
+    border-radius: .25rem;
+    padding-top: 10px;
+}
+ .login-head {
+    margin-left: 15px;
+ }
+
+.Google-Login-Btn {
+    margin: 5px 0 0 85px;
+}
+
+.login-frm-elem {
+    margin: 5px 8px 15px 5px;;
+
+}
