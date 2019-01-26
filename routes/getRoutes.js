@@ -1,13 +1,14 @@
 const db = require("../db");
 
 module.exports = function(app) {
-    app.get("/api/search", function(req, res) {
+    app.post("/api/search", function(req, res) {
         console.log(req.body.sent, "this is req.body")
         db.posts
             .findAll({
                 where: {
                     tags: req.body.sent
-                }
+                },
+                include: [{model: db.comments, as: 'comments'}]
                 
             })
             .then(function(searchResults){
@@ -19,8 +20,10 @@ module.exports = function(app) {
 
     //gets all of the posts
     app.get("/api/search/all", function(req, res) {
-        db.posts.findAll(
-            // include: [{model: db.comment, as: 'comments'}]
+        // console.log("this is the passport user ", req.session.passport)
+        db.posts.findAll({
+            include: [{model: db.comments, as: 'comments'}]
+        }
         ).then(function(result) {
             res.json(result);
         });
