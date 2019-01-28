@@ -19,5 +19,9 @@
     "database": "project3_db_prod",
     "host": "localhost",
     "dialect": "mysql"
+  },
+  "real-production": {
+    "use_env_variable": "JAWSDB_URL",
+    "dialect": "mysql"
   }
 }
