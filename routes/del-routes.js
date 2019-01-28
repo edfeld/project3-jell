@@ -28,14 +28,6 @@ module.exports = function(app) {
     });
 
     //deletes comment
-<<<<<<< HEAD
-    app.delete("/api/delete/post/:id", function(req, res) {
-        db.comment.destroy()
-        .then(function(result) {
-            console.log("");
-        });
-    });
-=======
     app.delete("/api/delete/comment/:id", function(req, res) {
         db.comment.destroy(
             {
@@ -45,6 +37,5 @@ module.exports = function(app) {
             console.log("Comment Deleted: ", result);
         });
     })
->>>>>>> 5ad77a6fad1c5d0bf610a291db41341cd10327db
 
 };
