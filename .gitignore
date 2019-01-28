@@ -19,6 +19,9 @@
 .env.production.local
 package-lock.json
 /client/package-lock.json
+/client/build/asset-manifest.json
+/client/build/index.html
+/client/build/service-worker.js
 
 npm-debug.log*
 yarn-debug.log*
