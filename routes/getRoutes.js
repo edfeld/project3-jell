@@ -1,15 +1,16 @@
-const db = require("../db");
+const db = require("../models");
 
 module.exports = function(app) {
-    app.post("/api/search", function(req, res) {
+
+    //Searches for all posts with requested tags
+    app.get("/api/search", function(req, res) {
         console.log(req.body.sent, "this is req.body")
         db.posts
             .findAll({
                 where: {
                     tags: req.body.sent
                 },
-                include: [{model: db.comments, as: 'comments'}]
-                
+                include: [{model: db.comments, as: 'comments'}]    
             })
             .then(function(searchResults){
                 console.log(searchResults);
@@ -44,7 +45,7 @@ module.exports = function(app) {
         db.users.findOne(
             {
                 //need to adjust to exclude personal info
-                attributes: [],
+                attributes: ['username', 'userType', 'badges', 'createdAt'],
                 where: {id: req.params.id},
                 include: [{model: posts, as: 'posts'},
                           {model: comments, as: 'comments'}]
@@ -53,17 +54,26 @@ module.exports = function(app) {
             });
     });
 
-    //Get post and then get all associated comments
-    app.get("/api/post", function(req, res) {
-        console.log(req.body);
+    //Get post and then get all top level associated comments
+    app.get("/api/post/:id", function(req, res) {
         db.posts.findOne({
             where: {id: req.body.id},
             //only get certain user attributes for security
-            include: [{model: db.users, as: 'user', attributes: []}]
+            include: [{
+                model: users, as: 'user', 
+                attributes: ['username', 'userType', 'badges', 'createdAt']
+            }]
         }).then(function(result) {
             let post = result;
             db.comments.findAll({
-                where: {postId: 1}
+                where: {
+                          postId: req.params.id,
+                          isChild: false
+                       },
+                include: [{
+                    model: users, as: 'user', 
+                    attributes: ['username', 'userType', 'badges', 'createdAt']
+                }]
             }).then(function(result) {
                 let fin = {post: post, comments: result};
                 console.log(fin);
@@ -84,5 +94,24 @@ module.exports = function(app) {
         });
     });
 
-    
+    //gets the children specified for a comment
+    app.get("/api/comments/children/:children", function (req, res) {
+        let children = req.params.children.split(':');
+        children = children.map(id => parseInt(id));
+        db.comments.findAll(
+            {
+                where: {
+                    isChild: true,
+                    _id : {$in: children}
+                },
+                include: [{
+                    model: users, as: 'user', 
+                    attributes: ['username', 'userType', 'badges', 'createdAt']
+                }]
+            }).then(function(result) {
+                res.json(result);
+            })
+    });
+
+
 }

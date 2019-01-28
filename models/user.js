@@ -49,24 +49,25 @@ module.exports = function (sequelize, DataTypes) {
 		},
 
 		email: {
-			type: DataTypes.STRING,
-			notNull: false,
-			validate: {
-				isEmail: true
-			}
-		}
+            type: DataTypes.STRING,
+            notNull: false,
+            validate: {
+                isEmail: true
+            }
+        }
+
+	}, 
+	{
+		deletedAt: 'destroyTime',
+		paranoid: true
 	});
   
 	users.associate = function (models) {
 	  // We're saying that a login should belong to an user
 	  // A login can't be created without an user due to the foreign key constraint
-		users.hasMany(models.posts, {
-			//do stuff
-		});
+	  users.hasMany(models.posts, {});
 		
-		users.hasMany(models.comments, {
-			//do stuff
-		});
+	  users.hasMany(models.comments, {});
 	};
 	
 	
