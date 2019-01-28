@@ -1,6 +1,8 @@
 var db = require("../models");
 
 
+//TODO: add destroy mechanics so that the post deletes associated comments or blanks their contents
+
 module.exports = function(app) {
 
     //deletes user 
@@ -25,7 +27,7 @@ module.exports = function(app) {
         db.comment.destroy()
         .then(function(result) {
             console.log("");
-        })
-    })
+        });
+    });
 
 };
