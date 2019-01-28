@@ -1,10 +1,7 @@
-// Loading evnironmental variables here
 if (process.env.NODE_ENV !== 'production') {
 	console.log('loading dev environments')
-	require('dotenv').config()
 }
-require('dotenv').config()
-
+require('dotenv').config();
 const db = require("./models");  // [ERE] for MySQL
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -12,14 +9,32 @@ const morgan = require('morgan')  // Morgan is HTTP request logger middleware fo
 const session = require('express-session')
 const passport = require('./passport')
 const app = express()
+// var server = app.listen(3001);
+// var io = require('socket.io').listen(server);
+var cors = require('cors');
 const PORT = process.env.PORT || 3001
-
+const socketIO = require('socket.io')
 
 // const express = require('express')
-// const socketIO = require('socket.io')
+
+//cors unblocked
+app.use(cors());
+
 
 // const app = express()
 
+  //CORS unblock
+//   app.use(cors({
+// 	credentials: true,
+// 	origin: ['http://localhost:3001'] // add in production link here after deployment: 'https://radiant-atoll-34503.herokuapp.com/'],
+//   }));
+
+// Loading evnironmental variables here
+if (process.env.NODE_ENV !== 'production') {
+	console.log('loading dev environments')
+	require('dotenv').config()
+}
+require('dotenv').config()
 
 // ===== Middleware ====
 app.use(morgan('dev'))
@@ -42,15 +57,10 @@ app.use(
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header('Access-Control-Allow-Credentials: true')
 	next();
   });
 
-
-  //CORS unblock
-// app.use(cors({
-// 	credentials: true,
-// 	origin: ['http://localhost:3001'] // add in production link here after deployment: 'https://radiant-atoll-34503.herokuapp.com/'],
-//   }));
 
 
 // ===== Passport ====
@@ -122,11 +132,11 @@ const server = db.sequelize.sync(syncOptions).then(function() {
 });
 
 // This creates our socket using the instance of the server
-// const io = socketIO(server)
+const io = socketIO(server)
+io.set('origins', 'http://localhost:3000');
 
-// server.listen(port1, () => console.log(`Listening on port ${port1}`))
 
-// This is what the socket.io syntax is like
+// // This is what the socket.io syntax is like
 // io.on('connection', socket => {
 // 	console.log('New client connected')
 	
@@ -134,7 +144,7 @@ const server = db.sequelize.sync(syncOptions).then(function() {
 // 		io.emit('RECEIVE_MESSAGE', data);
 // 	})
 	
-// 	// disconnect is fired when a client leaves the server
+// // 	// disconnect is fired when a client leaves the server
 // 	socket.on('disconnect', () => {
 // 	  console.log('user disconnected')
 // 	})
