@@ -4,7 +4,7 @@ import "./Card.css";
 const Card = props => {
 const key = props.data.id; 
 return(
-<a href="#" key={key} className="wholeCard">
+<a key={key} onClick={() => props.fullpost(key)} className="wholeCard">
     <header className="card">
 {/* <div class="flex-container"> */}
 <div className="card-body">

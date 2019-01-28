@@ -54,17 +54,19 @@ module.exports = function(app) {
     });
 
     //Get post and then get all associated comments
-    app.get("/api/post/:id", function(req, res) {
+    app.get("/api/post", function(req, res) {
+        console.log(req.body);
         db.posts.findOne({
-            where: {id: req.params.id},
+            where: {id: req.body.id},
             //only get certain user attributes for security
-            include: [{model: users, as: 'user', attributes: []}]
+            include: [{model: db.users, as: 'user', attributes: []}]
         }).then(function(result) {
             let post = result;
             db.comments.findAll({
-                where: {post_id: post._id}
+                where: {postId: 1}
             }).then(function(result) {
                 let fin = {post: post, comments: result};
+                console.log(fin);
                 res.json(fin);
             });
         });

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
 import LoginForm from './components/Login/LoginForm'
-import SignupForm from './components/SignupForm'
+// import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
@@ -10,8 +10,10 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
-import socketIOClient from 'socket.io-client'
-import Chat from './components/Chat/Chat'
+import FullPost from './components/FullPost/FullPost'
+// import socketIOClient from 'socket.io-client'
+// import Chat from './components/Chat/Chat'
+// import FullPost from './pages/FullPost'
 
 
 class App extends Component {
@@ -27,7 +29,8 @@ class App extends Component {
 			posts: [],
 			debateTitle: "",
 			debateContext: "",
-			debateTags: ""
+			debateTags: "",
+			singlePost: []
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -180,19 +183,22 @@ class App extends Component {
 	}
 
 	upvote = (key) => {
-		console.log('key click');
 		for(var i = 0; i < this.state.posts.length; i++) {
 			if(this.state.posts[i].id === key){
-				console.log(this.state.posts[i].upVotes);
 				const plusOne = this.state.posts[i].upVotes + 1;
-				console.log(this.state.posts[i].upVotes);
 			axios
 				.put('/api/upvote', {
 					post: this.state.posts[i].id,
 					upvotes: plusOne
 				})
 				.then(response => {
-					this.componentDidMount();
+					axios
+					.get('/api/search/all')
+					.then(response => {
+						this.setState({
+							posts: response.data
+						})
+					})
 				})
 			}
 		}
@@ -200,7 +206,6 @@ class App extends Component {
 	}
 
 	downvote = (key) => {
-		console.log('key click');
 		for(var i = 0; i < this.state.posts.length; i++) {
 			if(this.state.posts[i].id === key){
 				console.log(this.state.posts[i].downVotes);
@@ -212,12 +217,33 @@ class App extends Component {
 					downvotes: minusOne
 				})
 				.then(response => {
-					this.componentDidMount();
+					axios
+					.get('/api/search/all')
+					.then(response => {
+						this.setState({
+							posts: response.data
+						})
+					})
 				})
 			}
 		}
 		
 	}
+
+
+	fullpost = (key) => {
+	axios
+		.get('/api/post', {
+			id: key
+		})
+		.then(response => {
+			this.setState({
+				posts: response.data
+			})
+		})
+	}
+	
+	
 
 	
 	
@@ -269,6 +295,7 @@ class App extends Component {
 								posts={this.state.posts}
 								upvote={this.upvote}
 								downvote={this.downvote}
+								fullpost={this.fullpost}
 							/>
 						</div>
 					} 
@@ -306,11 +333,29 @@ class App extends Component {
 					render={() => 
 						<div>
 						<h3>Debate Poster Quiz</h3>
-						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
-						<PosterQuiz ArrPosterQuiz={this.state.ArrPosterQuiz} user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						<SideDrawer 
+							show={this.state.sideOpen} 
+							toggleHandle={this.drawerToggle} 
+							search={this.searchDb}
+						/>
+						<PosterQuiz 
+							ArrPosterQuiz={this.state.ArrPosterQuiz} 
+							user={this.state.user}  
+							_logout={this._logout} 
+							loggedIn={this.state.loggedIn} 
+						/>
 						</div>
 					} 
 				/>
+				<Route 
+					exact 
+					path="/fullpost"
+					render={() => 
+						<FullPost 
+							post={this.state.post} 
+						/>
+					}  
+					/>
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)
