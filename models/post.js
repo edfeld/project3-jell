@@ -53,6 +53,10 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
           }
         });
+
+        posts.hasMany(models.comments, {
+            onDelete: 'cascade'
+        });
     };
 
   return posts;  

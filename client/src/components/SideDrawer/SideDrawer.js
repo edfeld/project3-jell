@@ -11,18 +11,36 @@ const SideDrawer = props => {
     }
    return ( <nav className={drawerClass}>
             <h2 className="drawerHead">Elevate Debate</h2>
-        <ToggleButton click={props.toggleHandle}/>
+        <ToggleButton 
+            click={props.toggleHandle}
+            />
         <ul>
-            <input className="form-control search" type="text" placeholder="Search For A Debate"/>
-            <button type="button" class="btn btn-secondary searchBtn" onClick={props.search} style={{position: 'relative'}}>Search</button>
+            <input 
+                className="form-control search" 
+                type="text" 
+                placeholder="Search For A Debate" 
+                name="searchBar" 
+                value={props.value} 
+                onChange={props.handleChange}
+            />
+            <button 
+                type="button" 
+                class="btn btn-secondary searchBtn" 
+                onClick={props.search} 
+                style={{position: 'relative'}}
+            >Search</button>
             <li><a href="/">Home</a></li>
             <li><a href="/">Top Debates</a></li>
             <li><a href="/">Relevant Debates</a></li>
-            <li><Link to="/" className="nav-link">Create A Post</Link></li>
+           
+            <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
+            <li><a onClick={() =>{props.changeModal('Challenge'); props.toggleHandle()}}>Challenge</a></li>
+            <li><a onClick={() =>{props.changeModal('SignUp'); props.toggleHandle()}}>Sign up</a></li>
+     
             {/* Ed adding a link for logout -- testing routes */}
-            <li><Link to="/login" className="nav-link">Login </Link></li>
-            <li><Link to="/signup" className="nav-link">Signup</Link></li>
-            <li><Link to="/posterquiz" className="nav-link">Poster Quiz</Link></li>
+            <li><a href="/login" className='nav-link'>Login</a></li>
+            {/* <li><Link to="/login" className="nav-link">Login </Link></li> */}
+            <li><Link to="/posterquiz" className="nav-link" >Poster Quiz</Link></li>
         </ul>
     </nav>
    )
