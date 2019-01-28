@@ -4,11 +4,25 @@ import PostComments from './PostComments'
 
 
 
-const FullPost = props => (
+const FullPost = props => {
+   console.log('this is props at FullPost ', props.post)
+   if(props === {}){
+      return (<div/>)
+   }else{
+   return(
    <div>
-   <PostHeader post={props.post.post}/>
-   <PostComments post={props.post.comments}/>
+   <PostHeader post={props.post}/>
+   {/* {props.post.comments.map(comments => (
+                    <PostComments 
+                    data={comments}
+                    upvote={props.upvote}
+                    downvote={props.downvote}
+                    />
+              ))} */}
+  
    </div>
-);
+   )
+   }
+};
 
 export default FullPost;

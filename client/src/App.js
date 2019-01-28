@@ -30,7 +30,7 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
-			singlePost: []
+			singlePost: {}
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -229,19 +229,26 @@ class App extends Component {
 		
 	}
 
+	componentWillMount(){
+		this.fullpost();
+		
+	}
+	
+
 
 	fullpost = (key) => {
-	const params = key;
+	console.log('fullpost key: ', key)
+	const id = parseInt(key);
 	axios
-		.get('/api/post/1', {
-			id: params
-		})
+		.get('/api/post/' + id)
 		.then(response => {
 			this.setState({
 				singlePost: response.data
 			})
+			console.log('state after call ',this.state.singlePost)
 		})
 	}
+
 	
 	
 
@@ -350,7 +357,7 @@ class App extends Component {
 				<Route 
 					exact 
 					path="/fullpost"
-					render={() => 
+					render={() =>
 						<FullPost 
 							post={this.state.singlePost} 
 						/>
