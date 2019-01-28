@@ -6,8 +6,8 @@ import PostComments from './PostComments'
 
 const FullPost = props => (
    <div>
-   <PostHeader post={props.post}/>
-   <PostComments post={props.post}/>
+   <PostHeader post={props.post.post}/>
+   <PostComments post={props.post.comments}/>
    </div>
 );
 

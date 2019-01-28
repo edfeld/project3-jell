@@ -1,10 +1,12 @@
 import React from 'react';
 import "./Card.css";
+import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 
 const Card = props => {
 const key = props.data.id; 
 return(
-<a key={key} onClick={() => props.fullpost(key)} className="wholeCard">
+<NavLink to='/fullpost' key={key} onClick={() => props.fullpost(key)} className="wholeCard">
+
     <header className="card">
 {/* <div class="flex-container"> */}
 <div className="card-body">
@@ -19,7 +21,7 @@ return(
 {/* </div> */}
     </header>
    
-</a>
+</NavLink>
 )
 };
 

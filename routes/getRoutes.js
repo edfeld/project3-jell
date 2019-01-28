@@ -57,10 +57,10 @@ module.exports = function(app) {
     //Get post and then get all top level associated comments
     app.get("/api/post/:id", function(req, res) {
         db.posts.findOne({
-            where: {id: req.body.id},
+            where: {id: req.params.id},
             //only get certain user attributes for security
             include: [{
-                model: users, as: 'user', 
+                model: db.users, as: 'user', 
                 attributes: ['username', 'userType', 'badges', 'createdAt']
             }]
         }).then(function(result) {
@@ -71,12 +71,11 @@ module.exports = function(app) {
                           isChild: false
                        },
                 include: [{
-                    model: users, as: 'user', 
+                    model: db.users, as: 'user', 
                     attributes: ['username', 'userType', 'badges', 'createdAt']
                 }]
             }).then(function(result) {
                 let fin = {post: post, comments: result};
-                console.log(fin);
                 res.json(fin);
             });
         });

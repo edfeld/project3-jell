@@ -63,7 +63,6 @@ class App extends Component {
 			.then(response => {
 				console.log('this is the response: ', response.data);
 			this.setState({
-				searchBar: "",
 				posts: response.data
 		   })
 		})
@@ -232,13 +231,14 @@ class App extends Component {
 
 
 	fullpost = (key) => {
+	const params = key;
 	axios
-		.get('/api/post', {
-			id: key
+		.get('/api/post/1', {
+			id: params
 		})
 		.then(response => {
 			this.setState({
-				posts: response.data
+				singlePost: response.data
 			})
 		})
 	}
@@ -352,7 +352,7 @@ class App extends Component {
 					path="/fullpost"
 					render={() => 
 						<FullPost 
-							post={this.state.post} 
+							post={this.state.singlePost} 
 						/>
 					}  
 					/>
