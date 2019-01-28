@@ -34,6 +34,8 @@ const SideDrawer = props => {
             <li><a href="/">Relevant Debates</a></li>
            
             <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
+            <li><a onClick={() =>{props.changeModal('Challenge'); props.toggleHandle()}}>Challenge</a></li>
+            <li><a onClick={() =>{props.changeModal('SignUp'); props.toggleHandle()}}>Sign up</a></li>
      
             {/* Ed adding a link for logout -- testing routes */}
             {/* <li><a href="/login" className='nav-link'>Login</a></li> */}

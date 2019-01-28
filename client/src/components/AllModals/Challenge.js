@@ -1,11 +1,9 @@
 import React from 'react';
+import Chat from '../Chat/Chat'
 
 
 const Challenge = props => (
-    
-    <div>
-        this is my challenge modal
-    </div>
+    <Chat/>
 );
 
 export default Challenge;
