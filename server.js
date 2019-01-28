@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+	console.log('loading dev environments')
+}
 require('dotenv').config();
 const db = require("./models");  // [ERE] for MySQL
 const express = require('express')
