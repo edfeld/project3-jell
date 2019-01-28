@@ -45,6 +45,14 @@ app.use(function(req, res, next) {
 	next();
   });
 
+
+  //CORS unblock
+// app.use(cors({
+// 	credentials: true,
+// 	origin: ['http://localhost:3001'] // add in production link here after deployment: 'https://radiant-atoll-34503.herokuapp.com/'],
+//   }));
+
+
 // ===== Passport ====
 app.use(passport.initialize())
 app.use(passport.session()) // will call the deserializeUser
@@ -89,6 +97,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/auth', require('./auth'))
 require('./routes/getRoutes')(app)
 require('./routes/postroutes')(app)
+require('./routes/put-routes.js')(app)
 
 // ====== Error handler ====
 app.use(function(err, req, res, next) {

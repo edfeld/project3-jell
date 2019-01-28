@@ -3,7 +3,7 @@
     "username": "root",
     "password": "blackwalnuts",
     "database": "project3_db",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
@@ -15,9 +15,9 @@
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "project3_db",
-    "host": "127.0.0.1",
+    "password": "blackwalnuts",
+    "database": "project3_db_prod",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }

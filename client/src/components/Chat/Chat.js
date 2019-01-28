@@ -37,11 +37,11 @@ class Chat extends React.Component{
     render(){
         return (
             <div className="container">
-                <div className="row">
+                <div className="chatRow">
                     <div className="col-4">
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="card-title">Global Chat</div>
+                        <div className="chatCard">
+                            <div className="chatCard-body">
+                                <div className="ChatCard-title">Global Chat</div>
                                 <hr/>
                                 <div className="messages">
                                     {this.state.messages.map(message => {
