@@ -10,8 +10,8 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
-import socketIOClient from 'socket.io-client'
-import Chat from './components/Chat/Chat'
+// import socketIOClient from 'socket.io-client'
+// import Chat from './components/Chat/Chat'
 
 
 class App extends Component {
