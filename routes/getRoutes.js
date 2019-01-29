@@ -60,7 +60,7 @@ module.exports = function(app) {
             where: {id: req.params.id},
             //only get certain user attributes for security
             include: [{
-                model: users, as: 'user', 
+                model: db.users, as: 'user', 
                 attributes: ['username', 'userType', 'badges', 'createdAt']
             }]
         }).then(function(result) {
@@ -71,7 +71,7 @@ module.exports = function(app) {
                           isChild: false
                        },
                 include: [{
-                    model: users, as: 'user', 
+                    model: db.users, as: 'user', 
                     attributes: ['username', 'userType', 'badges', 'createdAt']
                 }]
             }).then(function(result) {
