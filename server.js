@@ -12,6 +12,8 @@ const app = express();
 var cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const SocketIO = require('socket.io');
+const http = require('http')
+const server = http.createServer(app)
 
 
 //cors unblocked
@@ -49,12 +51,12 @@ app.use(
 	})
 )
 
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header('Access-Control-Allow-Credentials: true')
-	next();
-  });
+// app.use(function(req, res, next) {
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+// 	res.header('Access-Control-Allow-Credentials: true')
+// 	next();
+//   });
 
 
 
@@ -116,7 +118,7 @@ const syncOptions = { force: false };
 // ==== Starting Server ======
 
 
-const server = db.sequelize.sync(syncOptions).then(function() {
+db.sequelize.sync(syncOptions).then(function() {
 	app.listen(PORT, () => {
 		console.log(`App listening on PORT: ${PORT}`)
 	//   console.log(
@@ -128,7 +130,7 @@ const server = db.sequelize.sync(syncOptions).then(function() {
 });
 
 // This creates our socket using the instance of the server
-const io = SocketIO(server)
+const io = SocketIO(server);
 // io.set('origins', 'http://localhost:3001');
 
 
