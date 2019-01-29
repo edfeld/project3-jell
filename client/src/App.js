@@ -358,9 +358,19 @@ class App extends Component {
 					exact 
 					path="/fullpost"
 					render={() =>
+						<div>
+						<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
 						<FullPost 
 							post={this.state.singlePost} 
 						/>
+						</div>
 					}  
 					/>
 				{/* <LoginForm _login={this._login} /> */}
