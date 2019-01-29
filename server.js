@@ -1,25 +1,35 @@
+if (process.env.NODE_ENV !== 'production') {
+	console.log('loading dev environments')
+}
+require('dotenv').config();
+const db = require("./models");  // [ERE] for MySQL
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');  // Morgan is HTTP request logger middleware for Node.js
+const session = require('express-session');
+const passport = require('./passport');
+const app = express();
+var cors = require('cors');
+const PORT = process.env.PORT || 3001;
+const SocketIO = require('socket.io');
+
+
+//cors unblocked
+app.use(cors());
+
+
+  //CORS unblock
+//   app.use(cors({
+// 	credentials: true,
+// 	origin: ['http://localhost:3001'] // add in production link here after deployment: 'https://radiant-atoll-34503.herokuapp.com/'],
+//   }));
+
 // Loading evnironmental variables here
 if (process.env.NODE_ENV !== 'production') {
 	console.log('loading dev environments')
 	require('dotenv').config()
 }
 require('dotenv').config()
-
-const db = require("./models");  // [ERE] for MySQL
-const express = require('express')
-const bodyParser = require('body-parser')
-const morgan = require('morgan')  // Morgan is HTTP request logger middleware for Node.js
-const session = require('express-session')
-const passport = require('./passport')
-const app = express()
-const PORT = process.env.PORT || 3001
-
-
-// const express = require('express')
-// const socketIO = require('socket.io')
-
-// const app = express()
-
 
 // ===== Middleware ====
 app.use(morgan('dev'))
@@ -42,15 +52,10 @@ app.use(
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header('Access-Control-Allow-Credentials: true')
 	next();
   });
 
-
-  //CORS unblock
-// app.use(cors({
-// 	credentials: true,
-// 	origin: ['http://localhost:3001'] // add in production link here after deployment: 'https://radiant-atoll-34503.herokuapp.com/'],
-//   }));
 
 
 // ===== Passport ====
@@ -98,6 +103,7 @@ app.use('/auth', require('./auth'))
 require('./routes/getRoutes')(app)
 require('./routes/postroutes')(app)
 require('./routes/put-routes.js')(app)
+require('./routes/del-routes.js')(app)
 
 // ====== Error handler ====
 app.use(function(err, req, res, next) {
@@ -122,20 +128,20 @@ const server = db.sequelize.sync(syncOptions).then(function() {
 });
 
 // This creates our socket using the instance of the server
-// const io = socketIO(server)
+const io = SocketIO(server)
+// io.set('origins', 'http://localhost:3001');
 
-// server.listen(port1, () => console.log(`Listening on port ${port1}`))
 
 // This is what the socket.io syntax is like
-// io.on('connection', socket => {
-// 	console.log('New client connected')
+io.on('connection', socket => {
+	console.log('New client connected')
 	
-// 	socket.on('SEND_MESSAGE', function(data){
-// 		io.emit('RECEIVE_MESSAGE', data);
-// 	})
+	socket.on('SEND_MESSAGE', function(data){
+		io.sockets.emit('RECEIVE_MESSAGE', data);
+	})
 	
 // 	// disconnect is fired when a client leaves the server
-// 	socket.on('disconnect', () => {
-// 	  console.log('user disconnected')
-// 	})
-//   });
+	socket.on('disconnect', () => {
+	  console.log('user disconnected')
+	})
+  });

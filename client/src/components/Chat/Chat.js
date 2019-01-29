@@ -11,9 +11,9 @@ class Chat extends React.Component{
             message: '',
             messages: []
         };
-
+        
         this.socket = io('localhost:3001');
-
+        
         this.socket.on('RECEIVE_MESSAGE', function(data){
             addMessage(data);
         });
@@ -25,6 +25,7 @@ class Chat extends React.Component{
         };
 
         this.sendMessage = ev => {
+            console.log("Somethign taljsdlfjaljdfla")
             ev.preventDefault();
             this.socket.emit('SEND_MESSAGE', {
                 author: this.state.username,
@@ -33,8 +34,13 @@ class Chat extends React.Component{
             this.setState({message: ''});
 
         }
+
+        
+
+        
     }
     render(){
+       
         return (
             <div className="container">
                 <div className="chatRow">
