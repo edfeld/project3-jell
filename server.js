@@ -11,10 +11,10 @@ const passport = require('./passport');
 const app = express();
 var cors = require('cors');
 const PORT = process.env.PORT || 3001;
-const SocketIO = require('socket.io');
+// const SocketIO = require('socket.io');
 const http = require('http')
 const server = http.createServer(app)
-
+var io = require('socket.io').listen(server);  //pass a http.Server instance
 
 //cors unblocked
 app.use(cors());
@@ -115,11 +115,26 @@ app.use(function(err, req, res, next) {
 })
 
 const syncOptions = { force: false };
+
+// Socket listeners
+// This is what the socket.io syntax is like
+io.on('connection', socket => {
+	console.log('New client connected')
+	
+	socket.on('SEND_MESSAGE', function(data){
+		console.log(data);
+		io.emit('RECEIVE_MESSAGE', data);
+	})
+	
+// 	// disconnect is fired when a client leaves the server
+	socket.on('disconnect', () => {
+	  console.log('user disconnected')
+	})
+  });
 // ==== Starting Server ======
 
-
 db.sequelize.sync(syncOptions).then(function() {
-	app.listen(PORT, () => {
+	server.listen(PORT, () => {
 		console.log(`App listening on PORT: ${PORT}`)
 	//   console.log(
 	// 	"==> 🌎  App Listening on port 3000. Visit http://localhost:3000/ in your browser.",
@@ -130,20 +145,8 @@ db.sequelize.sync(syncOptions).then(function() {
 });
 
 // This creates our socket using the instance of the server
-const io = SocketIO(server);
+// const io = SocketIO(server);
 // io.set('origins', 'http://localhost:3001');
 
 
-// This is what the socket.io syntax is like
-io.on('connection', socket => {
-	console.log('New client connected')
-	
-	socket.on('SEND_MESSAGE', function(data){
-		io.sockets.emit('RECEIVE_MESSAGE', data);
-	})
-	
-// 	// disconnect is fired when a client leaves the server
-	socket.on('disconnect', () => {
-	  console.log('user disconnected')
-	})
-  });
+
