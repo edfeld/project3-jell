@@ -9,9 +9,14 @@ const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+if (env === 'production') {
+  console.log(config);
+  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 } else {
+  console.log('config ', config);
+  console.log('env', env);
+  console.log('loading dev')
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
