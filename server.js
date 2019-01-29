@@ -3,25 +3,20 @@ if (process.env.NODE_ENV !== 'production') {
 }
 require('dotenv').config();
 const db = require("./models");  // [ERE] for MySQL
-const express = require('express')
-const bodyParser = require('body-parser')
-const morgan = require('morgan')  // Morgan is HTTP request logger middleware for Node.js
-const session = require('express-session')
-const passport = require('./passport')
-const app = express()
-// var server = app.listen(3001);
-// var io = require('socket.io').listen(server);
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');  // Morgan is HTTP request logger middleware for Node.js
+const session = require('express-session');
+const passport = require('./passport');
+const app = express();
 var cors = require('cors');
-const PORT = process.env.PORT || 3001
-const socketIO = require('socket.io')
+const PORT = process.env.PORT || 3001;
+const SocketIO = require('socket.io');
 
-// const express = require('express')
 
 //cors unblocked
 app.use(cors());
 
-
-// const app = express()
 
   //CORS unblock
 //   app.use(cors({
@@ -108,6 +103,7 @@ app.use('/auth', require('./auth'))
 require('./routes/getRoutes')(app)
 require('./routes/postroutes')(app)
 require('./routes/put-routes.js')(app)
+require('./routes/del-routes.js')(app)
 
 // ====== Error handler ====
 app.use(function(err, req, res, next) {
@@ -132,20 +128,20 @@ const server = db.sequelize.sync(syncOptions).then(function() {
 });
 
 // This creates our socket using the instance of the server
-const io = socketIO(server)
-io.set('origins', 'http://localhost:3000');
+const io = SocketIO(server)
+// io.set('origins', 'http://localhost:3001');
 
 
-// // This is what the socket.io syntax is like
-// io.on('connection', socket => {
-// 	console.log('New client connected')
+// This is what the socket.io syntax is like
+io.on('connection', socket => {
+	console.log('New client connected')
 	
-// 	socket.on('SEND_MESSAGE', function(data){
-// 		io.emit('RECEIVE_MESSAGE', data);
-// 	})
+	socket.on('SEND_MESSAGE', function(data){
+		io.sockets.emit('RECEIVE_MESSAGE', data);
+	})
 	
-// // 	// disconnect is fired when a client leaves the server
-// 	socket.on('disconnect', () => {
-// 	  console.log('user disconnected')
-// 	})
-//   });
+// 	// disconnect is fired when a client leaves the server
+	socket.on('disconnect', () => {
+	  console.log('user disconnected')
+	})
+  });
