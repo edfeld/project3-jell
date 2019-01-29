@@ -197,6 +197,7 @@ class App extends Component {
 						this.setState({
 							posts: response.data
 						})
+						
 					})
 				})
 			}
