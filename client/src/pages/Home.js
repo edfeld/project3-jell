@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Card from '../components/Card/Card';
 import TitleBar from '../components/titleBar'
 
