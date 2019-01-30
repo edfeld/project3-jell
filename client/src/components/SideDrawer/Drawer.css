@@ -14,7 +14,7 @@
     transition: -webkit-transform 0.3s ease-out;
     transition: transform 0.3s ease-out;
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
-    background: #d59181;
+    background: rgb(206, 167, 116);
     font-family: 'Libre Baskerville', serif;
     
 }
