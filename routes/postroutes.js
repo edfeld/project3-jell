@@ -20,12 +20,12 @@ app.post('/api/postRoute', (req, res) => {
 
 app.post('/api/commentRoute', (req, res) => {
   const {content, isRebuttal} = req.body
-  console.log("this is the post route: ", req.body);
+  console.log("this is the comment route: ", req.body);
       const newComment = {
-                  'content': "comment",
+                  'content': content,
                   'isRebuttal': true,
                   'userId': 1,
-                  'postId': 5
+                  'postId': 1
       }
       db.comments.create(newComment).then(function(comment) {
         return res.json(comment);

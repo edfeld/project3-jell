@@ -30,6 +30,7 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
+			commentContent: "",
 			singlePost: {}
 		}
 		this._logout = this._logout.bind(this)
@@ -168,14 +169,30 @@ class App extends Component {
 			})
 			.then(response => {
 				console.log('this is the response: ', response.data);
-				
-			
 			this.setState({
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
 				currentModal: ""
-				
+		   })
+		})
+
+	}
+
+	commentRoute = (e) => {
+		e.preventDefault();
+		const comment = {
+		 commentContent: this.state.commentContent,
+		}
+		axios
+			.post('/api/commentRoute', {
+				content: comment.commentContent,
+			})
+			.then(response => {
+				console.log('this is the response: ', response.data);
+			this.setState({
+				commnetContent: "",
+				currentModal: ""
 		   })
 		})
 
@@ -271,9 +288,10 @@ class App extends Component {
 				<MasterModal 
 					currentModal={this.state.currentModal}
 					changeModal={this.changeModal}
-					value={this.state.debateTitle && this.state.debateContext && this.debateTags}
+					value={this.state.debateTitle && this.state.debateContext && this.state.debateTags && this.state.commentContent}
 					handleChange={this.handleChange}
 					post={this.postRoute}
+					comment={this.commentRoute}
 				/>
 				<Route 
 					exact 
@@ -367,6 +385,7 @@ class App extends Component {
 							post={this.state.singlePost}
 							upvote={this.upvote}
 							downvote={this.downvote} 
+							changeModal={this.changeModal}
 						/>
 						</div>
 					}  

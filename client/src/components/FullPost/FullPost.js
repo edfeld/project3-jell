@@ -16,12 +16,14 @@ const FullPost = props => {
       post={props.post} 
       upvote={props.upvote}
       downvote={props.downvote}
+      changeModal={props.changeModal}
    />
    {props.post.comments.map(comments => (
                     <PostComments 
                         data={comments}
                         upvote={props.upvote}
                         downvote={props.downvote}
+                        changeModal={props.changeModal}
                     />
               ))}
   
