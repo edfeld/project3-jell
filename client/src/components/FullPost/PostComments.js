@@ -6,7 +6,7 @@ const PostComments = props =>{
    const key = props.data.id
    return (
    <div key={key}>
-        <header className="card">
+        <header className="card" style={{display: 'inline-flex', width: '75%'}}>
         <div className="card-body">
             <h2 className="card-title">{props.data.user.username}</h2>
             <h5 className="card-subtitle mb-2">{props.data.isRubuttal}</h5>

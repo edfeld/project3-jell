@@ -35,7 +35,7 @@ const MasterModal = (props) => {
                 top:props.currentModal?'0px':'-100000px', 
                 width: props.currentModal?'100%':'0px', 
                 opacity: props.currentModal?'1':'0',
-                zIndex: '300'
+                zIndex: '800'
             }} 
             
         >

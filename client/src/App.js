@@ -273,20 +273,20 @@ class App extends Component {
 					{/* <div>
 						<Chat/>
 					</div> */}
-		
+				<MasterModal 
+					currentModal={this.state.currentModal}
+					changeModal={this.changeModal}
+					value={this.state.debateTitle && this.state.debateContext && this.debateTags}
+					handleChange={this.handleChange}
+					post={this.postRoute}
+				/>
 				<Route 
 					exact 
 					path="/" 
 					render={() => 
 						<div>
 							
-							<MasterModal 
-								currentModal={this.state.currentModal}
-								changeModal={this.changeModal}
-								value={this.state.debateTitle && this.state.debateContext && this.debateTags}
-								handleChange={this.handleChange}
-								post={this.postRoute}
-							/>
+							
 				
 							<SideDrawer 
 								show={this.state.sideOpen} 
