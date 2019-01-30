@@ -14,7 +14,7 @@ class UserPage extends Component {
 		
 		return (
             <div>
-                this is the User Page
+                this is the user page
             </div>
         )
 			

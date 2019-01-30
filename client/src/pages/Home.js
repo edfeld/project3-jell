@@ -15,6 +15,7 @@ const Home = props => {
                     data={posts}
                     upvote={props.upvote}
                     downvote={props.downvote}
+                    fullpost={props.fullpost}
                     />
               ))}
 
@@ -36,6 +37,7 @@ const Home = props => {
                     data={posts}
                     upvote={props.upvote}
                     downvote={props.downvote}
+                    fullpost={props.fullpost}
                     />
               ))}
 

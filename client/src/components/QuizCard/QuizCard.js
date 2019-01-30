@@ -6,11 +6,11 @@ const QuizCard = props => (
         <div className="card-header quizcard-header">
         {props.question}
         </div>
-        <ul key={props.id} className="card-body">
+        <ul  className="card-body" key={props.quizid}>
             <ul className="list-choices">
                 {props.arrChoices.map(answer => (
-                    <li className='quiz-choice' key={answer.charAt(0)}>
-                        <input type="checkbox"  checked='' id={answer.charAt(0)}/><span>&nbsp;{answer}</span>
+                    <li className='quiz-choice' >
+                        <input type="checkbox"  checked='' id={props.quizid + '.' + answer.charAt(0)}/><span>&nbsp;{answer}</span>
                     </li>
                     ))}
             </ul>
