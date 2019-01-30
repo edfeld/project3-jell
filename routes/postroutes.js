@@ -3,13 +3,13 @@ const db = require("../models");
 module.exports = function(app){
 
 app.post('/api/postRoute', (req, res) => {
-    const {title, context, tags} = req.body
+    const {title, context, tags, userId} = req.body
     console.log("this is the post route: ", req.body);
 				const newPost = {
                     'title': title,
                     'context': context,
                     'tags': tags,
-                    userId: 1
+                    'userId': userId
 				}
 				db.posts.create(newPost).then(function(post) {
 					return res.json(post);

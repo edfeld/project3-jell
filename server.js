@@ -103,7 +103,11 @@ app.use('/auth', require('./auth'))
 require('./routes/getRoutes')(app)
 require('./routes/postroutes')(app)
 require('./routes/put-routes.js')(app)
+<<<<<<< HEAD
 require('./routes/del-routes.js')(app)
+=======
+require('./routes/del-routes')(app)
+>>>>>>> poster-quiz-ed
 
 // ====== Error handler ====
 app.use(function(err, req, res, next) {
