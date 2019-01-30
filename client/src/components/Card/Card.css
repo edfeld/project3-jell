@@ -10,12 +10,13 @@
     box-shadow: 0px 0px 20px 1px black;
     text-align: left;
     height: 15.5rem;
+    text-shadow:-2px -1px 0 black;
 }
 
 
 
 .card-body{
-    font-family: 'Righteous', cursive;
+    font-family: 'cairo', cursive;
     border: none;
     color: white;
     

@@ -12,12 +12,16 @@ const FullPost = props => {
    }else{
    return(
    <div>
-   <PostHeader post={props.post}/>
+   <PostHeader 
+      post={props.post} 
+      upvote={props.upvote}
+      downvote={props.downvote}
+   />
    {props.post.comments.map(comments => (
                     <PostComments 
-                    data={comments}
-                    upvote={props.upvote}
-                    downvote={props.downvote}
+                        data={comments}
+                        upvote={props.upvote}
+                        downvote={props.downvote}
                     />
               ))}
   

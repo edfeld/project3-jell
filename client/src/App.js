@@ -195,7 +195,7 @@ class App extends Component {
 					.get('/api/search/all')
 					.then(response => {
 						this.setState({
-							posts: response.data
+							post: response.data.upVotes
 						})
 						
 					})
@@ -221,7 +221,7 @@ class App extends Component {
 					.get('/api/search/all')
 					.then(response => {
 						this.setState({
-							posts: response.data
+							post: response.data.downVotes
 						})
 					})
 				})
@@ -369,7 +369,9 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 						<FullPost 
-							post={this.state.singlePost} 
+							post={this.state.singlePost}
+							upvote={this.upvote}
+							downvote={this.downvote} 
 						/>
 						</div>
 					}  

@@ -46,7 +46,8 @@ const MasterModal = (props) => {
                     color:'white', 
                     height: '500px', 
                     margin: '0 auto', 
-                    background: 'black', 
+                    
+                    backgroundImage: 'linear-gradient(to bottom right,#3f51b5, rgb(0, 7, 162), #ff5722)', 
                     borderRadius: '15px', 
                     padding: '10px', 
                     marginTop: '100px'
