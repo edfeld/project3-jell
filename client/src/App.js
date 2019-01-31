@@ -10,7 +10,7 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
-import FullPost from './components/FullPost/FullPost'
+import FullPost from './pages/FullPost/FullPost'
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
 // import FullPost from './pages/FullPost'
@@ -179,20 +179,24 @@ class App extends Component {
 
 	}
 
-	commentRoute = (e) => {
-		e.preventDefault();
+	commentRoute = (postId) => {
+		// e.preventDefault();
 		const comment = {
 		 commentContent: this.state.commentContent,
 		}
 		axios
 			.post('/api/commentRoute', {
 				content: comment.commentContent,
+				userId: this.state.user.id,
+				isChild: 0,
+				postId: postId
 			})
 			.then(response => {
 				console.log('this is the response: ', response.data);
 			this.setState({
 				commnetContent: "",
-				currentModal: ""
+				currentModal: "",
+				posts: response
 		   })
 		})
 
@@ -292,6 +296,7 @@ class App extends Component {
 					handleChange={this.handleChange}
 					post={this.postRoute}
 					comment={this.commentRoute}
+					postData={this.state.singlePost}
 				/>
 				<Route 
 					exact 
@@ -386,6 +391,7 @@ class App extends Component {
 							upvote={this.upvote}
 							downvote={this.downvote} 
 							changeModal={this.changeModal}
+							user={this.state.user}
 						/>
 						</div>
 					}  

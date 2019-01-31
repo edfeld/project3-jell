@@ -20,10 +20,10 @@ const Home = props => {
               ))}
 
               <div className="Home">
-                    {/* <p>Current User:</p> */}
-                    {/* <code>
+                    <p>Current User:</p> 
+                    <code>
                           {JSON.stringify(props)}
-                    </code> */}
+                    </code>
               </div>
             </div>
 		)
@@ -42,10 +42,10 @@ const Home = props => {
               ))}
 
               <div className="Home">
-                    {/* <p>Current User:</p>
+                    <p>Current User:</p>
                     <code>
                           {JSON.stringify(props)}
-                    </code> */}
+                    </code>
               </div>
             </div>
 		)

@@ -12,7 +12,7 @@ const PostHeader = props => {
                 <p><button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}><h5>+</h5></button>Up Votes: {props.post.post.upVotes}/<button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}><h5>-</h5></button>Down Votes: {props.post.post.downVotes}</p>
                 <button onClick={() => props.changeModal('Comment')}>comment</button>
             </div>
-        </div>>
+        </div>
    </div>
     )
 };

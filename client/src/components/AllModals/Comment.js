@@ -2,7 +2,10 @@ import React from 'react';
 import './post.css';
 
 
-const Comment = props => (
+const Comment = props => {
+ const postId = props.postData.post.id;
+
+    return(
     <div className="postBackground">
         <h2 style={{color: 'black'}}>Make A Comment</h2>
         <div>
@@ -20,11 +23,11 @@ const Comment = props => (
                 </textarea>
             </div>
         
-        <button onClick={props.comment}>POST</button>
+        <button onClick={() => props.comment(postId)}>POST</button>
         </div>
     </div>
-
+    )
     
-);
+};
 
 export default Comment;

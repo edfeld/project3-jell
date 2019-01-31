@@ -6,7 +6,6 @@ import PostComments from './PostComments'
 
 
 const FullPost = props => {
-   console.log('this is props at FullPost ', props.post)
    if(props.post.post === null){
       return (<div/>)
    }else{

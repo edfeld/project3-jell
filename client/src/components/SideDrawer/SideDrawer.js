@@ -29,7 +29,7 @@ const SideDrawer = props => {
                 onClick={props.search} 
                 style={{position: 'relative'}}
             >Search</button>
-            <li ><Link to="/" onClick={() =>props.toggleHandle()}>Home</Link></li>
+            <li><Link to="/" onClick={() =>props.toggleHandle()}>Home</Link></li>
             <li><Link to="/" onClick={() =>props.toggleHandle()}>Top Debates</Link></li>
             <li><Link to="/" onClick={() =>props.toggleHandle()}>Relevant Debates</Link></li>
            
