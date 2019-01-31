@@ -164,7 +164,8 @@ class App extends Component {
 			.post('/api/postRoute', {
 				title: post.debateTitle,
 				context: post.debateContext,
-				tags: post.debateTags
+				tags: post.debateTags,
+				userId: this.state.user.id
 				
 			})
 			.then(response => {
