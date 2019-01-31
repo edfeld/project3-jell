@@ -1,5 +1,5 @@
 .postBackground{
-    background: white;
+    background-image: linear-gradient(to bottom right,#3f51b5, #0007a24d, #ff5722);
     width: 100%;
     height: 100%;
     justify-content: space-around;
@@ -7,4 +7,5 @@
     min-width: 100%;
     border-radius: 15px;
     padding: 5px;
+    
 }

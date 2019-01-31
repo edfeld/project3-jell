@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Card from '../components/Card/Card';
 import TitleBar from '../components/titleBar'
 
@@ -20,7 +20,7 @@ const Home = props => {
               ))}
 
               <div className="Home">
-                    <p>Current User:</p>
+                    <p>Current User:</p> 
                     <code>
                           {JSON.stringify(props)}
                     </code>
