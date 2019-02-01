@@ -6,6 +6,7 @@ import PostComments from './PostComments'
 
 
 const FullPost = props => {
+   console.log(props);
    if(props.post.post === null){
       return (<div/>)
    }else{
@@ -23,6 +24,7 @@ const FullPost = props => {
                         upvote={props.upvote}
                         downvote={props.downvote}
                         changeModal={props.changeModal}
+                        postId = {props.post.post.id}
                     />
               ))}
   

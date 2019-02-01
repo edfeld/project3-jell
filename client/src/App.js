@@ -59,16 +59,17 @@ class App extends Component {
 
 		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
 		
+		if(this.state.posts !== undefined){
 		axios
 			.get('/api/search/all')
 			.then(response => {
-				console.log('this is the response: ', response.data);
 			this.setState({
 				posts: response.data
 		   })
 		})
 
 	}
+}
 
 	_logout = (event) => {
 		event.preventDefault()
@@ -164,16 +165,18 @@ class App extends Component {
 			.post('/api/postRoute', {
 				title: post.debateTitle,
 				context: post.debateContext,
-				tags: post.debateTags
+				tags: post.debateTags,
+				userId: this.state.user.id
 				
 			})
 			.then(response => {
-				console.log('this is the response: ', response.data);
+				console.log('this is the  post response: ', response.data);
 			this.setState({
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
-				currentModal: ""
+				currentModal: "",
+				posts: response.data
 		   })
 		})
 
@@ -192,12 +195,12 @@ class App extends Component {
 				postId: postId
 			})
 			.then(response => {
-				console.log('this is the response: ', response.data);
+				console.log('this is the response of the comment route: ', response.data);
 			this.setState({
 				commnetContent: "",
-				currentModal: "",
-				posts: response
+				currentModal: ""
 		   })
+		   this.fullpost(postId);
 		})
 
 	}
@@ -215,9 +218,7 @@ class App extends Component {
 					axios
 					.get('/api/search/all')
 					.then(response => {
-						this.setState({
-							post: response.data.upVotes
-						})
+						this.fullpost(key);
 						
 					})
 				})
@@ -241,9 +242,7 @@ class App extends Component {
 					axios
 					.get('/api/search/all')
 					.then(response => {
-						this.setState({
-							post: response.data.downVotes
-						})
+						this.fullpost(key)
 					})
 				})
 			}
@@ -258,9 +257,16 @@ class App extends Component {
 	
 
 
-	fullpost = (key) => {
-	console.log('fullpost key: ', key)
-	const id = parseInt(key);
+	fullpost = (id) => {
+	
+	console.log('fullpost id: ', id)
+	if(!id){
+		id = parseInt(window.location.href.split('post/')[1])
+	}else{
+		id = parseInt(id);
+	}
+	console.log(id)
+	console.log(window.location.href)
 	axios
 		.get('/api/post/' + id)
 		.then(response => {
@@ -353,9 +359,6 @@ class App extends Component {
 					path="/" 
 					render={() => 
 						<div>
-							
-							
-				
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -374,7 +377,7 @@ class App extends Component {
 								fullpost={this.fullpost}
 							/>
 						</div>
-					} 
+					}
 				/>
 				<Route
 					exact
@@ -427,7 +430,7 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/fullpost"
+					path="/api/post/:id"
 					render={() =>
 						<div>
 						<SideDrawer 
