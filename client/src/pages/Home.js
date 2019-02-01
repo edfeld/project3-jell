@@ -6,7 +6,7 @@ import TitleBar from '../components/titleBar'
 // TODO - add proptypes
 
 const Home = props => {
-	if (props.user) {
+	if (props.user && props.posts !== null) {
 		return (
             <div style={{backgroundImage: "inherit"}}>
               <TitleBar />
