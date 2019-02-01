@@ -114,10 +114,10 @@ module.exports = function(app) {
             {
                 where: {
                     isChild: true,
-                    _id : {$in: children}
+                    id : {$in: children}
                 },
                 include: [{
-                    model: users, as: 'user', 
+                    model: db.users, as: 'user', 
                     attributes: ['username', 'userType', 'badges', 'createdAt']
                 }]
             }).then(function(result) {

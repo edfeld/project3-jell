@@ -1,0 +1,20 @@
+/* PosterQuiz CSS */
+
+.submit-div {
+    text-align: center;
+    margin: 0 auto 25px auto; 
+}
+
+.submit-quiz {
+    font-family: 'Patua One', cursive;
+    background: #544841;
+    color: white
+}
+
+.submit-quiz:hover {
+    color:  white;
+    transition: transform 0.3s ease-out;
+    box-shadow: 3px 3px 3px 0px black;
+    background: rgba(145, 67, 3, 0.74);
+    text-shadow: 3px 3px 20px black;
+}

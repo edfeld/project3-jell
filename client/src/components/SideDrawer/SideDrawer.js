@@ -25,7 +25,7 @@ const SideDrawer = props => {
             />
             <button 
                 type="button" 
-                class="btn btn-secondary searchBtn" 
+                className="btn btn-secondary searchBtn" 
                 onClick={props.search} 
                 style={{position: 'relative'}}
             >Search</button>

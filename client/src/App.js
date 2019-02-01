@@ -271,6 +271,56 @@ class App extends Component {
 		})
 	}
 
+	// update the radio buttons on the quiz
+	answerClicked = (key, answerSelect) => {
+		// console.log("<  answer selected================================");
+		// console.log("answer selected: ", `${key} ${answerSelect}`);
+		// console.log("ArrPosterQuiz: ", this.state.ArrPosterQuiz);
+		this.state.ArrPosterQuiz.forEach(answer => {
+			// console.log("Here is the answer and key: ", `${answer.id} ${key}`);
+			// console.log('typeof answer.id and Key: ', `${typeof(answer.id)} ${typeof(key)}`)
+			if (answer.id === parseInt(key)) {
+				// console.log("In Foreach question: ", )
+				answer.arrChoices.forEach( choice => {
+					if (choice.text === answerSelect){
+						choice.isChecked = true
+						console.log("this choice is true", choice);
+					} else {
+						choice.isChecked = false;
+						console.log("this choice is false: ", choice);
+					}
+				})
+			}
+		});
+		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
+	}
+	
+	// Handle the submit button event on the quiz page
+	submitQuiz = () => {
+		const arrQuiz = this.state.ArrPosterQuiz;
+		const questCount = arrQuiz.length;
+		let quizGrade = 0;
+		let correctAnswers = 0;
+		let totalAnswers = 0;
+		
+		arrQuiz.forEach(question => {
+			let correctChoiceLetter = question.correctAnswer[0];
+			console.log("The correct letter to guess: ", correctChoiceLetter);
+			question.arrChoices.forEach( choiceSet => {
+				console.log("letter: ", choiceSet.text[0])
+				if (choiceSet.text[0] === correctChoiceLetter && choiceSet.isChecked === true) correctAnswers++;
+				if (choiceSet.isChecked === true) totalAnswers++;  // count the number of answers chosen to see if all questions have been answered
+			})
+		});
+		console.log("total questions answered: ", totalAnswers);
+		if (totalAnswers === arrQuiz.length) {
+			quizGrade = Math.round(correctAnswers / questCount * 100);
+			console.log('Your quiz Grade:: ', quizGrade + '%');
+		} else {
+			alert('Not all questions have been answered');
+		}
+
+	}
 
 	render() {
 		let backdrop;
@@ -365,10 +415,12 @@ class App extends Component {
 							search={this.searchDb}
 						/>
 						<PosterQuiz 
+							answerClicked={this.answerClicked}
 							ArrPosterQuiz={this.state.ArrPosterQuiz} 
 							user={this.state.user}  
 							_logout={this._logout} 
 							loggedIn={this.state.loggedIn} 
+							submitQuiz={this.submitQuiz}
 						/>
 						</div>
 					} 

@@ -18,18 +18,6 @@
     border-radius: .25rem;
 }
 
-.quizcard:hover{
-    text-decoration: none !important;
-    transition: null !important;
-    box-shadow: null !important;
-    background: null !important;
-    text-shadow: null !important;
-}
-
-.blockquote {
-    border-left: 0 solid #eceeef;
-}
-
 .list-choices {
     list-style-type: none;
 }
