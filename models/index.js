@@ -5,13 +5,20 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(__dirname + '/../config/config.js')[env];  // [ERE] fix db_password issue across pc and macs
 const db = {};
 
+console.log('config', config);
+
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+if (env === 'production') {
+  console.log(config);
+  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 } else {
+  console.log('config ', config);
+  console.log('env', env);
+  console.log('loading dev')
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 

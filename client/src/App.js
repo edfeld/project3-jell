@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
 import LoginForm from './components/Login/LoginForm'
-import SignupForm from './components/SignupForm'
+// import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
 import SideDrawer from './components/SideDrawer/SideDrawer'
 import BackDrop from './components/Backdrop/backdrop'
@@ -10,8 +10,10 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
+import FullPost from './pages/FullPost/FullPost'
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
+// import FullPost from './pages/FullPost'
 
 
 class App extends Component {
@@ -27,7 +29,9 @@ class App extends Component {
 			posts: [],
 			debateTitle: "",
 			debateContext: "",
-			debateTags: ""
+			debateTags: "",
+			commentContent: "",
+			singlePost: {}
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -55,17 +59,17 @@ class App extends Component {
 
 		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
 		
+		if(this.state.posts !== undefined){
 		axios
 			.get('/api/search/all')
 			.then(response => {
-				console.log('this is the response: ', response.data);
 			this.setState({
-				searchBar: "",
 				posts: response.data
 		   })
 		})
 
 	}
+}
 
 	_logout = (event) => {
 		event.preventDefault()
@@ -161,38 +165,62 @@ class App extends Component {
 			.post('/api/postRoute', {
 				title: post.debateTitle,
 				context: post.debateContext,
-				tags: post.debateTags
+				tags: post.debateTags,
+				userId: this.state.user.id
 				
 			})
 			.then(response => {
-				console.log('this is the response: ', response.data);
-				
-			
+				console.log('this is the  post response: ', response.data);
 			this.setState({
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
-				currentModal: ""
-				
+				currentModal: "",
+				posts: response.data
 		   })
 		})
 
 	}
 
+	commentRoute = (postId) => {
+		// e.preventDefault();
+		const comment = {
+		 commentContent: this.state.commentContent,
+		}
+		axios
+			.post('/api/commentRoute', {
+				content: comment.commentContent,
+				userId: this.state.user.id,
+				isChild: 0,
+				postId: postId
+			})
+			.then(response => {
+				console.log('this is the response of the comment route: ', response.data);
+			this.setState({
+				commnetContent: "",
+				currentModal: ""
+		   })
+		   this.fullpost(postId);
+		})
+
+	}
+
 	upvote = (key) => {
-		console.log('key click');
 		for(var i = 0; i < this.state.posts.length; i++) {
 			if(this.state.posts[i].id === key){
-				console.log(this.state.posts[i].upVotes);
 				const plusOne = this.state.posts[i].upVotes + 1;
-				console.log(this.state.posts[i].upVotes);
 			axios
 				.put('/api/upvote', {
 					post: this.state.posts[i].id,
 					upvotes: plusOne
 				})
 				.then(response => {
-					this.componentDidMount();
+					axios
+					.get('/api/search/all')
+					.then(response => {
+						this.fullpost(key);
+						
+					})
 				})
 			}
 		}
@@ -200,7 +228,6 @@ class App extends Component {
 	}
 
 	downvote = (key) => {
-		console.log('key click');
 		for(var i = 0; i < this.state.posts.length; i++) {
 			if(this.state.posts[i].id === key){
 				console.log(this.state.posts[i].downVotes);
@@ -212,15 +239,94 @@ class App extends Component {
 					downvotes: minusOne
 				})
 				.then(response => {
-					this.componentDidMount();
+					axios
+					.get('/api/search/all')
+					.then(response => {
+						this.fullpost(key)
+					})
 				})
 			}
 		}
 		
 	}
 
+	componentWillMount(){
+		this.fullpost();
+		
+	}
 	
+
+
+	fullpost = (id) => {
 	
+	console.log('fullpost id: ', id)
+	if(!id){
+		id = parseInt(window.location.href.split('post/')[1])
+	}else{
+		id = parseInt(id);
+	}
+	console.log(id)
+	console.log(window.location.href)
+	axios
+		.get('/api/post/' + id)
+		.then(response => {
+			this.setState({
+				singlePost: response.data
+			})
+			console.log('state after call ',this.state.singlePost)
+		})
+	}
+
+	// update the radio buttons on the quiz
+	answerClicked = (key, answerSelect) => {
+		// console.log("<  answer selected================================");
+		// console.log("answer selected: ", `${key} ${answerSelect}`);
+		// console.log("ArrPosterQuiz: ", this.state.ArrPosterQuiz);
+		this.state.ArrPosterQuiz.forEach(answer => {
+			// console.log("Here is the answer and key: ", `${answer.id} ${key}`);
+			// console.log('typeof answer.id and Key: ', `${typeof(answer.id)} ${typeof(key)}`)
+			if (answer.id === parseInt(key)) {
+				// console.log("In Foreach question: ", )
+				answer.arrChoices.forEach( choice => {
+					if (choice.text === answerSelect){
+						choice.isChecked = true
+						console.log("this choice is true", choice);
+					} else {
+						choice.isChecked = false;
+						console.log("this choice is false: ", choice);
+					}
+				})
+			}
+		});
+		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
+	}
+	
+	// Handle the submit button event on the quiz page
+	submitQuiz = () => {
+		const arrQuiz = this.state.ArrPosterQuiz;
+		const questCount = arrQuiz.length;
+		let quizGrade = 0;
+		let correctAnswers = 0;
+		let totalAnswers = 0;
+		
+		arrQuiz.forEach(question => {
+			let correctChoiceLetter = question.correctAnswer[0];
+			console.log("The correct letter to guess: ", correctChoiceLetter);
+			question.arrChoices.forEach( choiceSet => {
+				console.log("letter: ", choiceSet.text[0])
+				if (choiceSet.text[0] === correctChoiceLetter && choiceSet.isChecked === true) correctAnswers++;
+				if (choiceSet.isChecked === true) totalAnswers++;  // count the number of answers chosen to see if all questions have been answered
+			})
+		});
+		console.log("total questions answered: ", totalAnswers);
+		if (totalAnswers === arrQuiz.length) {
+			quizGrade = Math.round(correctAnswers / questCount * 100);
+			console.log('Your quiz Grade:: ', quizGrade + '%');
+		} else {
+			alert('Not all questions have been answered');
+		}
+
+	}
 
 	render() {
 		let backdrop;
@@ -239,21 +345,20 @@ class App extends Component {
 					{/* <div>
 						<Chat/>
 					</div> */}
-		
+				<MasterModal 
+					currentModal={this.state.currentModal}
+					changeModal={this.changeModal}
+					value={this.state.debateTitle && this.state.debateContext && this.state.debateTags && this.state.commentContent}
+					handleChange={this.handleChange}
+					post={this.postRoute}
+					comment={this.commentRoute}
+					postData={this.state.singlePost}
+				/>
 				<Route 
 					exact 
 					path="/" 
 					render={() => 
 						<div>
-							
-							<MasterModal 
-								currentModal={this.state.currentModal}
-								changeModal={this.changeModal}
-								value={this.state.debateTitle && this.state.debateContext && this.debateTags}
-								handleChange={this.handleChange}
-								post={this.postRoute}
-							/>
-				
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -269,9 +374,10 @@ class App extends Component {
 								posts={this.state.posts}
 								upvote={this.upvote}
 								downvote={this.downvote}
+								fullpost={this.fullpost}
 							/>
 						</div>
-					} 
+					}
 				/>
 				<Route
 					exact
@@ -306,11 +412,45 @@ class App extends Component {
 					render={() => 
 						<div>
 						<h3>Debate Poster Quiz</h3>
-						<SideDrawer show={this.state.sideOpen} toggleHandle={this.drawerToggle} search={this.searchDb}/>
-						<PosterQuiz ArrPosterQuiz={this.state.ArrPosterQuiz} user={this.state.user}  _logout={this._logout} loggedIn={this.state.loggedIn} />
+						<SideDrawer 
+							show={this.state.sideOpen} 
+							toggleHandle={this.drawerToggle} 
+							search={this.searchDb}
+						/>
+						<PosterQuiz 
+							answerClicked={this.answerClicked}
+							ArrPosterQuiz={this.state.ArrPosterQuiz} 
+							user={this.state.user}  
+							_logout={this._logout} 
+							loggedIn={this.state.loggedIn} 
+							submitQuiz={this.submitQuiz}
+						/>
 						</div>
 					} 
 				/>
+				<Route 
+					exact 
+					path="/api/post/:id"
+					render={() =>
+						<div>
+						<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+						<FullPost 
+							post={this.state.singlePost}
+							upvote={this.upvote}
+							downvote={this.downvote} 
+							changeModal={this.changeModal}
+							user={this.state.user}
+						/>
+						</div>
+					}  
+					/>
 				{/* <LoginForm _login={this._login} /> */}
 			</div>
 		)

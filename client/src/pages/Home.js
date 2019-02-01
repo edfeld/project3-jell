@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Card from '../components/Card/Card';
 import TitleBar from '../components/titleBar'
 
@@ -6,7 +6,7 @@ import TitleBar from '../components/titleBar'
 // TODO - add proptypes
 
 const Home = props => {
-	if (props.user) {
+	if (props.user && props.posts !== null) {
 		return (
             <div style={{backgroundImage: "inherit"}}>
               <TitleBar />
@@ -15,11 +15,12 @@ const Home = props => {
                     data={posts}
                     upvote={props.upvote}
                     downvote={props.downvote}
+                    fullpost={props.fullpost}
                     />
               ))}
 
               <div className="Home">
-                    <p>Current User:</p>
+                    <p>Current User:</p> 
                     <code>
                           {JSON.stringify(props)}
                     </code>
@@ -36,6 +37,7 @@ const Home = props => {
                     data={posts}
                     upvote={props.upvote}
                     downvote={props.downvote}
+                    fullpost={props.fullpost}
                     />
               ))}
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 class UserPage extends Component {
 	constructor() {
@@ -14,7 +14,7 @@ class UserPage extends Component {
 		
 		return (
             <div>
-                this is the User Page
+                this is the user page
             </div>
         )
 			
