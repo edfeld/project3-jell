@@ -6,7 +6,7 @@ const titleBar = props => (
         <div className="jumbotron jumbotron-fluid">
         <div className="container">
             <h1 className="display-4">Todays Top Debates</h1>
-            <p className="lead">Look At What People Are Talking About.</p>
+            <p className="lead">What People Are Talking About Right Now?</p>
         </div>
         </div>
     </header>

@@ -10,7 +10,7 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
-import FullPost from './components/FullPost/FullPost'
+import FullPost from './pages/FullPost/FullPost'
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
 // import FullPost from './pages/FullPost'
@@ -30,6 +30,7 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
+			commentContent: "",
 			singlePost: {}
 		}
 		this._logout = this._logout.bind(this)
@@ -168,14 +169,34 @@ class App extends Component {
 			})
 			.then(response => {
 				console.log('this is the response: ', response.data);
-				
-			
 			this.setState({
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
 				currentModal: ""
-				
+		   })
+		})
+
+	}
+
+	commentRoute = (postId) => {
+		// e.preventDefault();
+		const comment = {
+		 commentContent: this.state.commentContent,
+		}
+		axios
+			.post('/api/commentRoute', {
+				content: comment.commentContent,
+				userId: this.state.user.id,
+				isChild: 0,
+				postId: postId
+			})
+			.then(response => {
+				console.log('this is the response: ', response.data);
+			this.setState({
+				commnetContent: "",
+				currentModal: "",
+				posts: response
 		   })
 		})
 
@@ -195,7 +216,7 @@ class App extends Component {
 					.get('/api/search/all')
 					.then(response => {
 						this.setState({
-							posts: response.data
+							post: response.data.upVotes
 						})
 						
 					})
@@ -221,7 +242,7 @@ class App extends Component {
 					.get('/api/search/all')
 					.then(response => {
 						this.setState({
-							posts: response.data
+							post: response.data.downVotes
 						})
 					})
 				})
@@ -301,7 +322,6 @@ class App extends Component {
 
 	}
 
-
 	render() {
 		let backdrop;
 		if(this.state.sideOpen) {
@@ -319,20 +339,22 @@ class App extends Component {
 					{/* <div>
 						<Chat/>
 					</div> */}
-		
+				<MasterModal 
+					currentModal={this.state.currentModal}
+					changeModal={this.changeModal}
+					value={this.state.debateTitle && this.state.debateContext && this.state.debateTags && this.state.commentContent}
+					handleChange={this.handleChange}
+					post={this.postRoute}
+					comment={this.commentRoute}
+					postData={this.state.singlePost}
+				/>
 				<Route 
 					exact 
 					path="/" 
 					render={() => 
 						<div>
 							
-							<MasterModal 
-								currentModal={this.state.currentModal}
-								changeModal={this.changeModal}
-								value={this.state.debateTitle && this.state.debateContext && this.debateTags}
-								handleChange={this.handleChange}
-								post={this.postRoute}
-							/>
+							
 				
 							<SideDrawer 
 								show={this.state.sideOpen} 
@@ -417,7 +439,11 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 						<FullPost 
-							post={this.state.singlePost} 
+							post={this.state.singlePost}
+							upvote={this.upvote}
+							downvote={this.downvote} 
+							changeModal={this.changeModal}
+							user={this.state.user}
 						/>
 						</div>
 					}  

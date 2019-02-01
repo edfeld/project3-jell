@@ -2,6 +2,7 @@ import React from 'react';
 import SignUp from './SignUp'
 import Challenge from './Challenge'
 import MakePost from './MakePost'
+import Comment from './Comment'
 import './masterModal.css'
 
 
@@ -13,6 +14,14 @@ const MasterModal = (props) => {
             break;
         case 'Challenge':
             currentModal = <Challenge />
+            break;
+        case 'Comment':
+            currentModal = <Comment 
+                                value4={props.value}
+                                handleChange={props.handleChange}
+                                comment={props.comment}
+                                postData={props.postData}
+                            />
             break;
         case 'MakePost':
             currentModal = <MakePost 
@@ -35,7 +44,7 @@ const MasterModal = (props) => {
                 top:props.currentModal?'0px':'-100000px', 
                 width: props.currentModal?'100%':'0px', 
                 opacity: props.currentModal?'1':'0',
-                zIndex: '300'
+                zIndex: '800'
             }} 
             
         >
@@ -46,7 +55,8 @@ const MasterModal = (props) => {
                     color:'white', 
                     height: '500px', 
                     margin: '0 auto', 
-                    background: 'black', 
+                    
+                    backgroundImage: 'linear-gradient(to bottom right,#3f51b5, rgb(0, 7, 162), #ff5722)', 
                     borderRadius: '15px', 
                     padding: '10px', 
                     marginTop: '100px'
