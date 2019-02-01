@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3001;
 const http = require('http')
 const server = http.createServer(app)
 var io = require('socket.io').listen(server);  //pass a http.Server instance
+const badgeChron = require("./scripts/badges-chron.js");
 
 //cors unblocked
 app.use(cors());
@@ -135,7 +136,8 @@ io.on('connection', socket => {
 
 db.sequelize.sync(syncOptions).then(function() {
 	server.listen(PORT, () => {
-		console.log(`App listening on PORT: ${PORT}`)
+		console.log(`App listening on PORT: ${PORT}`);
+		badgeChron.run();
 	//   console.log(
 	// 	"==> 🌎  App Listening on port 3000. Visit http://localhost:3000/ in your browser.",
 	//   );
@@ -143,6 +145,8 @@ db.sequelize.sync(syncOptions).then(function() {
 }).catch(function (err) {
     console.log(err, "Something went wrong with the Database Update!")
 });
+
+
 
 // This creates our socket using the instance of the server
 // const io = SocketIO(server);

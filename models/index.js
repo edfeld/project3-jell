@@ -8,6 +8,8 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];  // [ERE] fix db_password issue across pc and macs
 const db = {};
 
+console.log('config', config);
+
 let sequelize;
 if (env === 'production') {
   console.log(config);

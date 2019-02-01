@@ -6,7 +6,8 @@ module.exports = function (sequelize, DataTypes) {
 	var users = sequelize.define("users", {
 	  username: {
 		type: DataTypes.STRING,
-		notNull: true
+		notNull: true,
+		unique: true
 		},
 		
 		passwordHashSalt: DataTypes.STRING,
