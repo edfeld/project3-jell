@@ -6,14 +6,14 @@ var db = require("../models");
 
 //asynch promise to find all users along with their associated posts and comments
 var getAllUsers = new Promise( function(resolve, reject) {
-    db.users.find(
+    db.users.findAll(
         {
             //need to adjust to exclude personal info
             attributes: ['username', 'userType', 'badges', 'createdAt'],
             include: [{model: db.posts, as: 'posts'}, 
                       {model: db.comments, as: 'comments'}]
         }).then(function(result) {
-            resolve.json(result);
+            resolve(result);
         }).catch(function(err) {
             reject(err);
         });
@@ -21,7 +21,12 @@ var getAllUsers = new Promise( function(resolve, reject) {
 
 //Checks the user's type and updates badges accordingly
 function userTypeCheck (user) {
-    let badges = user.badges.split(":");
+    let badges;
+    if(user.badges) {
+        badges = user.badges.split(":");
+    } else {
+        badges = [];
+    }
     let type = user.userType;
     // Basic badge should only be shown if no other type badges present 
 
@@ -40,7 +45,12 @@ function userTypeCheck (user) {
 
 //checks if user has met certain conditions and distributes badges accordingly
 function achievementCheck (user){
-    let badges = user.badges.split(":");
+    let badges;
+    if(user.badges) {
+        badges = user.badges.split(":");
+    } else {
+        badges = [];
+    }
     let {upvotes, downvotes} = totalVotes(user);
 
     //User's got the goods
@@ -78,9 +88,15 @@ function totalVotes (user) {
 //main function loops through users and updates their badges accordingly
 function checkAndUpdateBadges(users) {
     users.forEach(user => {
+        console.log("user: ", user.username);
         userTypeCheck(user);
         achievementCheck(user);
-        db.users.update({badges: user.badges}, {where: {id: user.id}});
+        db.users.update({badges: user.badges}, {where: {username: user.username}})
+        .then(function (result) {
+            console.log("Updated:", result);
+        }).catch(function(error) {
+            console.log("Error: ", error);
+        });
     });
 }
 
@@ -92,19 +108,21 @@ module.exports = {
     run: function () {
         //Interval set to run for one day
         setInterval(function () {
+            console.log("Badge update initiated...");
             //get all users and their associated posts and comments
-            getAllUsers()
+            getAllUsers
                 .then(function (result) {
-
+                    console.log("Data Collected, updating badges");
+                    // console.log("result", result);
                     checkAndUpdateBadges(result);
 
                 }).catch(function (error) {
 
                     console.log('ERROR: ', error)
 
-                })
+                });
 
         //runs daily
-        }, 86400000)
+        }, 6000)//86400000)
     }
 }

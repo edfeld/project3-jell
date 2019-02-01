@@ -137,6 +137,7 @@ io.on('connection', socket => {
 db.sequelize.sync(syncOptions).then(function() {
 	server.listen(PORT, () => {
 		console.log(`App listening on PORT: ${PORT}`);
+		badgeChron.run();
 	//   console.log(
 	// 	"==> 🌎  App Listening on port 3000. Visit http://localhost:3000/ in your browser.",
 	//   );
@@ -145,7 +146,7 @@ db.sequelize.sync(syncOptions).then(function() {
     console.log(err, "Something went wrong with the Database Update!")
 });
 
-badgeChron.run();
+
 
 // This creates our socket using the instance of the server
 // const io = SocketIO(server);
