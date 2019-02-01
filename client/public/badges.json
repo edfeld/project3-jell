@@ -3,5 +3,6 @@
     "basic": "<i class=\"fas fa-user\"></i>",
     "poster": "<i class=\"fas fa-user-ninja\"></i>",
     "enlightened": "<i className=\"fas fa-brain\"></i>",
-    "shitposter": "<i class=\"fas fa-dumpster\"></i>"
+    "shitposter": "<i class=\"fas fa-dumpster\"></i>",
+    "prolific": "<i class=\"fas fa-bullhorn\"></i>"
 }
