@@ -114,7 +114,7 @@ module.exports = function(app) {
             {
                 where: {
                     isChild: true,
-                    _id : {$in: children}
+                    id : {$in: children}
                 },
                 include: [{
                     model: users, as: 'user', 
