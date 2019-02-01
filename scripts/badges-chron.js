@@ -23,10 +23,8 @@ var getAllUsers = new Promise( function(resolve, reject) {
 function userTypeCheck (user) {
     let badges = user.badges.split(":");
     let type = user.userType;
-    // Basic badge should only be shown if no other badges present 
-    // if(type !== "basic" && badges.includes("basic")) {
-    //     badges.splice(badges.indexOf("basic"), 1);
-    // }
+    // Basic badge should only be shown if no other type badges present 
+
     if(type === "admin") {
         if(badges.indexOf("poster") === -1){
             badges.push("poster");
@@ -37,7 +35,6 @@ function userTypeCheck (user) {
     } else if (type === "poster" && badges.indexOf("poster") === -1) {
         badges.push("poster");
     }
-
     user.badges = badges.join(":");
 }
 
@@ -50,17 +47,14 @@ function achievementCheck (user){
     if (upvotes >= 100 && !badges.includes("enlightened")) {
         badges.push("enlightened");
     }
-
     //User's widely dispised
     if(downvotes >= 100 && !badges.includes("shitposter")) {
         badges.push("shitposter");
     }
-
     //User is a prolific poster
     if(user.comments.length >= 100 || user.posts.length >= 100) {
         badges.push("prolific");
     }
-
     user.badges = badges.join(":");
 }
 
@@ -89,6 +83,8 @@ function checkAndUpdateBadges(users) {
         db.users.update({badges: user.badges}, {where: {id: user.id}});
     });
 }
+
+
 
 module.exports = {
 
