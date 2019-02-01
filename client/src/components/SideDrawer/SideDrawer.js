@@ -25,13 +25,13 @@ const SideDrawer = props => {
             />
             <button 
                 type="button" 
-                class="btn btn-secondary searchBtn" 
+                className="btn btn-secondary searchBtn" 
                 onClick={props.search} 
                 style={{position: 'relative'}}
             >Search</button>
-            <li><a href="/">Home</a></li>
-            <li><a href="/">Top Debates</a></li>
-            <li><a href="/">Relevant Debates</a></li>
+            <li><Link to="/" onClick={() =>props.toggleHandle()}>Home</Link></li>
+            <li><Link to="/" onClick={() =>props.toggleHandle()}>Top Debates</Link></li>
+            <li><Link to="/" onClick={() =>props.toggleHandle()}>Relevant Debates</Link></li>
            
             <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
             <li><a onClick={() =>{props.changeModal('Challenge'); props.toggleHandle()}}>Challenge</a></li>

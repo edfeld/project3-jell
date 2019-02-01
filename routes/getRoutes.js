@@ -117,7 +117,7 @@ module.exports = function(app) {
                     id : {$in: children}
                 },
                 include: [{
-                    model: users, as: 'user', 
+                    model: db.users, as: 'user', 
                     attributes: ['username', 'userType', 'badges', 'createdAt']
                 }]
             }).then(function(result) {

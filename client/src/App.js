@@ -10,7 +10,7 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
-import FullPost from './components/FullPost/FullPost'
+import FullPost from './pages/FullPost/FullPost'
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
 // import FullPost from './pages/FullPost'
@@ -30,6 +30,7 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
+			commentContent: "",
 			singlePost: {}
 		}
 		this._logout = this._logout.bind(this)
@@ -168,14 +169,34 @@ class App extends Component {
 			})
 			.then(response => {
 				console.log('this is the response: ', response.data);
-				
-			
 			this.setState({
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
 				currentModal: ""
-				
+		   })
+		})
+
+	}
+
+	commentRoute = (postId) => {
+		// e.preventDefault();
+		const comment = {
+		 commentContent: this.state.commentContent,
+		}
+		axios
+			.post('/api/commentRoute', {
+				content: comment.commentContent,
+				userId: this.state.user.id,
+				isChild: 0,
+				postId: postId
+			})
+			.then(response => {
+				console.log('this is the response: ', response.data);
+			this.setState({
+				commnetContent: "",
+				currentModal: "",
+				posts: response
 		   })
 		})
 
@@ -195,7 +216,7 @@ class App extends Component {
 					.get('/api/search/all')
 					.then(response => {
 						this.setState({
-							posts: response.data
+							post: response.data.upVotes
 						})
 						
 					})
@@ -221,7 +242,7 @@ class App extends Component {
 					.get('/api/search/all')
 					.then(response => {
 						this.setState({
-							posts: response.data
+							post: response.data.downVotes
 						})
 					})
 				})
@@ -250,11 +271,56 @@ class App extends Component {
 		})
 	}
 
+	// update the radio buttons on the quiz
+	answerClicked = (key, answerSelect) => {
+		// console.log("<  answer selected================================");
+		// console.log("answer selected: ", `${key} ${answerSelect}`);
+		// console.log("ArrPosterQuiz: ", this.state.ArrPosterQuiz);
+		this.state.ArrPosterQuiz.forEach(answer => {
+			// console.log("Here is the answer and key: ", `${answer.id} ${key}`);
+			// console.log('typeof answer.id and Key: ', `${typeof(answer.id)} ${typeof(key)}`)
+			if (answer.id === parseInt(key)) {
+				// console.log("In Foreach question: ", )
+				answer.arrChoices.forEach( choice => {
+					if (choice.text === answerSelect){
+						choice.isChecked = true
+						console.log("this choice is true", choice);
+					} else {
+						choice.isChecked = false;
+						console.log("this choice is false: ", choice);
+					}
+				})
+			}
+		});
+		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
+	}
 	
-	
+	// Handle the submit button event on the quiz page
+	submitQuiz = () => {
+		const arrQuiz = this.state.ArrPosterQuiz;
+		const questCount = arrQuiz.length;
+		let quizGrade = 0;
+		let correctAnswers = 0;
+		let totalAnswers = 0;
+		
+		arrQuiz.forEach(question => {
+			let correctChoiceLetter = question.correctAnswer[0];
+			console.log("The correct letter to guess: ", correctChoiceLetter);
+			question.arrChoices.forEach( choiceSet => {
+				console.log("letter: ", choiceSet.text[0])
+				if (choiceSet.text[0] === correctChoiceLetter && choiceSet.isChecked === true) correctAnswers++;
+				if (choiceSet.isChecked === true) totalAnswers++;  // count the number of answers chosen to see if all questions have been answered
+			})
+		});
+		console.log("total questions answered: ", totalAnswers);
+		if (totalAnswers === arrQuiz.length) {
+			quizGrade = Math.round(correctAnswers / questCount * 100);
+			console.log('Your quiz Grade:: ', quizGrade + '%');
+		} else {
+			alert('Not all questions have been answered');
+		}
 
-	
-	
+	}
 
 	render() {
 		let backdrop;
@@ -273,20 +339,22 @@ class App extends Component {
 					{/* <div>
 						<Chat/>
 					</div> */}
-		
+				<MasterModal 
+					currentModal={this.state.currentModal}
+					changeModal={this.changeModal}
+					value={this.state.debateTitle && this.state.debateContext && this.state.debateTags && this.state.commentContent}
+					handleChange={this.handleChange}
+					post={this.postRoute}
+					comment={this.commentRoute}
+					postData={this.state.singlePost}
+				/>
 				<Route 
 					exact 
 					path="/" 
 					render={() => 
 						<div>
 							
-							<MasterModal 
-								currentModal={this.state.currentModal}
-								changeModal={this.changeModal}
-								value={this.state.debateTitle && this.state.debateContext && this.debateTags}
-								handleChange={this.handleChange}
-								post={this.postRoute}
-							/>
+							
 				
 							<SideDrawer 
 								show={this.state.sideOpen} 
@@ -347,10 +415,12 @@ class App extends Component {
 							search={this.searchDb}
 						/>
 						<PosterQuiz 
+							answerClicked={this.answerClicked}
 							ArrPosterQuiz={this.state.ArrPosterQuiz} 
 							user={this.state.user}  
 							_logout={this._logout} 
 							loggedIn={this.state.loggedIn} 
+							submitQuiz={this.submitQuiz}
 						/>
 						</div>
 					} 
@@ -369,7 +439,11 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 						<FullPost 
-							post={this.state.singlePost} 
+							post={this.state.singlePost}
+							upvote={this.upvote}
+							downvote={this.downvote} 
+							changeModal={this.changeModal}
+							user={this.state.user}
 						/>
 						</div>
 					}  

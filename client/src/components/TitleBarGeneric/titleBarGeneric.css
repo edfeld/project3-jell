@@ -1,20 +1,19 @@
 .titleBar{
-    width: 100%;
-    position: sticky;
-    top: .1px;
-  z-index: 400;
+    width: 96%;
+    position: relative;
+    top: 5px;
+    left: 1.9%;
 }
 
 .jumbotron{
-    font-family: 'Righteous', cursive;
+    font-family: 'Libre Baskerville', serif;
     background-image: url(https://images.pexels.com/photos/1093909/pexels-photo-1093909.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
     background-position: top right;
-    /* border-radius: 27px; */
+    border-radius: 60px;
     color: whitesmoke;
     box-shadow: 1px 3px 14px 0px black;
-    height: 15em;
+    height: 22em;
     text-shadow: 1px 1px 5px black;
     width: 100%;
-    text-align: center;
 }
 

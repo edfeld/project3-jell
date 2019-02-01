@@ -4,6 +4,7 @@ module.exports = function(app) {
 
     //updates User information
     app.put("/api/update/user/:id", function(req, res) {
+        // console.log("req.body", req.body);
         db.users.update(req.body, {where : {id: req.params.id}})
         .then(function(result) {
             console.log("User updated", req.body);
