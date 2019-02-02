@@ -7,6 +7,7 @@ import TitleBar from '../components/titleBar'
 
 const Home = props => {
 	if (props.user && props.posts !== null) {
+            // props.allposts()
 		return (
             <div style={{backgroundImage: "inherit"}}>
               <TitleBar />
@@ -27,7 +28,8 @@ const Home = props => {
               </div>
             </div>
 		)
-	} else {
+	} else{
+            // props.allposts()
 		return (
             <div style={{backgroundImage: "inherit"}}>
               <TitleBar />
