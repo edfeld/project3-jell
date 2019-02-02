@@ -2,14 +2,11 @@ import React from 'react';
 import PostHeader from './PostHeader'
 import PostComments from './PostComments'
 
-
-
-
 const FullPost = props => {
    console.log(props);
    if(props.post.post === null){
       return (<div/>)
-   }else{
+   }else if(props.post.post !== null){
    return(
    <div>
    <PostHeader 
