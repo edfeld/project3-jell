@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Chat.css";
 import io from "socket.io-client";
+const socket = io();
 
 class Chat extends React.Component{
     constructor(props){
@@ -12,9 +13,10 @@ class Chat extends React.Component{
             messages: []
         };
         
-        this.socket = io('localhost:3001');
+        this.socket = io('localhost:3001/test');
         
-        this.socket.on('RECEIVE_MESSAGE', function(data){
+        socket.on('RECEIVE_MESSAGE', function(data){
+            console.log("Message Received: ", data )
             addMessage(data);
         });
 
@@ -25,12 +27,13 @@ class Chat extends React.Component{
         };
 
         this.sendMessage = ev => {
-            console.log("Somethign taljsdlfjaljdfla")
             ev.preventDefault();
-            this.socket.emit('SEND_MESSAGE', {
+            // console.log(this.state.username, this.state.message)
+            socket.emit('SEND_MESSAGE', {
                 author: this.state.username,
                 message: this.state.message
             })
+ 
             this.setState({message: ''});
 
         }

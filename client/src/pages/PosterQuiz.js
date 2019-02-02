@@ -1,36 +1,36 @@
 import React from 'react'
-import Card from '../components/Card/Card';
-import TitleBar from '../components/titleBar'
-// import "./PosterQuiz.css"
-import QuizCard from '../components/QuizCard/QuizCard';
+import Card from '../components/Card/Card'
+import TitleBarGeneric from '../components/TitleBarGeneric'
+import './PosterQuiz.css'
+import QuizCard from '../components/QuizCard/QuizCard'
 
 // TODO - add proptypes
 const PosterQuiz = props => {
 	// if (props.user) {
 		return (
             <div style={{backgroundImage: "inherit"}}>
-                  <TitleBar />
+                  <TitleBarGeneric
+                  title={"Debate Competency Quiz"}
+                  lead={"Take this quiz to qualify to post debate topics and post concurrences and rebuttals"}
+                  />
                   <div className="Home">
                         <p>Current User:</p>
                         <code>
                               {JSON.stringify(props.user)}
                         </code>
                   </div>
-                  {/* <div className="card w-75">
-                        <div className="card-body">
-                              <h5 className="card-title">Card title</h5>
-                              <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                              <a href="#" className="btn btn-primary">Button</a>
-                        </div>
-                  </div> */}
                   {props.ArrPosterQuiz.map(quiz => (
                         < QuizCard 
+                              key={quiz.id}
+                              answerClicked={props.answerClicked}
+                              mkey={quiz.id}
                               question={quiz.questionText}
-                              // question={props.ArrPosterQuiz.questionText}
                               arrChoices={quiz.arrChoices}
                         />
-
                   ))}
+                  <div className='submit-div'>
+                        <button className='submit-quiz' onClick={() => {props.submitQuiz()}}>Submit Quiz</button>
+                  </div>
             </div>
 		)
       // } 

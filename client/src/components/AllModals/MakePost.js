@@ -6,6 +6,7 @@ const MakePost = props => (
     <div className="postBackground">
         <h2 style={{color: 'black'}}>Make A Post</h2>
         <div>
+            <p>Title?</p>
             <input 
                 className="form-control" 
                 type="text" 
@@ -17,6 +18,7 @@ const MakePost = props => (
             />
         </div>
         <div>
+            <p>Context</p>
             <div className="input-group">
                 <textarea 
                     className="form-control" 
@@ -28,10 +30,11 @@ const MakePost = props => (
                 </textarea>
             </div>
             <div>
+            <p>Tags?</p>
             <input 
                 className="form-control" 
                 type="text" 
-                placeholder="Whats Your Debate Title?"
+                placeholder="Any Tags That You Want To Add?"
                 name="debateTags"
                 value3={props.value}
                 onChange={props.handleChange}

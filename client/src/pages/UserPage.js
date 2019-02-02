@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 class UserPage extends Component {
 	constructor() {
@@ -6,8 +6,6 @@ class UserPage extends Component {
 		this.state = {
 			
 		}
-		this._logout = this._logout.bind(this)
-		this._login = this._login.bind(this)
 	}
 
 	render() {

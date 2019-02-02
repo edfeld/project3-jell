@@ -10,7 +10,8 @@ import MasterModal from './components/AllModals/MasterModal'
 import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
-import FullPost from './components/FullPost/FullPost'
+import FullPost from './pages/FullPost/FullPost'
+import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
 // import FullPost from './pages/FullPost'
@@ -27,9 +28,11 @@ class App extends Component {
 			currentModal: "",
 			searchBar: "",
 			posts: [],
+			searchResults: [],
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
+			commentContent: "",
 			singlePost: {}
 		}
 		this._logout = this._logout.bind(this)
@@ -57,17 +60,20 @@ class App extends Component {
 		})
 
 		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
-		
+
+		this.getAllPosts();
+	}
+
+	getAllPosts = () => {
 		axios
-			.get('/api/search/all')
+			.get('/api/getall')
 			.then(response => {
-				console.log('this is the response: ', response.data);
 			this.setState({
 				posts: response.data
 		   })
 		})
-
 	}
+
 
 	_logout = (event) => {
 		event.preventDefault()
@@ -109,19 +115,16 @@ class App extends Component {
 
 	searchDb = (e) => {
 		e.preventDefault();
-		const search = {
-		 searchBar: this.state.searchBar
-		}
+		console.log(this.state.searchBar)
 		axios
-			.post('/api/search', {
-				sent: search.searchBar
-			})
+			.get('/api/search/' + this.state.searchBar)
 			.then(response => {
 				console.log('this is the response: ', response.data);
-			this.setState({
-				searchBar: "",
-				posts: response.data
-		   })
+				this.setState({
+					searchBar: "",
+					searchResults: response.data
+				})
+			
 		})
 	}
 
@@ -163,20 +166,42 @@ class App extends Component {
 			.post('/api/postRoute', {
 				title: post.debateTitle,
 				context: post.debateContext,
-				tags: post.debateTags
+				tags: post.debateTags,
+				userId: this.state.user.id
 				
 			})
 			.then(response => {
-				console.log('this is the response: ', response.data);
-				
-			
+				console.log('this is the  post response: ', response.data);
 			this.setState({
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
 				currentModal: ""
-				
 		   })
+		   this.getAllPosts();
+		})
+
+	}
+
+	commentRoute = (postId) => {
+		// e.preventDefault();
+		const comment = {
+		 commentContent: this.state.commentContent,
+		}
+		axios
+			.post('/api/commentRoute', {
+				content: comment.commentContent,
+				userId: this.state.user.id,
+				isChild: 0,
+				postId: postId
+			})
+			.then(response => {
+				console.log('this is the response of the comment route: ', response.data);
+			this.setState({
+				commnetContent: "",
+				currentModal: ""
+		   })
+		   this.fullpost(postId);
 		})
 
 	}
@@ -192,11 +217,9 @@ class App extends Component {
 				})
 				.then(response => {
 					axios
-					.get('/api/search/all')
+					.get('/api/getall')
 					.then(response => {
-						this.setState({
-							posts: response.data
-						})
+						this.fullpost(key);
 						
 					})
 				})
@@ -218,11 +241,9 @@ class App extends Component {
 				})
 				.then(response => {
 					axios
-					.get('/api/search/all')
+					.get('/api/getall')
 					.then(response => {
-						this.setState({
-							posts: response.data
-						})
+						this.fullpost(key)
 					})
 				})
 			}
@@ -232,29 +253,80 @@ class App extends Component {
 
 	componentWillMount(){
 		this.fullpost();
-		
 	}
 	
 
 
-	fullpost = (key) => {
-	console.log('fullpost key: ', key)
-	const id = parseInt(key);
+	fullpost = (id) => {
+	
+	console.log('fullpost id: ', id)
+	if(!id){
+		id = parseInt(window.location.href.split('post/')[1])
+	}else{
+		id = parseInt(id);
+	}
+	console.log(id)
+	console.log(window.location.href)
 	axios
 		.get('/api/post/' + id)
 		.then(response => {
 			this.setState({
 				singlePost: response.data
 			})
-			console.log('state after call ',this.state.singlePost)
+			console.log('state after call ', this.state.singlePost)
 		})
 	}
 
+	// update the radio buttons on the quiz
+	answerClicked = (key, answerSelect) => {
+		// console.log("<  answer selected================================");
+		// console.log("answer selected: ", `${key} ${answerSelect}`);
+		// console.log("ArrPosterQuiz: ", this.state.ArrPosterQuiz);
+		this.state.ArrPosterQuiz.forEach(answer => {
+			// console.log("Here is the answer and key: ", `${answer.id} ${key}`);
+			// console.log('typeof answer.id and Key: ', `${typeof(answer.id)} ${typeof(key)}`)
+			if (answer.id === parseInt(key)) {
+				// console.log("In Foreach question: ", )
+				answer.arrChoices.forEach( choice => {
+					if (choice.text === answerSelect){
+						choice.isChecked = true
+						console.log("this choice is true", choice);
+					} else {
+						choice.isChecked = false;
+						console.log("this choice is false: ", choice);
+					}
+				})
+			}
+		});
+		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
+	}
 	
-	
+	// Handle the submit button event on the quiz page
+	submitQuiz = () => {
+		const arrQuiz = this.state.ArrPosterQuiz;
+		const questCount = arrQuiz.length;
+		let quizGrade = 0;
+		let correctAnswers = 0;
+		let totalAnswers = 0;
+		
+		arrQuiz.forEach(question => {
+			let correctChoiceLetter = question.correctAnswer[0];
+			console.log("The correct letter to guess: ", correctChoiceLetter);
+			question.arrChoices.forEach( choiceSet => {
+				console.log("letter: ", choiceSet.text[0])
+				if (choiceSet.text[0] === correctChoiceLetter && choiceSet.isChecked === true) correctAnswers++;
+				if (choiceSet.isChecked === true) totalAnswers++;  // count the number of answers chosen to see if all questions have been answered
+			})
+		});
+		console.log("total questions answered: ", totalAnswers);
+		if (totalAnswers === arrQuiz.length) {
+			quizGrade = Math.round(correctAnswers / questCount * 100);
+			console.log('Your quiz Grade:: ', quizGrade + '%');
+		} else {
+			alert('Not all questions have been answered');
+		}
 
-	
-	
+	}
 
 	render() {
 		let backdrop;
@@ -273,21 +345,22 @@ class App extends Component {
 					{/* <div>
 						<Chat/>
 					</div> */}
-		
+				<MasterModal 
+					currentModal={this.state.currentModal}
+					changeModal={this.changeModal}
+					value={this.state.debateTitle && this.state.debateContext && this.state.debateTags && this.state.commentContent}
+					handleChange={this.handleChange}
+					post={this.postRoute}
+					comment={this.commentRoute}
+					postData={this.state.singlePost}
+				/>
 				<Route 
 					exact 
 					path="/" 
 					render={() => 
+						
 						<div>
 							
-							<MasterModal 
-								currentModal={this.state.currentModal}
-								changeModal={this.changeModal}
-								value={this.state.debateTitle && this.state.debateContext && this.debateTags}
-								handleChange={this.handleChange}
-								post={this.postRoute}
-							/>
-				
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -304,9 +377,10 @@ class App extends Component {
 								upvote={this.upvote}
 								downvote={this.downvote}
 								fullpost={this.fullpost}
+								allposts={this.getAllPosts}
 							/>
 						</div>
-					} 
+					}
 				/>
 				<Route
 					exact
@@ -347,17 +421,19 @@ class App extends Component {
 							search={this.searchDb}
 						/>
 						<PosterQuiz 
+							answerClicked={this.answerClicked}
 							ArrPosterQuiz={this.state.ArrPosterQuiz} 
 							user={this.state.user}  
 							_logout={this._logout} 
 							loggedIn={this.state.loggedIn} 
+							submitQuiz={this.submitQuiz}
 						/>
 						</div>
 					} 
 				/>
 				<Route 
 					exact 
-					path="/fullpost"
+					path="/api/post/:id"
 					render={() =>
 						<div>
 						<SideDrawer 
@@ -369,7 +445,11 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 						<FullPost 
-							post={this.state.singlePost} 
+							post={this.state.singlePost}
+							upvote={this.upvote}
+							downvote={this.downvote} 
+							changeModal={this.changeModal}
+							user={this.state.user}
 						/>
 						</div>
 					}  

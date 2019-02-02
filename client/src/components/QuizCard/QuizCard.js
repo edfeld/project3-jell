@@ -1,38 +1,31 @@
 import React from 'react';
 import "./QuizCard.css";
 
-const QuizCard = props => (
-    <div className="card quizcard">
+const QuizCard = props => {
+    const key = props.mkey.toString();
+    return(
+    <div className="card quizcard" key={key}>
         <div className="card-header quizcard-header">
         {props.question}
         </div>
-        <ul key={props.id} className="card-body">
+        <div  className="card-body">
             <ul className="list-choices">
                 {props.arrChoices.map(answer => (
-                    <li className='quiz-choice' key={answer.charAt(0)}>
-                        <input type="checkbox"  checked='' id={answer.charAt(0)}/><span>&nbsp;{answer}</span>
+                    <li className='quiz-choice' key={`${key}.${answer.text.charAt(0)}`} onClick={() => props.answerClicked(key, answer.text)}>
+                        <input name={`choiceQ${key}}`} type="radio" 
+                        onChange={() => {}}  
+                        checked={answer.isChecked}
+                        /><span>&nbsp;{answer.text}</span>
                     </li>
                     ))}
             </ul>
             {/* <blockquote className="blockquote mb-0">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
                     <footer className="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-            </blockquote> */}
-        </ul>
+                </blockquote> */}
+        </div> {/* End quizCard*/}
     </div>
-);
-// const Card = props => (
-//     <header className="card">
-// {/* <div class="flex-container"> */}
-//     <div className="card-body">
-//         <h2 className="card-title">Debate Title</h2>
-//         <h5 className="card-subtitle mb-2">Debate Topic</h5>
-//         <p className="card-text">Quick Debate Snippet</p>
-//         <a href="#" className="card-link">View Full Debate</a>
-//         <a href="#" className="card-link">Another link</a>
-//     {/* </div> */}
-// </div>
-//     </header>
-// );
+    )
+};
 
 export default QuizCard;

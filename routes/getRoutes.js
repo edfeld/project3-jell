@@ -3,12 +3,12 @@ const db = require("../models");
 module.exports = function(app) {
 
     //Searches for all posts with requested tags
-    app.get("/api/search", function(req, res) {
-        console.log(req.body.sent, "this is req.body")
+    app.get("/api/search/:tags", function(req, res) {
+        console.log(req.params.tags)
         db.posts
             .findAll({
                 where: {
-                    tags: req.body.sent
+                    tags: req.params.tags
                 },
                 include: [{model: db.comments, as: 'comments'}]    
             })
@@ -20,7 +20,7 @@ module.exports = function(app) {
     });
 
     //gets all of the posts
-    app.get("/api/search/all", function(req, res) {
+    app.get("/api/getall", function(req, res) {
         // console.log("this is the passport user ", req.session.passport)
         db.posts.findAll({
             include: [{model: db.comments, as: 'comments'}]
@@ -33,8 +33,8 @@ module.exports = function(app) {
     //gets n posts with an offset of j support for pagination
     app.get("/api/search/:n/:j", function(req, res) {
         db.posts.findAll({
-            limit: req.params.n, 
-            offset: req.params.j
+            limit: parseInt(req.params.n), // [ere] add parseInt
+            offset: parseInt(req.params.j) // [ere] add parseInt
         }).then(function(result){
             res.json(result);
         });
@@ -47,8 +47,8 @@ module.exports = function(app) {
                 //need to adjust to exclude personal info
                 attributes: ['username', 'userType', 'badges', 'createdAt'],
                 where: {id: req.params.id},
-                include: [{model: posts, as: 'posts'},
-                          {model: comments, as: 'comments'}]
+                include: [{model: db.posts, as: 'posts'}, // [ere] prefix with db.
+                          {model: db.comments, as: 'comments'}]
             }).then(function(result) {
                 res.json(result);
             });
@@ -84,14 +84,27 @@ module.exports = function(app) {
 
     //gets n posts with an offset of j support for pagination orders by upvotes
     app.get("/api/top-posts/:n/:j", function(req, res) {
+        const { n, j } = req.params
+        // console.log("n , J: ", n + " " + j)
         db.posts.findAll({
-            limit: req.params.n, 
-            offset: req.params.j,
-            order:  sequelize.fn('max', sequelize.col('upVotes'))
+            order: [
+            ['upVotes', 'DESC'], // Order by upvotes descending
+            ]
         }).then(function(result){
-            res.json(result);
+            // console.log("slice results: ", result.slice(j, parseInt(j) + parseInt(n))); 
+            res.json( result.slice(j, parseInt(j) + parseInt(n))); // slice the array to start at j and capture n elements
         });
     });
+    // [ERE] function copy
+    // app.get("/api/top-posts/:n/:j", function(req, res) {
+    //     db.posts.findAll({
+    //         limit: parseInt(req.params.n), 
+    //         offset: parseInt(req.params.j),
+    //         order:  sequelize.fn('max', sequelize.col('upVotes'))
+    //     }).then(function(result){
+    //         res.json(result);
+    //     });
+    // });
 
     //gets the children specified for a comment
     app.get("/api/comments/children/:children", function (req, res) {
@@ -101,10 +114,10 @@ module.exports = function(app) {
             {
                 where: {
                     isChild: true,
-                    _id : {$in: children}
+                    id : {$in: children}
                 },
                 include: [{
-                    model: users, as: 'user', 
+                    model: db.users, as: 'user', 
                     attributes: ['username', 'userType', 'badges', 'createdAt']
                 }]
             }).then(function(result) {
