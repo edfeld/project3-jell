@@ -11,6 +11,7 @@ import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
+import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
 // import FullPost from './pages/FullPost'
@@ -27,6 +28,7 @@ class App extends Component {
 			currentModal: "",
 			searchBar: "",
 			posts: [],
+			searchResults: [],
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
@@ -58,18 +60,20 @@ class App extends Component {
 		})
 
 		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
-		
-		if(this.state.posts !== undefined){
+
+		this.getAllPosts();
+	}
+
+	getAllPosts = () => {
 		axios
-			.get('/api/search/all')
+			.get('/api/getall')
 			.then(response => {
 			this.setState({
 				posts: response.data
 		   })
 		})
-
 	}
-}
+
 
 	_logout = (event) => {
 		event.preventDefault()
@@ -111,19 +115,16 @@ class App extends Component {
 
 	searchDb = (e) => {
 		e.preventDefault();
-		const search = {
-		 searchBar: this.state.searchBar
-		}
+		console.log(this.state.searchBar)
 		axios
-			.post('/api/search', {
-				sent: search.searchBar
-			})
+			.get('/api/search/' + this.state.searchBar)
 			.then(response => {
 				console.log('this is the response: ', response.data);
-			this.setState({
-				searchBar: "",
-				posts: response.data
-		   })
+				this.setState({
+					searchBar: "",
+					searchResults: response.data
+				})
+			
 		})
 	}
 
@@ -175,9 +176,9 @@ class App extends Component {
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
-				currentModal: "",
-				posts: response.data
+				currentModal: ""
 		   })
+		   this.getAllPosts();
 		})
 
 	}
@@ -216,7 +217,7 @@ class App extends Component {
 				})
 				.then(response => {
 					axios
-					.get('/api/search/all')
+					.get('/api/getall')
 					.then(response => {
 						this.fullpost(key);
 						
@@ -240,7 +241,7 @@ class App extends Component {
 				})
 				.then(response => {
 					axios
-					.get('/api/search/all')
+					.get('/api/getall')
 					.then(response => {
 						this.fullpost(key)
 					})
@@ -252,7 +253,6 @@ class App extends Component {
 
 	componentWillMount(){
 		this.fullpost();
-		
 	}
 	
 
@@ -273,7 +273,7 @@ class App extends Component {
 			this.setState({
 				singlePost: response.data
 			})
-			console.log('state after call ',this.state.singlePost)
+			console.log('state after call ', this.state.singlePost)
 		})
 	}
 
@@ -358,7 +358,9 @@ class App extends Component {
 					exact 
 					path="/" 
 					render={() => 
+						
 						<div>
+							
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -375,6 +377,7 @@ class App extends Component {
 								upvote={this.upvote}
 								downvote={this.downvote}
 								fullpost={this.fullpost}
+								allposts={this.getAllPosts}
 							/>
 						</div>
 					}
