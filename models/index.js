@@ -13,8 +13,8 @@ console.log('config', config);
 let sequelize;
 if (env === 'production') {
   console.log(config);
-  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  // sequelize = new Sequelize(config.database, config.username, config.password, config);
 } else {
   console.log('config ', config);
   console.log('env', env);
