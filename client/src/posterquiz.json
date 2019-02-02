@@ -1,0 +1,140 @@
+[
+  {
+    "id": 1,
+    "questionText": "From the list below, select the name of the rhetorical device that attacks the arguer instead of the argument.",
+    "userAnswer": "",
+    "correctAnswer": "D) Ad hominem",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Ad hominem", "isChecked": false},
+      {"text": "E) Burden of proof", "isChecked": false},
+      {"text": "F) Straw man", "isChecked": false}
+    ]
+  },
+  {
+    "id": 2,
+    "questionText": "From the list below, select the name of the rhetorical device that unfairly places the onus of providing evidence for a position on the wrong side of an issue.",
+    "userAnswer": "",
+    "correctAnswer": "E) Burden of proof",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question","isChecked": false},
+      {"text": "C) False dilemma","isChecked": false},
+      {"text": "D) Ad hominem","isChecked": false},
+      {"text": "E) Burden of proof","isChecked": false},
+      {"text": "F) Straw man","isChecked": false}
+    ]
+  },
+  {
+    "id": 3,
+    "questionText": "From the list below, select the name of the rhetorical device that ignores an opponent's actual position and instead presents and attacks a distorted, oversimplified, or misrepresented version of that position.",
+    "userAnswer": "",
+    "correctAnswer": "F) Straw man",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Ad hominem", "isChecked": false},
+      {"text": "E) Burden of proof", "isChecked": false},
+      {"text": "F) Straw man", "isChecked": false}
+    ]
+  },
+  {
+    "id": 4,
+    "questionText": "From the list below, select the name of the rhetorical device that limits consideration to only two alternatives when there are, in fact, more than two.",
+    "userAnswer": "",
+    "correctAnswer": "C) False dilemma",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Ad hominem", "isChecked": false},
+      {"text": "E) Burden of proof", "isChecked": false},
+      {"text": "F) Straw man", "isChecked": false}
+    ]
+  },
+  {
+    "id": 5,
+    "questionText": "From the list below, select the name of the rhetorical device that claims we must continue a certain course of action since we have already begun that course.",
+    "userAnswer": "",
+    "correctAnswer": "A) Slippery slope",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Ad hominem", "isChecked": false},
+      {"text": "E) Burden of proof", "isChecked": false},
+      {"text": "F) Straw man", "isChecked": false}
+    ]
+  },
+  {
+    "id": 6,
+    "questionText": "From the list below, select the name of the rhetorical device that tempts us to believe there is a necessary connection between one thing happening and some other thing happening when, in fact, there is no such necessary connection.",
+    "userAnswer": "",
+    "correctAnswer": "A) Slippery slope",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Ad hominem", "isChecked": false},
+      {"text": "E) Burden of proof", "isChecked": false},
+      {"text": "F) Straw man", "isChecked": false}
+    ]
+  },
+  {
+    "id":7,
+    "questionText": "From the list below, select the name of the rhetorical device that asks us to accept premises that are as controversial as the conclusion being argued for and which are controversial on the same grounds.",
+    "userAnswer": "",
+    "correctAnswer": "B) Begging the question",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Ad hominem", "isChecked": false},
+      {"text": "E) Burden of proof", "isChecked": false},
+      {"text": "F) Straw man", "isChecked": false}
+    ]
+  },
+  {
+    "id":8,
+    "questionText": "Poisoning the well and argument from inconsistency are versions of which of the following types of rhetorical devices?",
+    "userAnswer": "",
+    "correctAnswer": "D) Ad hominem",
+    "arrChoices": [
+      {"text": "A) Slippery slope", "isChecked": false},
+      {"text": "B) Begging the question", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Ad hominem", "isChecked": false},
+      {"text": "E) Burden of proof", "isChecked": false},
+      {"text": "F) Straw man", "isChecked": false}
+    ]
+  },
+  {
+    "id":9,
+    "questionText": "Choose the fallacy at work in this example: Either join in political life or resign yourself to a lonely and meaningless existence.",
+    "userAnswer": "",
+    "correctAnswer": "C) False dilemma",
+    "arrChoices": [
+      {"text": "A) Appeal to ignorance", "isChecked": false},
+      {"text": "B) Circumstantial ad hominem", "isChecked": false},
+      {"text": "C) False dilemma", "isChecked": false},
+      {"text": "D) Poisoning the well", "isChecked": false},
+      {"text": "E) Genetic fallacy", "isChecked": false}
+    ]
+  },
+  {
+    "id":10,
+    "questionText": "Choose the fallacy at work in this example: You have to discount Mr. McGill's views on abortion. As a member of the Pre-Natal Liberation Organization, he can't help being prejudiced.",
+    "userAnswer": "",
+    "correctAnswer": "C) Circumstantial ad hominem",
+    "arrChoices": [
+      {"text": "A) Appeal to ignorance", "isChecked": false},
+      {"text": "B) Burden of proof", "isChecked": false},
+      {"text": "C) Circumstantial ad hominem", "isChecked": false},
+      {"text": "D) Line-drawing fallacy", "isChecked": false},
+      {"text": "E) Perfectionist fallacy", "isChecked": false}
+    ]
+  }
+]

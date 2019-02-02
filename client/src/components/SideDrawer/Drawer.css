@@ -1,0 +1,85 @@
+.side-drawer {
+    height: 100%;
+    background: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    max-width: 400px;
+    z-index: 600;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-transition: -webkit-transform 0.3s ease-out;
+    transition: -webkit-transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    background: rgb(206, 167, 116);
+    font-family: 'Libre Baskerville', serif;
+    
+}
+
+.search{
+    position: absolute;
+    bottom: 80%;
+    right: 8px;
+    width: 96%;
+    font-family: 'Libre Baskerville', serif;
+}
+
+.drawerHead{
+    text-align: center;
+    font-family: 'Libre Baskerville', serif;
+    text-decoration: underline;
+    padding-top: 5px;
+}
+
+
+.side-drawer ul {
+    height: 100%;
+    margin-top: -25px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.side-drawer li{
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+
+.side-drawer a:hover,
+.side-drawer a:active,
+.side-drawer li:hover{
+    color: red;
+}
+
+
+.side-drawer.open {
+    transform: translateX(0);
+}
+
+
+
+.side-drawer a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.2rem
+}
+
+.nav-link a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.2rem;
+    
+}
+
+.searchBtn{
+  width: 6em;  
+  top: 50px;
+  left: -32px;
+  font-family: 'Libre Baskerville', serif;
+}

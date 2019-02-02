@@ -1,0 +1,32 @@
+/* PosterQuiz CSS */
+.quizcard-header {
+    background-color: #544841;
+    color: #ffffff;
+}
+.quizcard {
+    width: 96.4%;
+    display: inline-flex;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    position: relative;
+    border: rgb(143, 143, 143) solid 3px;
+    margin: 1.5rem;
+    background-color: #fff;
+    background-image: linear-gradient(to bottom right,
+    rgba(221, 109, 18, 0.856), rgba(0, 0, 0, 0.753));
+    border-radius: .25rem;
+}
+
+.list-choices {
+    list-style-type: none;
+}
+
+.quiz-choice:hover {
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease-out;
+    box-shadow: 3px 3px 3px 0px black;
+    background: rgba(145, 67, 3, 0.74);
+    text-shadow: 3px 3px 20px black;
+}

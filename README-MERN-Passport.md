@@ -31,3 +31,4 @@ View the live version of this app here:
 * In development mode (i.e. `npm run dev`), OAuth google callback is not being proxied to the google servers. Therefore in order to test the google OAuth on your local machine do the following:
 1) `npm run build`
 2) `npm run prod`
+`npm run start` or `npm start` starts the app in dev mode [Ed].

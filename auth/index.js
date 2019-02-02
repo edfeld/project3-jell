@@ -1,7 +1,10 @@
-const express = require('express')
-const router = express.Router()
-const User = require('../db/models/user')
+const express = require('express');
+const router = express.Router();
+const User = require('../models').users;
 const passport = require('../passport')
+const bcrypt = require('bcryptjs');
+
+const saltRounds = 10;
 
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
@@ -34,10 +37,12 @@ router.post(
 	(req, res) => {
 		console.log('POST to /login')
 		const user = JSON.parse(JSON.stringify(req.user)) // hack
+		console.log("at /login route.  user: ", user);
 		const cleanUser = Object.assign({}, user)
-		if (cleanUser.local) {
-			console.log(`Deleting ${cleanUser.local.password}`)
-			delete cleanUser.local.password
+		console.log("cleanUser: =======*******>", cleanUser);
+		if (cleanUser.passwordHashSalt) {
+			console.log(`Deleting ${cleanUser.passwordHashSalt}`)
+			delete cleanUser.passwordHashSalt
 		}
 		res.json({ user: cleanUser })
 	}
@@ -54,23 +59,59 @@ router.post('/logout', (req, res) => {
 })
 
 router.post('/signup', (req, res) => {
-	const { username, password } = req.body
+	const { username, password, firstName, lastName, email } = req.body
+	// console.log("username, password: ", `${username} ${password}` )
 	// ADD VALIDATION
-	User.findOne({ 'local.username': username }, (err, userMatch) => {
-		if (userMatch) {
-			return res.json({
+	User.findOne({ where: { 'username': username }})
+	.then( response => {
+		if (response) {
+			console.log("response: ", response.dataValues);
+			return {
 				error: `Sorry, already a user with the username: ${username}`
-			})
+			}
+		} else {
+			// TODO: create a new user. 
+			// TODO: bcrypt password.
+			bcrypt.hash(password, saltRounds, function(err, hash) {
+				// Store hash in your password DB.
+				// console.log("-=--=-=-=-=-=> Hashed password::: ", hash);
+				// Display the unencrypted Hash
+				// const isMatch = bcrypt.compareSync(password, hash);
+				// console.log("check the hash match: ==============> it's ", isMatch);
+				const newUser = {
+					'username': username,
+					'passwordHashSalt': hash,
+					'firstName': firstName,
+					'lastName': lastName,
+					'email': email
+				}
+				// console.log("New User: ===>:", newUser);
+				User.create(newUser).then(function(newItemUser) {
+					return res.json(newItemUser);
+				});
+			});
 		}
-		const newUser = new User({
-			'local.username': username,
-			'local.password': password
-		})
-		newUser.save((err, savedUser) => {
-			if (err) return res.json(err)
-			return res.json(savedUser)
-		})
 	})
+	.catch(function (err) {
+	console.log("findOne Error: ", err);
+  });
+
+	// User.findOne({ where: { 'username': username }}, (err, userMatch) => {
+	// 	if (userMatch) {
+	// 		return res.json({
+	// 			error: `Sorry, already a user with the username: ${username}`
+	// 		})
+	// 	}
+	// 	const newUser = new User({
+	// 		'username': username,
+	// 		'passwordHashSalt': password
+	// 	})
+	// 	console.log("New User: ===>:", newUser);
+	// 	newUser.save((err, savedUser) => {
+	// 		if (err) return res.json(err)
+	// 		return res.json(savedUser)
+	// 	})
+	// })
 })
 
 module.exports = router
