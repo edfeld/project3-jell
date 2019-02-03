@@ -13,8 +13,9 @@ const Badges = props => {
             {badges.map(badge => {
                 <i className={icons[{badge}]}></i>
             })}
-            
         </div>
     )
 
-}
+};
+
+export default Badges;
