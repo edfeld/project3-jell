@@ -32,8 +32,7 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
-			commentContent: "",
-			singlePost: {}
+			commentContent: ""
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -201,83 +200,10 @@ class App extends Component {
 				commnetContent: "",
 				currentModal: ""
 		   })
-		//    this.fullpost(postId);
 		})
+		
 
 	}
-
-	// upvote = (key) => {
-	// 	for(var i = 0; i < this.state.posts.length; i++) {
-	// 		if(this.state.posts[i].id === key){
-	// 			const plusOne = this.state.posts[i].upVotes + 1;
-	// 		axios
-	// 			.put('/api/upvote', {
-	// 				post: this.state.posts[i].id,
-	// 				upvotes: plusOne
-	// 			})
-	// 			.then(response => {
-	// 				axios
-	// 				.get('/api/getall')
-	// 				.then(response => {
-	// 					// this.fullpost(key);
-	// 					console.log(response);
-						
-	// 				})
-	// 			})
-	// 		}
-	// 	}
-		
-	// }
-
-	// downvote = (key) => {
-	// 	for(var i = 0; i < this.state.posts.length; i++) {
-	// 		if(this.state.posts[i].id === key){
-	// 			console.log(this.state.posts[i].downVotes);
-	// 			const minusOne = this.state.posts[i].downVotes + 1;
-	// 			console.log(this.state.posts[i].downVotes);
-	// 		axios
-	// 			.put('/api/downvote', {
-	// 				post: this.state.posts[i].id,
-	// 				downvotes: minusOne
-	// 			})
-	// 			.then(response => {
-	// 				axios
-	// 				.get('/api/getall')
-	// 				.then(response => {
-	// 					// this.fullpost(key)
-	// 					console.log(response);
-	// 				})
-	// 			})
-	// 		}
-	// 	}
-		
-	// }
-
-	// componentWillMount(){
-	// 	this.fullpost();
-	// }
-	
-
-
-	// fullpost = (id) => {
-	
-	// console.log('fullpost id: ', id)
-	// if(!id){
-	// 	id = parseInt(window.location.href.split('post/')[1])
-	// }else{
-	// 	id = parseInt(id);
-	// }
-	// console.log(id)
-	// console.log(window.location.href)
-	// axios
-	// 	.get('/api/post/' + id)
-	// 	.then(response => {
-	// 		this.setState({
-	// 			singlePost: response.data
-	// 		})
-	// 		console.log('state after call ', this.state.singlePost)
-	// 	})
-	// }
 
 	// update the radio buttons on the quiz
 	answerClicked = (key, answerSelect) => {
@@ -447,11 +373,11 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 						<FullPost 
-							// post={this.state.singlePost}
 							upvote={this.upvote}
 							downvote={this.downvote} 
 							changeModal={this.changeModal}
 							user={this.state.user}
+							commentFunction={this.commentRoute}
 						/>
 						</div>
 					}  
