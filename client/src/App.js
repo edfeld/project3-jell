@@ -11,6 +11,7 @@ import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
+import UserPage from './pages/UserPage/UserPage'
 import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
@@ -379,6 +380,17 @@ class App extends Component {
 							user={this.state.user}
 							commentFunction={this.commentRoute}
 						/>
+						</div>
+					}  
+					/>
+
+
+<Route 
+					exact 
+					path="/api/user/:id"
+					render={() =>
+						<div>
+							<UserPage />
 						</div>
 					}  
 					/>
