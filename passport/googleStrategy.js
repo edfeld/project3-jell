@@ -15,41 +15,42 @@ const strategy = new GoogleStrategy(
 		// code
 		const { id, name, photos } = profile
 		User.findOne({where: { 'googleId': id }})
-			.then(userMatch => {
-				if (userMatch) {
-					return done(null, userMatch)
-				} else {
-					// if no user in our db, create a new user with that googleId
-					console.log('====== PRE SAVE Google =======')
-					console.log(id)
-					console.log(profile)
-					console.log('====== post save Google ....')
-					const newGoogleUser = new User({
-						username: "GoogleUser",
-						passwordHashSalt: "GoogleUser",
-						googleId: id,
-						firstName: name.givenName,
-						lastName: name.familyName,
-						// photos: photos
+		.then(userMatch => {
+			if (userMatch) {
+				return done(null, userMatch)
+			} else {
+				const newUserId = `${name.givenName[0]}${name.familyName}`;
+				// if no user in our db, create a new user with that googleId
+				console.log('====== PRE SAVE Google =======')
+				console.log(id)
+				console.log(profile)
+				console.log('====== post save Google ....')
+				const newGoogleUser = new User({
+					username: newUserId,
+					passwordHashSalt: "GoogleUser",
+					googleId: id,
+					firstName: name.givenName,
+					lastName: name.familyName,
+					// photos: photos
+				})
+				// save this user
+				newGoogleUser.save()
+					.then(savedUser =>{
+						console.log("savedUser:=:=:=:=:=:=", savedUser);
+						return done(null, savedUser);
 					})
-					// save this user
-					newGoogleUser.save()
-						.then(savedUser =>{
-							console.log("savedUser:=:=:=:=:=:=", savedUser);
-							return done(null, savedUser);
-						})
-						.catch(err => {
-							return done(null, false);
-						})
-					// newGoogleUser.save((err, savedUser) => {
-					// 	if (err) {
-					// 		console.log('Error!! saving the new google user')
-					// 		console.log(err)
-					// 		return done(null, false)
-					// 	} else {
-					// 		return done(null, savedUser)
-					// 	}
-					// }) // closes newGoogleUser.save
+					.catch(err => {
+						return done(null, false);
+					})
+				// newGoogleUser.save((err, savedUser) => {
+				// 	if (err) {
+				// 		console.log('Error!! saving the new google user')
+				// 		console.log(err)
+				// 		return done(null, false)
+				// 	} else {
+				// 		return done(null, savedUser)
+				// 	}
+				// }) // closes newGoogleUser.save
 				}
 			}) // close .then()
 			.catch(err => {

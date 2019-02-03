@@ -1,3 +1,4 @@
+// App.js
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
@@ -254,8 +255,6 @@ class App extends Component {
 		this.fullpost();
 		
 	}
-	
-
 
 	fullpost = (id) => {
 	
@@ -277,7 +276,7 @@ class App extends Component {
 		})
 	}
 
-	// update the radio buttons on the quiz
+	// update the radio buttons on the quiz when clicked
 	answerClicked = (key, answerSelect) => {
 		// console.log("<  answer selected================================");
 		// console.log("answer selected: ", `${key} ${answerSelect}`);
@@ -299,6 +298,31 @@ class App extends Component {
 			}
 		});
 		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
+	}
+
+	updateUserToPoster = (id) => {
+		console.log("setting UserType to Poster here");	
+		axios
+			.put("/api/update/user/" + this.state.user.id, 
+				{
+					userType: "poster"
+				}
+			)
+			.then(response => {
+				console.log('this is the response for User Update to poster: ', response.data);
+				this.setState({
+					user: this.state.user
+				})
+			})
+			.catch(err => {
+				console.log("UpdateUserToPost error: ", err);
+			})
+		// db.users.update({UserType: "poster"}, {where: {username: this.user.username}})
+        // .then(function (result) {
+        //     console.log("Updated:", result);
+        // }).catch(function(error) {
+        //     console.log("Error: ", error);
+        // });
 	}
 	
 	// Handle the submit button event on the quiz page
@@ -324,6 +348,14 @@ class App extends Component {
 			console.log('Your quiz Grade:: ', quizGrade + '%');
 		} else {
 			alert('Not all questions have been answered');
+		}
+		console.log(this.state.user);
+		if (quizGrade >= 60  && this.state.user.userType === 'basic') {
+			console.log('call to updateUserToPost User:', this.state.user.id);
+			this.updateUserToPoster(this.state.user.id);
+			alert("you passed the quiz with " + quizGrade + '%');
+		} else if (quizGrade < 60) {
+			alert("you failed the quiz with " + quizGrade + '%');
 		}
 
 	}
@@ -411,7 +443,7 @@ class App extends Component {
 					path="/posterquiz" 
 					render={() => 
 						<div>
-						<h3>Debate Poster Quiz</h3>
+						{/* <h3>Debate Poster Quiz</h3> */}
 						<SideDrawer 
 							show={this.state.sideOpen} 
 							toggleHandle={this.drawerToggle} 
