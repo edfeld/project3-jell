@@ -92,14 +92,14 @@ app.get(
 	}
 )
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', function(req, res) {
-	res.sendFile(('public/index.html'), function(err) {
-	  if (err) {
-		res.status(500).send(err)
-	  }
-	})
-  })
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.get('/', function(req, res) {
+// 	res.sendFile(('public/index.html'), function(err) {
+// 	  if (err) {
+// 		res.status(500).send(err)
+// 	  }
+// 	})
+//   })
 
 console.log("process.env.NODE_ENV:+:+>  ", process.env.NODE_ENV);
 // ==== if its production environment!
