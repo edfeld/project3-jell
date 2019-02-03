@@ -2,7 +2,6 @@ import React from 'react';
 
 
 const PostComments = props =>{
-   console.log('this is the comments ',props)
    const key = props.data.id
    return (
    <div key={key}>
