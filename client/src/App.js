@@ -206,52 +206,52 @@ class App extends Component {
 
 	}
 
-	upvote = (key) => {
-		for(var i = 0; i < this.state.posts.length; i++) {
-			if(this.state.posts[i].id === key){
-				const plusOne = this.state.posts[i].upVotes + 1;
-			axios
-				.put('/api/upvote', {
-					post: this.state.posts[i].id,
-					upvotes: plusOne
-				})
-				.then(response => {
-					axios
-					.get('/api/getall')
-					.then(response => {
-						// this.fullpost(key);
-						console.log(response);
+	// upvote = (key) => {
+	// 	for(var i = 0; i < this.state.posts.length; i++) {
+	// 		if(this.state.posts[i].id === key){
+	// 			const plusOne = this.state.posts[i].upVotes + 1;
+	// 		axios
+	// 			.put('/api/upvote', {
+	// 				post: this.state.posts[i].id,
+	// 				upvotes: plusOne
+	// 			})
+	// 			.then(response => {
+	// 				axios
+	// 				.get('/api/getall')
+	// 				.then(response => {
+	// 					// this.fullpost(key);
+	// 					console.log(response);
 						
-					})
-				})
-			}
-		}
+	// 				})
+	// 			})
+	// 		}
+	// 	}
 		
-	}
+	// }
 
-	downvote = (key) => {
-		for(var i = 0; i < this.state.posts.length; i++) {
-			if(this.state.posts[i].id === key){
-				console.log(this.state.posts[i].downVotes);
-				const minusOne = this.state.posts[i].downVotes + 1;
-				console.log(this.state.posts[i].downVotes);
-			axios
-				.put('/api/downvote', {
-					post: this.state.posts[i].id,
-					downvotes: minusOne
-				})
-				.then(response => {
-					axios
-					.get('/api/getall')
-					.then(response => {
-						// this.fullpost(key)
-						console.log(response);
-					})
-				})
-			}
-		}
+	// downvote = (key) => {
+	// 	for(var i = 0; i < this.state.posts.length; i++) {
+	// 		if(this.state.posts[i].id === key){
+	// 			console.log(this.state.posts[i].downVotes);
+	// 			const minusOne = this.state.posts[i].downVotes + 1;
+	// 			console.log(this.state.posts[i].downVotes);
+	// 		axios
+	// 			.put('/api/downvote', {
+	// 				post: this.state.posts[i].id,
+	// 				downvotes: minusOne
+	// 			})
+	// 			.then(response => {
+	// 				axios
+	// 				.get('/api/getall')
+	// 				.then(response => {
+	// 					// this.fullpost(key)
+	// 					console.log(response);
+	// 				})
+	// 			})
+	// 		}
+	// 	}
 		
-	}
+	// }
 
 	// componentWillMount(){
 	// 	this.fullpost();
