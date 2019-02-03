@@ -1,8 +1,8 @@
 {
-    "admin": "<i className=\"fas fa-balance-scale\"></i>",
-    "basic": "<i class=\"fas fa-user\"></i>",
-    "poster": "<i class=\"fas fa-user-ninja\"></i>",
-    "enlightened": "<i className=\"fas fa-brain\"></i>",
-    "controversial": "<i class=\"fas fa-dumpster\"></i>",
-    "prolific": "<i class=\"fas fa-bullhorn\"></i>"
+    "admin": "fas fa-balance-scale",
+    "basic": "fas fa-user",
+    "poster": "fas fa-user-ninja",
+    "enlightened": "fas fa-brain",
+    "controversial": "fas fa-dumpster",
+    "prolific": "fas fa-bullhorn"
 }
