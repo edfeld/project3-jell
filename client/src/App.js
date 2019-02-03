@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Route, Link } from 'react-router-dom'
+import { BrowserRouter , Route, Link } from 'react-router-dom'
 import LoginForm from './components/Login/LoginForm'
 // import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
@@ -201,7 +201,7 @@ class App extends Component {
 				commnetContent: "",
 				currentModal: ""
 		   })
-		   this.fullpost(postId);
+		//    this.fullpost(postId);
 		})
 
 	}
@@ -219,7 +219,8 @@ class App extends Component {
 					axios
 					.get('/api/getall')
 					.then(response => {
-						this.fullpost(key);
+						// this.fullpost(key);
+						console.log(response);
 						
 					})
 				})
@@ -243,7 +244,8 @@ class App extends Component {
 					axios
 					.get('/api/getall')
 					.then(response => {
-						this.fullpost(key)
+						// this.fullpost(key)
+						console.log(response);
 					})
 				})
 			}
@@ -251,31 +253,31 @@ class App extends Component {
 		
 	}
 
-	componentWillMount(){
-		this.fullpost();
-	}
+	// componentWillMount(){
+	// 	this.fullpost();
+	// }
 	
 
 
-	fullpost = (id) => {
+	// fullpost = (id) => {
 	
-	console.log('fullpost id: ', id)
-	if(!id){
-		id = parseInt(window.location.href.split('post/')[1])
-	}else{
-		id = parseInt(id);
-	}
-	console.log(id)
-	console.log(window.location.href)
-	axios
-		.get('/api/post/' + id)
-		.then(response => {
-			this.setState({
-				singlePost: response.data
-			})
-			console.log('state after call ', this.state.singlePost)
-		})
-	}
+	// console.log('fullpost id: ', id)
+	// if(!id){
+	// 	id = parseInt(window.location.href.split('post/')[1])
+	// }else{
+	// 	id = parseInt(id);
+	// }
+	// console.log(id)
+	// console.log(window.location.href)
+	// axios
+	// 	.get('/api/post/' + id)
+	// 	.then(response => {
+	// 		this.setState({
+	// 			singlePost: response.data
+	// 		})
+	// 		console.log('state after call ', this.state.singlePost)
+	// 	})
+	// }
 
 	// update the radio buttons on the quiz
 	answerClicked = (key, answerSelect) => {
@@ -445,7 +447,7 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 						<FullPost 
-							post={this.state.singlePost}
+							// post={this.state.singlePost}
 							upvote={this.upvote}
 							downvote={this.downvote} 
 							changeModal={this.changeModal}

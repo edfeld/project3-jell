@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
 	console.log('loading dev environments')
 }
 require('dotenv').config();
+const path = require('path');
 const db = require("./models");  // [ERE] for MySQL
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,8 +13,8 @@ const app = express();
 var cors = require('cors');
 const PORT = process.env.PORT || 3001;
 // const SocketIO = require('socket.io');
-const http = require('http')
-const server = http.createServer(app)
+const http = require('http');
+const server = http.createServer(app);
 var io = require('socket.io').listen(server);  //pass a http.Server instance
 const badgeChron = require("./scripts/badges-chron.js");
 
@@ -76,6 +77,7 @@ app.use(function(req, res, next) {
 
 console.log("Google testing next --->");
 // testing
+
 app.get(
 	'/auth/google/callback',
 	(req, res, next) => {
@@ -89,6 +91,15 @@ app.get(
 		res.redirect('/')
 	}
 )
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', function(req, res) {
+	res.sendFile(('public/index.html'), function(err) {
+	  if (err) {
+		res.status(500).send(err)
+	  }
+	})
+  })
 
 console.log("process.env.NODE_ENV:+:+>  ", process.env.NODE_ENV);
 // ==== if its production environment!
