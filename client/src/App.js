@@ -390,6 +390,14 @@ class App extends Component {
 					path="/api/user/:id"
 					render={() =>
 						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
 							<UserPage />
 						</div>
 					}  
