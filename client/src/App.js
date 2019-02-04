@@ -72,8 +72,8 @@ class App extends Component {
 	}
 }
 
-	_logout = (event) => {
-		event.preventDefault()
+	_logout = () => {
+		// event.preventDefault()
 		console.log('logging out')
 		axios.post('/auth/logout').then(response => {
 			console.log(response.data)
@@ -398,6 +398,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 							/>
 							<Home 
 								user={this.state.user}  
@@ -428,6 +429,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 						/>
 						<LoginForm
 							show={this.state.sideOpen} 
@@ -446,8 +448,12 @@ class App extends Component {
 						{/* <h3>Debate Poster Quiz</h3> */}
 						<SideDrawer 
 							show={this.state.sideOpen} 
-							toggleHandle={this.drawerToggle} 
+							toggleHandle={this.drawerToggle}
+							value={this.state.searchBar}
 							search={this.searchDb}
+							handleChange={this.handleChange}
+							changeModal={this.changeModal}
+							_logout={this._logout}
 						/>
 						<PosterQuiz 
 							answerClicked={this.answerClicked}
@@ -472,6 +478,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 							/>
 						<FullPost 
 							post={this.state.singlePost}
