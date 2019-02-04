@@ -1,7 +1,7 @@
 import React from 'react';
 import PostHeader from './PostHeader'
 import PostComments from './PostComments'
-
+import Chat from '../../components/Chat/Chat'
 
 
 
@@ -12,6 +12,7 @@ const FullPost = props => {
    }else{
    return(
    <div>
+   <Chat />
    <PostHeader 
       post={props.post} 
       upvote={props.upvote}
