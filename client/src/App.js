@@ -12,6 +12,7 @@ import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
 import UserPage from './pages/UserPage/UserPage'
+import TopDebates from './pages/TopDebates/TopDebates'
 import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
@@ -384,7 +385,7 @@ class App extends Component {
 					/>
 
 
-<Route 
+				<Route 
 					exact 
 					path="/api/user/:id"
 					render={() =>
@@ -398,6 +399,24 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 							<UserPage />
+						</div>
+					} 
+					/>
+
+<Route 
+					exact 
+					path="/topdebates"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<TopDebates />
 						</div>
 					}  
 					/>

@@ -30,7 +30,7 @@ const SideDrawer = props => {
                 style={{position: 'relative'}}
             >Search</button><br/><br/>
             <li><Link to="/" onClick={() =>props.toggleHandle()}>Home</Link></li>
-            <li><Link to="/" onClick={() =>props.toggleHandle()}>Top Debates</Link></li>
+            <li><Link to="/topdebates" onClick={() =>props.toggleHandle()}>Top Debates</Link></li>
             <li><Link to="/" onClick={() =>props.toggleHandle()}>Relevant Debates</Link></li>
             <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
             <li><a onClick={() =>{props.changeModal('Challenge'); props.toggleHandle()}}>Challenge</a></li>
