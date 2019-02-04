@@ -8,7 +8,7 @@ module.exports = function(app) {
         db.posts
             .findAll({
                 where: {
-                    tags: req.params.tags
+                    tags: req.params.tags.split(', ')
                 },
                 include: [{model: db.comments, as: 'comments'}]    
             })
