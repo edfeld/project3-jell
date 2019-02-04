@@ -27,18 +27,17 @@ const SideDrawer = props => {
                 type="button" 
                 className="btn btn-secondary searchBtn" 
                 onClick={props.search} 
-                style={{position: 'relative'}}
+                style={{position: 'relative', marginTop: '-35%'}}
             >Search</button><br/><br/>
             <li><Link to="/" onClick={() =>props.toggleHandle()}>Home</Link></li>
             <li><Link to="/topdebates" onClick={() =>props.toggleHandle()}>Top Debates</Link></li>
-            <li><Link to="/" onClick={() =>props.toggleHandle()}>Relevant Debates</Link></li>
             <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
             <li><a onClick={() =>{props.changeModal('Challenge'); props.toggleHandle()}}>Challenge</a></li>
             <li><a onClick={() =>{props.changeModal('SignUp'); props.toggleHandle()}}>Sign up</a></li>
             {/* Ed adding a link for logout -- testing routes */}
             {/* <li><a href="/login" className='nav-link'>Login</a></li> */}
-            <li><Link to="/login" className="nav-link" onClick={props.toggleHandle}>Login </Link></li>
-            <li><Link to="/posterquiz" className="nav-link" onClick={props.toggleHandle}>Poster Quiz</Link></li>
+            <li><Link to="/login" onClick={props.toggleHandle}>Login </Link></li>
+            <li><Link to="/posterquiz" onClick={props.toggleHandle}>Poster Quiz</Link></li>
         </ul>
     </nav>
    )

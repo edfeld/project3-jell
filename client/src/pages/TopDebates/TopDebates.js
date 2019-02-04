@@ -33,15 +33,17 @@ class TopDebates extends Component {
 		return (
             <div>
 			<TopDebatesHead/>
+			<div style={{justifyContent: 'space-around', position: 'relative', left: '1%'}}>
                  {this.state.topPosts.map(posts => (
                         <TopPostCard 
-                              data={posts}
+							  data={posts}
                               // upvote={props.upvote}
                               // downvote={props.downvote}
                               // changeModal={props.changeModal}
                               
                         />
-                  ))}
+				  ))}
+			</div>
             </div>
         )
 			
