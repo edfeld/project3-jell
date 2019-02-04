@@ -3,7 +3,7 @@ import "./userHead.css";
 
 const UserHeader = props => (
     <header className="userHead">
-        <div className="userTron " style={{padding: '0', backgroundColor:'#201106cc'}}>
+        <div className="userTron " style={{padding: '0', backgroundColor:'#201106cc '}}>
         <div className="userName">
             <span>User Name:</span>
             <h1 className="display-4">{props.userData.username}</h1>
