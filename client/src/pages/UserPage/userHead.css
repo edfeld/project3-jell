@@ -1,0 +1,24 @@
+
+.userTron{
+    justify-content: space-around;
+    position: relative;
+    display: inline-flex;
+    height: 30em;
+    margin: 5px;
+}
+
+.userName{
+    text-shadow: 3px 3px 14px #e37a82bd;
+    margin-top: 3em;
+    color: whitesmoke;
+}
+
+.aboutMe{
+    width: 35%;
+    font-size: 1rem;
+    font-weight: 700;
+    display: inline-flex;
+    position: relative;
+    margin-top: 3em;
+    color: whitesmoke;
+}

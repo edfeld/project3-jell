@@ -23,7 +23,7 @@ app.post('/api/commentRoute', (req, res) => {
   console.log("this is the comment route: ", req.body);
       const newComment = {
                   'content': content,
-                  'isRebuttal': true,
+                  'isRebuttal': isRebuttal,
                   'userId': userId,
                   'postId': postId,
                   isChild: isChild

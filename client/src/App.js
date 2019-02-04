@@ -1,7 +1,7 @@
 // App.js
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Route, Link } from 'react-router-dom'
+import { BrowserRouter , Route, Link } from 'react-router-dom'
 import LoginForm from './components/Login/LoginForm'
 // import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
@@ -12,10 +12,11 @@ import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
+import UserPage from './pages/UserPage/UserPage'
+import TopDebates from './pages/TopDebates/TopDebates'
+import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
-// import FullPost from './pages/FullPost'
-
 
 class App extends Component {
 	constructor() {
@@ -28,11 +29,12 @@ class App extends Component {
 			currentModal: "",
 			searchBar: "",
 			posts: [],
+			searchResults: [],
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
-			commentContent: "",
-			singlePost: {}
+			isRebuttal: "",
+			commentContent: ""
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -59,18 +61,19 @@ class App extends Component {
 		})
 
 		this.setState({ArrPosterQuiz: ArrPosterQuiz}); //[ERE] 20190123 - PosterQuiz implementation
-		
-		if(this.state.posts !== undefined){
+
+		this.getAllPosts();
+	}
+
+	getAllPosts = () => {
 		axios
-			.get('/api/search/all')
+			.get('/api/getall')
 			.then(response => {
 			this.setState({
 				posts: response.data
 		   })
 		})
-
 	}
-}
 
 	_logout = () => {
 		// event.preventDefault()
@@ -112,19 +115,15 @@ class App extends Component {
 
 	searchDb = (e) => {
 		e.preventDefault();
-		const search = {
-		 searchBar: this.state.searchBar
-		}
+		console.log(this.state.searchBar)
 		axios
-			.post('/api/search', {
-				sent: search.searchBar
-			})
+			.get('/api/search/' + this.state.searchBar)
 			.then(response => {
 				console.log('this is the response: ', response.data);
-			this.setState({
-				searchBar: "",
-				posts: response.data
-		   })
+				this.setState({
+					searchBar: "",
+					searchResults: response.data
+				})
 		})
 	}
 
@@ -133,7 +132,6 @@ class App extends Component {
 			return {sideOpen: !prevState.sideOpen}
 		});
 	};
-
 
 	backDropClick = () => {
 		this.setState({sideOpen: false});
@@ -167,6 +165,7 @@ class App extends Component {
 				title: post.debateTitle,
 				context: post.debateContext,
 				tags: post.debateTags,
+				isRebuttal:post.isRebuttal,
 				userId: this.state.user.id
 				
 			})
@@ -176,21 +175,29 @@ class App extends Component {
 				debateTitle: "",
 				debateContext: "",
 				debateTags: "",
-				currentModal: "",
-				posts: response.data
+				currentModal: ""
 		   })
+		   this.getAllPosts();
 		})
 
 	}
 
 	commentRoute = (postId) => {
+		let isRebuttal;
+		if(this.state.isRebuttal.toLowerCase() === 'yes'){
+			isRebuttal = 1;
+		}else{
+			isRebuttal = 0;
+		}
 		// e.preventDefault();
 		const comment = {
 		 commentContent: this.state.commentContent,
+		 isRebuttal: this.state.isRebuttal
 		}
 		axios
 			.post('/api/commentRoute', {
 				content: comment.commentContent,
+				isRebuttal: isRebuttal,
 				userId: this.state.user.id,
 				isChild: 0,
 				postId: postId
@@ -201,82 +208,10 @@ class App extends Component {
 				commnetContent: "",
 				currentModal: ""
 		   })
-		   this.fullpost(postId);
-		})
-
-	}
-
-	upvote = (key) => {
-		for(var i = 0; i < this.state.posts.length; i++) {
-			if(this.state.posts[i].id === key){
-				const plusOne = this.state.posts[i].upVotes + 1;
-			axios
-				.put('/api/upvote', {
-					post: this.state.posts[i].id,
-					upvotes: plusOne
-				})
-				.then(response => {
-					axios
-					.get('/api/search/all')
-					.then(response => {
-						this.fullpost(key);
-						
-					})
-				})
-			}
-		}
-		
-	}
-
-	downvote = (key) => {
-		for(var i = 0; i < this.state.posts.length; i++) {
-			if(this.state.posts[i].id === key){
-				console.log(this.state.posts[i].downVotes);
-				const minusOne = this.state.posts[i].downVotes + 1;
-				console.log(this.state.posts[i].downVotes);
-			axios
-				.put('/api/downvote', {
-					post: this.state.posts[i].id,
-					downvotes: minusOne
-				})
-				.then(response => {
-					axios
-					.get('/api/search/all')
-					.then(response => {
-						this.fullpost(key)
-					})
-				})
-			}
-		}
-		
-	}
-
-	componentWillMount(){
-		this.fullpost();
-		
-	}
-
-	fullpost = (id) => {
-	
-	console.log('fullpost id: ', id)
-	if(!id){
-		id = parseInt(window.location.href.split('post/')[1])
-	}else{
-		id = parseInt(id);
-	}
-	console.log(id)
-	console.log(window.location.href)
-	axios
-		.get('/api/post/' + id)
-		.then(response => {
-			this.setState({
-				singlePost: response.data
-			})
-			console.log('state after call ',this.state.singlePost)
 		})
 	}
 
-	// update the radio buttons on the quiz when clicked
+	// update the radio buttons on the quiz
 	answerClicked = (key, answerSelect) => {
 		// console.log("<  answer selected================================");
 		// console.log("answer selected: ", `${key} ${answerSelect}`);
@@ -357,7 +292,6 @@ class App extends Component {
 		} else if (quizGrade < 60) {
 			alert("you failed the quiz with " + quizGrade + '%');
 		}
-
 	}
 
 	render() {
@@ -390,7 +324,9 @@ class App extends Component {
 					exact 
 					path="/" 
 					render={() => 
+						
 						<div>
+							
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -408,6 +344,7 @@ class App extends Component {
 								upvote={this.upvote}
 								downvote={this.downvote}
 								fullpost={this.fullpost}
+								allposts={this.getAllPosts}
 							/>
 						</div>
 					}
@@ -421,7 +358,6 @@ class App extends Component {
 								currentModal={this.state.currentModal}
 								changeModal={this.changeModal}
 						/>
-						<TitleBar />
 						<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -481,12 +417,49 @@ class App extends Component {
 								_logout={this._logout}
 							/>
 						<FullPost 
-							post={this.state.singlePost}
 							upvote={this.upvote}
 							downvote={this.downvote} 
 							changeModal={this.changeModal}
 							user={this.state.user}
+							commentFunction={this.commentRoute}
 						/>
+						</div>
+					}  
+					/>
+
+
+				<Route 
+					exact 
+					path="/api/user/:id"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<UserPage />
+						</div>
+					} 
+					/>
+
+<Route 
+					exact 
+					path="/topdebates"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<TopDebates />
 						</div>
 					}  
 					/>

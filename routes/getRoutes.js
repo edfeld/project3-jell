@@ -3,12 +3,12 @@ const db = require("../models");
 module.exports = function(app) {
 
     //Searches for all posts with requested tags
-    app.get("/api/search", function(req, res) {
-        console.log(req.body.sent, "this is req.body")
+    app.get("/api/search/:tags", function(req, res) {
+        console.log(req.params.tags)
         db.posts
             .findAll({
                 where: {
-                    tags: req.body.sent
+                    tags: req.params.tags
                 },
                 include: [{model: db.comments, as: 'comments'}]    
             })
@@ -20,7 +20,7 @@ module.exports = function(app) {
     });
 
     //gets all of the posts
-    app.get("/api/search/all", function(req, res) {
+    app.get("/api/getall", function(req, res) {
         // console.log("this is the passport user ", req.session.passport)
         db.posts.findAll({
             include: [{model: db.comments, as: 'comments'}]
