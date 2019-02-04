@@ -13,6 +13,7 @@ import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
 import UserPage from './pages/UserPage/UserPage'
 import TopDebates from './pages/TopDebates/TopDebates'
+import SearchResults from './pages/SearchResults/SearchResults'
 import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
@@ -120,8 +121,7 @@ class App extends Component {
 			.then(response => {
 				console.log('this is the response: ', response.data);
 				this.setState({
-					searchBar: "",
-					searchResults: response.data
+					searchBar: ""
 				})
 		})
 	}
@@ -403,7 +403,7 @@ class App extends Component {
 					} 
 					/>
 
-<Route 
+				<Route 
 					exact 
 					path="/topdebates"
 					render={() =>
@@ -417,6 +417,26 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 							<TopDebates />
+						</div>
+					}  
+					/>
+
+				<Route 
+					exact 
+					path="/api/search/:tags"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<SearchResults
+								results={this.state.searchResults}	
+							/>
 						</div>
 					}  
 					/>
