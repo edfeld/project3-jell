@@ -22,7 +22,7 @@ module.exports = function(app) {
     });
 
     //updates Comment information
-    app.put("/api/update/user/:id", function(req, res) {
+    app.put("/api/update/comment/:id", function(req, res) {
         db.comments.update(req.body, {where: {id: req.params.id}})
         .then(function(result) {
             console.log("Comment updated", req.body);
@@ -30,6 +30,7 @@ module.exports = function(app) {
         });
     });
 
+    //Update Post with upvote
     app.put("/api/upvote", function(req, res) {
         const {post, upvotes} = req.body;
         db.posts.update({
@@ -45,6 +46,7 @@ module.exports = function(app) {
         });
       });
       
+      //Update Post with downvote
       app.put("/api/downvote", function(req, res) {
         const {post, downvotes} = req.body;
         db.posts.update({

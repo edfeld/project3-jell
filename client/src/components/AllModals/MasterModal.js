@@ -18,6 +18,7 @@ const MasterModal = (props) => {
         case 'Comment':
             currentModal = <Comment 
                                 value4={props.value}
+                                value5={props.value}
                                 handleChange={props.handleChange}
                                 comment={props.comment}
                                 postData={props.postData}
@@ -28,6 +29,7 @@ const MasterModal = (props) => {
                                 value1={props.value}
                                 value2={props.value} 
                                 value3={props.value}
+                                value4={props.value}
                                 handleChange={props.handleChange}
                                 post={props.post}
                             />
