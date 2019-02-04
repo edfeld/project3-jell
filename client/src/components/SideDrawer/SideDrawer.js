@@ -2,7 +2,7 @@ import React from 'react';
 import ToggleButton from './ToggleButton.js';
 import './DrawerToggle.css';
 import './Drawer.css';
-import { Route, Link } from 'react-router-dom' //[ERE 20190121] Add Link
+import { Link } from 'react-router-dom' //[ERE 20190121] Add Link
 
 const SideDrawer = props => {
     let drawerClass = 'side-drawer';
@@ -34,9 +34,12 @@ const SideDrawer = props => {
             <li><a onClick={() =>{props.changeModal('MakePost'); props.toggleHandle()}}>Create A Post</a></li>
             <li><a onClick={() =>{props.changeModal('Challenge'); props.toggleHandle()}}>Challenge</a></li>
             <li><a onClick={() =>{props.changeModal('SignUp'); props.toggleHandle()}}>Sign up</a></li>
-            {/* Ed adding a link for logout -- testing routes */}
-            {/* <li><a href="/login" className='nav-link'>Login</a></li> */}
             <li><Link to="/login" onClick={props.toggleHandle}>Login </Link></li>
+            {/* <li><Link to="/signup" className="nav-link">Signup</Link></li> */}
+            {/* <li><a onClick={() =>{props._logout()}}>logout</a></li> */}
+            <Link to="#" onClick={() => {props._logout(); props.toggleHandle()}}>
+			        Logout
+			      </Link>
             <li><Link to="/posterquiz" onClick={props.toggleHandle}>Poster Quiz</Link></li>
         </ul>
     </nav>
