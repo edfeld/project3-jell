@@ -187,7 +187,7 @@ class App extends Component {
 
 	commentRoute = (postId) => {
 		let isRebuttal;
-		if(this.state.isRebuttal === 'yes'){
+		if(this.state.isRebuttal.toLowerCase() === 'yes'){
 			isRebuttal = 1;
 		}else{
 			isRebuttal = 0;
