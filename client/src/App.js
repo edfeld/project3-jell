@@ -12,11 +12,10 @@ import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
 import UserPage from './pages/UserPage/UserPage'
+import TopDebates from './pages/TopDebates/TopDebates'
 import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
-// import FullPost from './pages/FullPost'
-
 
 class App extends Component {
 	constructor() {
@@ -75,7 +74,6 @@ class App extends Component {
 		})
 	}
 
-
 	_logout = (event) => {
 		event.preventDefault()
 		console.log('logging out')
@@ -125,7 +123,6 @@ class App extends Component {
 					searchBar: "",
 					searchResults: response.data
 				})
-			
 		})
 	}
 
@@ -134,7 +131,6 @@ class App extends Component {
 			return {sideOpen: !prevState.sideOpen}
 		});
 	};
-
 
 	backDropClick = () => {
 		this.setState({sideOpen: false});
@@ -212,10 +208,7 @@ class App extends Component {
 				currentModal: ""
 		   })
 		})
-		
-
 	}
-
 	// update the radio buttons on the quiz
 	answerClicked = (key, answerSelect) => {
 		// console.log("<  answer selected================================");
@@ -239,7 +232,6 @@ class App extends Component {
 		});
 		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
 	}
-	
 	// Handle the submit button event on the quiz page
 	submitQuiz = () => {
 		const arrQuiz = this.state.ArrPosterQuiz;
@@ -264,7 +256,6 @@ class App extends Component {
 		} else {
 			alert('Not all questions have been answered');
 		}
-
 	}
 
 	render() {
@@ -330,7 +321,6 @@ class App extends Component {
 								currentModal={this.state.currentModal}
 								changeModal={this.changeModal}
 						/>
-						<TitleBar />
 						<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -395,7 +385,7 @@ class App extends Component {
 					/>
 
 
-<Route 
+				<Route 
 					exact 
 					path="/api/user/:id"
 					render={() =>
@@ -409,6 +399,24 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 							<UserPage />
+						</div>
+					} 
+					/>
+
+<Route 
+					exact 
+					path="/topdebates"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<TopDebates />
 						</div>
 					}  
 					/>

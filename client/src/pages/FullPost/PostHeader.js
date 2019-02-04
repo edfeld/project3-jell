@@ -12,6 +12,7 @@ const PostHeader = props => {
             <div class="container">
                 <h1 class="display-4">{props.post.title}</h1>
                 <p class="lead">{props.post.context}</p>
+                <h6>By:{props.post.user.username}</h6>
                 <p><button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}><h5>+</h5></button>Up Votes: {props.post.upVotes}/<button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}><h5>-</h5></button>Down Votes: {props.post.downVotes}</p>
                 <button onClick={() => props.changeModal('Comment')}>comment</button>
             </div>
