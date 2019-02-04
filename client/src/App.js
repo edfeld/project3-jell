@@ -33,6 +33,7 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
+			isRebuttal: "",
 			commentContent: ""
 		}
 		this._logout = this._logout.bind(this)
@@ -167,6 +168,7 @@ class App extends Component {
 				title: post.debateTitle,
 				context: post.debateContext,
 				tags: post.debateTags,
+				isRebuttal:post.isRebuttal,
 				userId: this.state.user.id
 				
 			})
@@ -184,13 +186,21 @@ class App extends Component {
 	}
 
 	commentRoute = (postId) => {
+		let isRebuttal;
+		if(this.state.isRebuttal.toLowerCase() === 'yes'){
+			isRebuttal = 1;
+		}else{
+			isRebuttal = 0;
+		}
 		// e.preventDefault();
 		const comment = {
 		 commentContent: this.state.commentContent,
+		 isRebuttal: this.state.isRebuttal
 		}
 		axios
 			.post('/api/commentRoute', {
 				content: comment.commentContent,
+				isRebuttal: isRebuttal,
 				userId: this.state.user.id,
 				isChild: 0,
 				postId: postId
