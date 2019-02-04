@@ -3,7 +3,7 @@ import './post.css';
 
 
 const Comment = props => {
- const postId = props.postData.post.id;
+ const postId = parseInt(window.location.href.split('post/')[1]);
 
     return(
     <div className="postBackground">
@@ -22,7 +22,15 @@ const Comment = props => {
                     >
                 </textarea>
             </div>
-        
+            <p>Is This A Rebuttal to the question?(yes or no)</p>
+                <input 
+                    className="form-control" 
+                    type="text" 
+                    placeholder="Please only type yes or no"
+                    name="isRebuttal"
+                    value5={props.value}
+                    onChange={props.handleChange}
+                />
         <button onClick={() => props.comment(postId)}>POST</button>
         </div>
     </div>
