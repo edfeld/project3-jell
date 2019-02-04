@@ -1,3 +1,4 @@
+// App.js
 import React, { Component } from 'react'
 import axios from 'axios'
 import { BrowserRouter , Route, Link } from 'react-router-dom'
@@ -75,8 +76,8 @@ class App extends Component {
 		})
 	}
 
-	_logout = (event) => {
-		event.preventDefault()
+	_logout = () => {
+		// event.preventDefault()
 		console.log('logging out')
 		axios.post('/auth/logout').then(response => {
 			console.log(response.data)
@@ -209,6 +210,7 @@ class App extends Component {
 		   })
 		})
 	}
+
 	// update the radio buttons on the quiz
 	answerClicked = (key, answerSelect) => {
 		// console.log("<  answer selected================================");
@@ -232,6 +234,32 @@ class App extends Component {
 		});
 		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
 	}
+
+	updateUserToPoster = (id) => {
+		console.log("setting UserType to Poster here");	
+		axios
+			.put("/api/update/user/" + this.state.user.id, 
+				{
+					userType: "poster"
+				}
+			)
+			.then(response => {
+				console.log('this is the response for User Update to poster: ', response.data);
+				this.setState({
+					user: this.state.user
+				})
+			})
+			.catch(err => {
+				console.log("UpdateUserToPost error: ", err);
+			})
+		// db.users.update({UserType: "poster"}, {where: {username: this.user.username}})
+        // .then(function (result) {
+        //     console.log("Updated:", result);
+        // }).catch(function(error) {
+        //     console.log("Error: ", error);
+        // });
+	}
+	
 	// Handle the submit button event on the quiz page
 	submitQuiz = () => {
 		const arrQuiz = this.state.ArrPosterQuiz;
@@ -255,6 +283,14 @@ class App extends Component {
 			console.log('Your quiz Grade:: ', quizGrade + '%');
 		} else {
 			alert('Not all questions have been answered');
+		}
+		console.log(this.state.user);
+		if (quizGrade >= 60  && this.state.user.userType === 'basic') {
+			console.log('call to updateUserToPost User:', this.state.user.id);
+			this.updateUserToPoster(this.state.user.id);
+			alert("you passed the quiz with " + quizGrade + '%');
+		} else if (quizGrade < 60) {
+			alert("you failed the quiz with " + quizGrade + '%');
 		}
 	}
 
@@ -298,6 +334,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 							/>
 							<Home 
 								user={this.state.user}  
@@ -328,6 +365,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 						/>
 						<LoginForm
 							show={this.state.sideOpen} 
@@ -343,11 +381,15 @@ class App extends Component {
 					path="/posterquiz" 
 					render={() => 
 						<div>
-						<h3>Debate Poster Quiz</h3>
+						{/* <h3>Debate Poster Quiz</h3> */}
 						<SideDrawer 
 							show={this.state.sideOpen} 
-							toggleHandle={this.drawerToggle} 
+							toggleHandle={this.drawerToggle}
+							value={this.state.searchBar}
 							search={this.searchDb}
+							handleChange={this.handleChange}
+							changeModal={this.changeModal}
+							_logout={this._logout}
 						/>
 						<PosterQuiz 
 							answerClicked={this.answerClicked}
@@ -372,6 +414,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 							/>
 						<FullPost 
 							upvote={this.upvote}
