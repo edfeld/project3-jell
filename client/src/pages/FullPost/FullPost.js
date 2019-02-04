@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PostHeader from './PostHeader'
 import PostComments from './PostComments'
 import axios from 'axios';
+import "./style.css";
 
 class FullPost extends Component {
       constructor(props) {
