@@ -72,9 +72,7 @@ c
                      console.log(response);
                   })
          }
-         
       }
-
 
       componentDidMount(){
          let id = parseInt(this.state.propsId.match.params.id)

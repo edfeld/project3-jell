@@ -429,8 +429,8 @@ class App extends Component {
 
 				<Route 
 					exact 
-					path="/api/user/:id"
-					render={() =>
+					path="/user/:id"
+					render={(props) =>
 						<div>
 							<SideDrawer 
 								show={this.state.sideOpen} 
@@ -439,8 +439,11 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								
 							/>
-							<UserPage />
+							<UserPage 
+								userId={props}
+							/>
 						</div>
 					} 
 					/>
