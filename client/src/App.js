@@ -322,9 +322,7 @@ class App extends Component {
 					exact 
 					path="/" 
 					render={() => 
-						
 						<div>
-							
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -402,10 +400,10 @@ class App extends Component {
 				<Route 
 					exact 
 					path="/fullpost/:id?"
-					render={() => {
+					render={(props) => {
 						return (
 						<div>
-						<SideDrawer 
+							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
 								value={this.state.searchBar} 
@@ -414,13 +412,14 @@ class App extends Component {
 								changeModal={this.changeModal}
 								logout={this._logout}
 							/>
-						<FullPost 
-							upvote={this.upvote}
-							downvote={this.downvote} 
-							changeModal={this.changeModal}
-							user={this.state.user}
-							commentFunction={this.commentRoute}
-						/>
+							<FullPost 
+								upvote={this.upvote}
+								downvote={this.downvote} 
+								changeModal={this.changeModal}
+								user={this.state.user}
+								commentFunction={this.commentRoute}
+								propsId={props}
+							/>
 						</div>
 						)
 					}

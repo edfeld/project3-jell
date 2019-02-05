@@ -30,10 +30,10 @@ const Home = props => {
 		)
 	} else{
             // props.allposts()
+            console.log('posts in home ',props)
 		return (
             <div style={{backgroundImage: "inherit"}}>
               <TitleBar />
-
               {props.posts.map(posts => (
                     <Card 
                     data={posts}
