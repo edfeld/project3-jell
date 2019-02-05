@@ -401,7 +401,7 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/fullpost/:id"
+					path="/fullpost/:id?"
 					render={() =>
 						<div>
 						<SideDrawer 
