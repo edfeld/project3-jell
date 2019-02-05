@@ -18,7 +18,7 @@ const SideDrawer = props => {
             <input 
                 className="form-control search" 
                 type="text" 
-                placeholder="Search For A Debate" 
+                placeholder="Search For Key Words" 
                 name="searchBar" 
                 value={props.value} 
                 onChange={props.handleChange}
