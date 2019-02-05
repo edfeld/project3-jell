@@ -131,14 +131,16 @@ const syncOptions = { force: false };
 // Socket listeners
 // This is what the socket.io syntax is like
 io.on('connection', socket => {
-	console.log('New client connected')
+	// console.log('New client connected')
 	console.log("this is global chat-----------------", socket)
-	socket.join('some_room');
-	console.log("this is sooooooome room---------------", )
+	var room = socket.handshake['query']
+	console.log("what is ROOOOOOM", room)
+	socket.join(room);
+	// console.log("this is sooooooome room---------------", )
 	socket.on('SEND_MESSAGE', function(data){
 		console.log(data);
 		//io.emit('RECEIVE_MESSAGE', data);
-		io.to('some_room').emit('RECEIVE_MESSAGE', data);
+		io.to(room).emit('RECEIVE_MESSAGE', data);
 	})
 	
 // 	// disconnect is fired when a client leaves the server
