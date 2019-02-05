@@ -61,12 +61,13 @@ const MasterModal = (props) => {
                     backgroundImage: 'linear-gradient(to bottom right,#3f51b5, rgb(0, 7, 162), #ff5722)', 
                     borderRadius: '15px', 
                     padding: '10px', 
-                    marginTop: '100px'
+                    marginTop: '100px',
+                    position: 'relative'
                 }}
                 // onClick={() => props.changeModal('')}
             >
                 {currentModal}
-                <span onClick={() => props.changeModal('')} style={{color: 'red', position: 'absolute' }}>X</span>
+                <span onClick={() => props.changeModal('')} style={{color: 'red', position: 'absolute', top: '5px', right: '10px' }}>X</span>
             </div>
             
         </div>

@@ -83,9 +83,9 @@ componentWillReceiveProps = () => {
          
       }
 
-componentDidMount(){
-      this.fullpost()
-      
+
+      componentDidMount(){
+         this.fullpost()
       }
 
    render(){
