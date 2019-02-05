@@ -19,7 +19,8 @@ module.exports = function (sequelize, DataTypes) {
 		},
     
 		badges: {
-			type: DataTypes.STRING
+			type: DataTypes.STRING,
+			defaultValue:"basic"
 		},
 
 		createdAt: {

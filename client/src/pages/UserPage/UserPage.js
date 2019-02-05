@@ -4,12 +4,13 @@ import UserHeader from './UserHeader'
 import UserPosts from './UserPosts'
 
 class UserPage extends Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 		this.state = {
-			user: {}
+			user: {},
+			userId: props.userId
 		}
-	
+		
 	}
 
 	
@@ -26,7 +27,7 @@ class UserPage extends Component {
 }
 
 	componentDidMount(){
-		let id = parseInt(window.location.href.split('user/')[1]);
+		let id = this.state.userId.match.params.id;
 		this.getUser(id)
 	}
 

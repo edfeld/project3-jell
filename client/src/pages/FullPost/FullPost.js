@@ -9,42 +9,31 @@ class FullPost extends Component {
       constructor(props) {
 		super(props)
 		this.state = {
-         upvote: props.upvote,
-         downvote: props.downvote,
          changeModal:props.changeModal,
          singlePost: {},
          upVoteCount: 0,
          DownVoteCount: 0,
          chatRoom: false,
-         chatRoomId:''
-		}
+         chatRoomId:'',
+         propsId: props.propsId
+      }
 		
+      // console.log("these are the props in full post id ", id)
    }
+
 renderChatroom = (key) => {
       //This method is not responsible for updating chat room to false
-      console.log("render chat roooooooooooooooooooom")
+      // console.log("render chat roooooooooooooooooooom")
       this.setState({
          chatRoom: true,
          chatRoomId: key
       })
    }
-componentWillReceiveProps = () => {
-   this.fullpost()
-   
-}
 
    fullpost = (id) => {
-      
-      if(!id){
-         id = parseInt(window.location.href.split('fullpost/')[1])
-         console.log('fullpost id: ', id)
-      }else{
-         id = parseInt(id);
-      }
       axios
          .get('/api/post/' + id)
          .then(response => {
-            console.log('response from fullpost ', response)
             this.setState({
                singlePost: response.data
             })
@@ -81,16 +70,22 @@ componentWillReceiveProps = () => {
                      console.log(response);
                   })
          }
+      }
+
+      componentDidMount(){
+         let id = parseInt(this.state.propsId.match.params.id)
+         this.fullpost(id)
          
       }
 
-componentDidMount(){
-      this.fullpost()
-      
+      componentWillReceiveProps = () => {
+         let id = parseInt(this.state.propsId.match.params.id)
+         this.fullpost(id)
+         
       }
 
    render(){
-      console.log('PROPPPPPS object',this.state.singlePost.id)
+      // console.log('PROPPPPPS object',this.state.singlePost.id)
    if(this.state.singlePost.comments === undefined){
       return (<div/>)
    }
