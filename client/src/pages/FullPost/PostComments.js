@@ -1,7 +1,9 @@
 import React from 'react';
-import Badge from '../../components/Badges'
+import Badge from '../../components/Badges';
+import Reply from '../../components/Reply-Btn';
+import ChildComment from '../../components/Children';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function getChildren (children) {
     axios.get('/api/comments/children/'+ children)
@@ -20,7 +22,7 @@ const PostComments = props =>{
 
         return (
             <div key={key}>
-                    <header className="card" style={{display: 'inline-flex', width: '75%', margin: '1rem',  backgroundImage: 'linear-gradient(to bottom right,rgba(221, 18, 18, 0.855), rgba(17, 10, 51, 0.89))'}}>
+                <header className="card" style={{display: 'inline-flex', width: '75%', margin: '1rem',  backgroundImage: 'linear-gradient(to bottom right,rgba(221, 18, 18, 0.855), rgba(17, 10, 51, 0.89))'}}>
                     <div className="card-body">
                         <h6 className="type">Rebuttal</h6>
                         <Link to={'/api/user/' + props.data.userId}><h4 className="card-title">{props.data.user.username}</h4></Link>
@@ -35,6 +37,8 @@ const PostComments = props =>{
                             <button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>
                             Down Votes: {props.data.downVotes}
                         </p>
+                        <button>View Children</button>
+                        <button>Reply</button>
                     </div>
                 </header>
             </div>

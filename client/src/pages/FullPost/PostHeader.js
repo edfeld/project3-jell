@@ -16,6 +16,7 @@ const PostHeader = props => {
                 <Link to={'/api/user/' + props.post.userId}><h6>By:{props.post.user.username}</h6></Link>
                 <p><button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}><h5>+</h5></button>Up Votes: {props.post.upVotes}/<button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}><h5>-</h5></button>Down Votes: {props.post.downVotes}</p>
                 <button onClick={() => props.changeModal('Comment')}>comment</button>
+                <button onClick={() => props.renderChatroom(key)}>Chat button</button>
             </div>
         </div>
    </div>

@@ -14,8 +14,8 @@ let sequelize;
 if (env === 'production') {
   console.log(config);
   // This code has to be toggled in order to make the Prod environment run on local -- The first line is for prod on local
-  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  // sequelize = new Sequelize(config.database, config.username, config.password, config);
 } else {
   console.log('config ', config);
   console.log('env', env);

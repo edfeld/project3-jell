@@ -131,11 +131,16 @@ const syncOptions = { force: false };
 // Socket listeners
 // This is what the socket.io syntax is like
 io.on('connection', socket => {
-	console.log('New client connected')
-	
+	// console.log('New client connected')
+	console.log("this is global chat-----------------", socket)
+	var room = socket.handshake['query']
+	console.log("what is ROOOOOOM", room)
+	socket.join(room);
+	// console.log("this is sooooooome room---------------", )
 	socket.on('SEND_MESSAGE', function(data){
 		console.log(data);
-		io.emit('RECEIVE_MESSAGE', data);
+		//io.emit('RECEIVE_MESSAGE', data);
+		io.to(room).emit('RECEIVE_MESSAGE', data);
 	})
 	
 // 	// disconnect is fired when a client leaves the server
@@ -143,6 +148,17 @@ io.on('connection', socket => {
 	  console.log('user disconnected')
 	})
   });
+
+  //Testing multi room channel
+
+//   io.on('connection', function(socket1){
+// 	socket.join('some room');
+// 	console.log("this is somme rooom",socket1)
+//   });
+
+//   io.to('some room').emit('some event');
+
+
 // ==== Starting Server ======
 
 db.sequelize.sync(syncOptions).then(function() {
