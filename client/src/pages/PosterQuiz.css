@@ -18,3 +18,24 @@
     background: rgba(145, 67, 3, 0.74);
     text-shadow: 3px 3px 20px black;
 }
+
+.quiz-note {
+    font-family: 'Patua One';
+    color: white;
+}
+.quiz-loginlink {
+    font-family: 'Patua One';  
+    color: white !important;
+    background: #544841;
+    padding-right: 13px;
+    margin-left: 20px;
+}
+
+.quiz-loginlink:hover {
+        text-decoration: none;
+        color:  white;
+        transition: transform 0.3s ease-out !important;
+        box-shadow: 3px 3px 3px 0px black !important;
+        background: rgba(145, 67, 3, 0.74) !important;
+        text-shadow: 3px 3px 20px black !important;
+}

@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
 	console.log('loading dev environments')
 }
 require('dotenv').config();
+const path = require('path');
 const db = require("./models");  // [ERE] for MySQL
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,8 +13,8 @@ const app = express();
 var cors = require('cors');
 const PORT = process.env.PORT || 3001;
 // const SocketIO = require('socket.io');
-const http = require('http')
-const server = http.createServer(app)
+const http = require('http');
+const server = http.createServer(app);
 var io = require('socket.io').listen(server);  //pass a http.Server instance
 const badgeChron = require("./scripts/badges-chron.js");
 
@@ -76,6 +77,7 @@ app.use(function(req, res, next) {
 
 console.log("Google testing next --->");
 // testing
+
 app.get(
 	'/auth/google/callback',
 	(req, res, next) => {
@@ -89,6 +91,15 @@ app.get(
 		res.redirect('/')
 	}
 )
+
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.get('/', function(req, res) {
+// 	res.sendFile(('public/index.html'), function(err) {
+// 	  if (err) {
+// 		res.status(500).send(err)
+// 	  }
+// 	})
+//   })
 
 console.log("process.env.NODE_ENV:+:+>  ", process.env.NODE_ENV);
 // ==== if its production environment!
@@ -120,11 +131,16 @@ const syncOptions = { force: false };
 // Socket listeners
 // This is what the socket.io syntax is like
 io.on('connection', socket => {
-	console.log('New client connected')
-	
+	// console.log('New client connected')
+	console.log("this is global chat-----------------", socket)
+	var room = socket.handshake['query']
+	console.log("what is ROOOOOOM", room)
+	socket.join(room);
+	// console.log("this is sooooooome room---------------", )
 	socket.on('SEND_MESSAGE', function(data){
 		console.log(data);
-		io.emit('RECEIVE_MESSAGE', data);
+		//io.emit('RECEIVE_MESSAGE', data);
+		io.to(room).emit('RECEIVE_MESSAGE', data);
 	})
 	
 // 	// disconnect is fired when a client leaves the server
@@ -132,6 +148,17 @@ io.on('connection', socket => {
 	  console.log('user disconnected')
 	})
   });
+
+  //Testing multi room channel
+
+//   io.on('connection', function(socket1){
+// 	socket.join('some room');
+// 	console.log("this is somme rooom",socket1)
+//   });
+
+//   io.to('some room').emit('some event');
+
+
 // ==== Starting Server ======
 
 db.sequelize.sync(syncOptions).then(function() {

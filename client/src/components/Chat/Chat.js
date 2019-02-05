@@ -13,7 +13,10 @@ class Chat extends React.Component{
             messages: []
         };
         
-        this.socket = io('localhost:3001/test');
+        this.socket = io('localhost:3001/', {
+            query: `r_var=${props.roomId}`
+        });
+        //()
         
         socket.on('RECEIVE_MESSAGE', function(data){
             console.log("Message Received: ", data )
