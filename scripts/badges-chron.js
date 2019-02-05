@@ -28,7 +28,12 @@ function userTypeCheck (user) {
         badges = [];
     }
     let type = user.userType;
-    // Basic badge should only be shown if no other type badges present 
+    // Basic badge should only be shown if no other type badges present
+
+    //removes basic badge if user has been upgraded
+    if (type !== "basic" && badges.includes("basic")){
+        badges.splice(badges.indexOf('basic'), 1);
+    }
 
     if(type === "admin") {
         if(badges.indexOf("poster") === -1){
