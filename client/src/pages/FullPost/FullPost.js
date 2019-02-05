@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PostHeader from './PostHeader'
 import PostComments from './PostComments'
 import axios from 'axios';
+import Chat from '../../components/Chat/Chat'
 import "./style.css";
 
 class FullPost extends Component {
@@ -13,13 +14,23 @@ class FullPost extends Component {
          changeModal:props.changeModal,
          singlePost: {},
          upVoteCount: 0,
-         DownVoteCount: 0
+         DownVoteCount: 0,
+         chatRoom: false,
+         chatRoomId:''
 		}
 		
    }
-   
+renderChatroom = (key) => {
+      //This method is not responsible for updating chat room to false
+      console.log("render chat roooooooooooooooooooom")
+      this.setState({
+         chatRoom: true,
+         chatRoomId: key
+      })
+   }
 componentWillReceiveProps = () => {
    this.fullpost()
+   
 }
 
    fullpost = (id) => {
@@ -73,14 +84,13 @@ componentWillReceiveProps = () => {
          
       }
 
-componentDidMount(){
-      this.fullpost()
+
+      componentDidMount(){
+         this.fullpost()
       }
 
-
-
-
    render(){
+      console.log('PROPPPPPS object',this.state.singlePost.id)
    if(this.state.singlePost.comments === undefined){
       return (<div/>)
    }
@@ -93,6 +103,8 @@ componentDidMount(){
             upvote={this.upvote}
             downvote={this.downvote}
             changeModal={this.state.changeModal}
+            renderChatroom={this.renderChatroom}
+            
          />
          {commentArr.map(comments => (
                         <PostComments 
@@ -103,7 +115,8 @@ componentDidMount(){
                               
                         />
                   ))}
-      
+         {/* ES6 conditional rendering of Chat component */}
+         {this.state.chatRoom?<Chat roomId={this.state.chatRoomId}/>:null}
          </div>
          )
    }
