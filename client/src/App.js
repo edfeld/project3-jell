@@ -402,7 +402,8 @@ class App extends Component {
 				<Route 
 					exact 
 					path="/fullpost/:id?"
-					render={() =>
+					render={() => {
+						return (
 						<div>
 						<SideDrawer 
 								show={this.state.sideOpen} 
@@ -421,6 +422,8 @@ class App extends Component {
 							commentFunction={this.commentRoute}
 						/>
 						</div>
+						)
+					}
 					}  
 					/>
 
