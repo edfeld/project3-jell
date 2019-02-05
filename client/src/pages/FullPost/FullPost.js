@@ -3,7 +3,7 @@ import PostHeader from './PostHeader'
 import PostComments from './PostComments'
 import axios from 'axios';
 import Chat from '../../components/Chat/Chat'
-
+import "./style.css";
 
 class FullPost extends Component {
       constructor(props) {
