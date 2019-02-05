@@ -23,9 +23,10 @@ componentWillReceiveProps = () => {
 }
 
    fullpost = (id) => {
-      console.log('fullpost id: ', id)
+      
       if(!id){
          id = parseInt(window.location.href.split('fullpost/')[1])
+         console.log('fullpost id: ', id)
       }else{
          id = parseInt(id);
       }
