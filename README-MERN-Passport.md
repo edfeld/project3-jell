@@ -30,5 +30,14 @@ View the live version of this app here:
 * In order to set the google authentication up, you must register your app @ [https://console.developers.google.com](https://console.developers.google.com) & set `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET` as environmental variables
 * In development mode (i.e. `npm run dev`), OAuth google callback is not being proxied to the google servers. Therefore in order to test the google OAuth on your local machine do the following:
 1) `npm run build`
+
 2) `npm run prod`
-`npm run start` or `npm start` starts the app in dev mode [Ed].
+
+## More notes
+1) `npm run start` or `npm start` starts the app in dev mode [Ed].
+
+2) `In order to get this to run in prod, I think you have to use the Export command in the Package.json file`
+
+3) `Be sure the production environment is set up in config/config.js with JawsDB_URL`
+
+4) `Use the proper setup with the database connection in idex.js in models`

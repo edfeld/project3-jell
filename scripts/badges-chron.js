@@ -58,8 +58,8 @@ function achievementCheck (user){
         badges.push("enlightened");
     }
     //User's widely dispised
-    if(downvotes >= 100 && !badges.includes("shitposter")) {
-        badges.push("shitposter");
+    if(downvotes >= 100 && !badges.includes("controversial")) {
+        badges.push("controversial");
     }
     //User is a prolific poster
     if(user.comments.length >= 100 || user.posts.length >= 100) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Route, Link } from 'react-router-dom'
+import { BrowserRouter , Route, Link } from 'react-router-dom'
 import LoginForm from './components/Login/LoginForm'
 // import SignupForm from './components/SignupForm'
 import Home from './pages/Home'
@@ -11,11 +11,12 @@ import PosterQuiz from './pages/PosterQuiz';
 import ArrPosterQuiz from './posterquiz.json'
 import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
+import UserPage from './pages/UserPage/UserPage'
+import TopDebates from './pages/TopDebates/TopDebates'
+import SearchResults from './pages/SearchResults/SearchResults'
 import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
-// import FullPost from './pages/FullPost'
-
 
 class App extends Component {
 	constructor() {
@@ -32,8 +33,8 @@ class App extends Component {
 			debateTitle: "",
 			debateContext: "",
 			debateTags: "",
-			commentContent: "",
-			singlePost: {}
+			isRebuttal: "",
+			commentContent: ""
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
@@ -74,9 +75,8 @@ class App extends Component {
 		})
 	}
 
-
-	_logout = (event) => {
-		event.preventDefault()
+	_logout = () => {
+		//event.preventDefault()
 		console.log('logging out')
 		axios.post('/auth/logout').then(response => {
 			console.log(response.data)
@@ -121,10 +121,8 @@ class App extends Component {
 			.then(response => {
 				console.log('this is the response: ', response.data);
 				this.setState({
-					searchBar: "",
-					searchResults: response.data
+					searchBar: ""
 				})
-			
 		})
 	}
 
@@ -133,7 +131,6 @@ class App extends Component {
 			return {sideOpen: !prevState.sideOpen}
 		});
 	};
-
 
 	backDropClick = () => {
 		this.setState({sideOpen: false});
@@ -167,6 +164,7 @@ class App extends Component {
 				title: post.debateTitle,
 				context: post.debateContext,
 				tags: post.debateTags,
+				isRebuttal:post.isRebuttal,
 				userId: this.state.user.id
 				
 			})
@@ -184,13 +182,21 @@ class App extends Component {
 	}
 
 	commentRoute = (postId) => {
+		let isRebuttal;
+		if(this.state.isRebuttal.toLowerCase() === 'yes'){
+			isRebuttal = 1;
+		}else{
+			isRebuttal = 0;
+		}
 		// e.preventDefault();
 		const comment = {
 		 commentContent: this.state.commentContent,
+		 isRebuttal: this.state.isRebuttal
 		}
 		axios
 			.post('/api/commentRoute', {
 				content: comment.commentContent,
+				isRebuttal: isRebuttal,
 				userId: this.state.user.id,
 				isChild: 0,
 				postId: postId
@@ -201,82 +207,8 @@ class App extends Component {
 				commnetContent: "",
 				currentModal: ""
 		   })
-		   this.fullpost(postId);
-		})
-
-	}
-
-	upvote = (key) => {
-		for(var i = 0; i < this.state.posts.length; i++) {
-			if(this.state.posts[i].id === key){
-				const plusOne = this.state.posts[i].upVotes + 1;
-			axios
-				.put('/api/upvote', {
-					post: this.state.posts[i].id,
-					upvotes: plusOne
-				})
-				.then(response => {
-					axios
-					.get('/api/getall')
-					.then(response => {
-						this.fullpost(key);
-						
-					})
-				})
-			}
-		}
-		
-	}
-
-	downvote = (key) => {
-		for(var i = 0; i < this.state.posts.length; i++) {
-			if(this.state.posts[i].id === key){
-				console.log(this.state.posts[i].downVotes);
-				const minusOne = this.state.posts[i].downVotes + 1;
-				console.log(this.state.posts[i].downVotes);
-			axios
-				.put('/api/downvote', {
-					post: this.state.posts[i].id,
-					downvotes: minusOne
-				})
-				.then(response => {
-					axios
-					.get('/api/getall')
-					.then(response => {
-						this.fullpost(key)
-					})
-				})
-			}
-		}
-		
-	}
-
-	componentWillMount(){
-		this.fullpost();
-	}
-	
-
-
-	fullpost = (id) => {
-	
-	console.log('fullpost id: ', id)
-	if(!id){
-		id = parseInt(window.location.href.split('post/')[1])
-	}else{
-		id = parseInt(id);
-	}
-	console.log(id)
-	console.log(window.location.href)
-	axios
-		.get('/api/post/' + id)
-		.then(response => {
-			this.setState({
-				singlePost: response.data
-			})
-			console.log('state after call ', this.state.singlePost)
 		})
 	}
-
 	// update the radio buttons on the quiz
 	answerClicked = (key, answerSelect) => {
 		// console.log("<  answer selected================================");
@@ -300,7 +232,32 @@ class App extends Component {
 		});
 		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
 	}
-	
+
+	updateUserToPoster = (id) => {	
+		console.log("setting UserType to Poster here");	      	
+		axios	
+			.put("/api/update/user/" + this.state.user.id, 	
+				{	
+					userType: "poster"	
+				}	
+			)	
+			.then(response => {	
+				console.log('this is the response for User Update to poster: ', response.data);	
+				this.setState({	
+					user: this.state.user	
+				})	
+			})	
+			.catch(err => {	
+				console.log("UpdateUserToPost error: ", err);	
+			})	
+		// db.users.update({UserType: "poster"}, {where: {username: this.user.username}})	
+        // .then(function (result) {	
+        //     console.log("Updated:", result);	
+        // }).catch(function(error) {	
+        //     console.log("Error: ", error);	
+        // });	
+	}
+
 	// Handle the submit button event on the quiz page
 	submitQuiz = () => {
 		const arrQuiz = this.state.ArrPosterQuiz;
@@ -325,7 +282,14 @@ class App extends Component {
 		} else {
 			alert('Not all questions have been answered');
 		}
-
+		console.log(this.state.user);	
+		if (quizGrade >= 60  && this.state.user.userType === 'basic') {	
+			console.log('call to updateUserToPost User:', this.state.user.id);	
+			this.updateUserToPoster(this.state.user.id);	
+			alert("you passed the quiz with " + quizGrade + '%');	
+		} else if (quizGrade < 60) {	
+			alert("you failed the quiz with " + quizGrade + '%');	
+		}
 	}
 
 	render() {
@@ -368,6 +332,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 							/>
 							<Home 
 								user={this.state.user}  
@@ -391,7 +356,6 @@ class App extends Component {
 								currentModal={this.state.currentModal}
 								changeModal={this.changeModal}
 						/>
-						<TitleBar />
 						<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -399,6 +363,7 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								_logout={this._logout}
 						/>
 						<LoginForm
 							show={this.state.sideOpen} 
@@ -419,6 +384,9 @@ class App extends Component {
 							show={this.state.sideOpen} 
 							toggleHandle={this.drawerToggle} 
 							search={this.searchDb}
+							handleChange={this.handleChange}	
+							changeModal={this.changeModal}	
+							_logout={this._logout}
 						/>
 						<PosterQuiz 
 							answerClicked={this.answerClicked}
@@ -443,14 +411,72 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								logout={this._logout}
 							/>
 						<FullPost 
-							post={this.state.singlePost}
 							upvote={this.upvote}
 							downvote={this.downvote} 
 							changeModal={this.changeModal}
 							user={this.state.user}
+							commentFunction={this.commentRoute}
 						/>
+						</div>
+					}  
+					/>
+
+
+				<Route 
+					exact 
+					path="/api/user/:id"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<UserPage />
+						</div>
+					} 
+					/>
+
+				<Route 
+					exact 
+					path="/topdebates"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<TopDebates />
+						</div>
+					}  
+					/>
+
+				<Route 
+					exact 
+					path="/api/search/:tags"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<SearchResults
+								results={this.state.searchResults}	
+							/>
 						</div>
 					}  
 					/>

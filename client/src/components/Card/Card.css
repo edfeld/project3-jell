@@ -8,7 +8,8 @@
     background-image: linear-gradient(to bottom right,rgba(221, 109, 18, 0.856), rgba(0, 0, 0, 0.753));
     box-shadow: 0px 0px 20px 1px black;
     text-align: left;
-    height: 15.5rem;
+    min-height: 15.5rem;
+    height: auto;
     text-shadow:-2px -1px 0 black;
 }
 
