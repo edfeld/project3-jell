@@ -119,7 +119,10 @@ module.exports = function(app) {
                 include: [{
                     model: db.users, as: 'user', 
                     attributes: ['username', 'userType', 'badges', 'createdAt']
-                }]
+                }],
+                order: [
+                    ['upVotes', 'DESC'], // Order by upvotes descending
+                    ]
             }).then(function(result) {
                 res.json(result);
             })
