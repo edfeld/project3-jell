@@ -13,3 +13,9 @@ hr {
 .type {
     font-style: italic;
 }
+
+.card {
+    display: 'inline-flex';
+    width: '75%';
+    margin: '1rem';
+}

@@ -1,7 +1,10 @@
 import React from 'react';
 import "./userHead.css";
+import Badge from '../../components/Badges'
 
-const UserHeader = props => (
+const UserHeader = props => {
+    const badges = props.userData.badges.split(':');
+    return(
     <header className="userHead">
         <div className="userTron " style={{padding: '0', backgroundColor:'#201106cc '}}>
         <div className="userName">
@@ -10,7 +13,9 @@ const UserHeader = props => (
             <span>User Type:</span>
             <h6 className="display-4">{props.userData.userType}</h6>
             <span>User Badges:</span>
-            <h6 className="display-4">{props.userData.badge}</h6>
+            <h6 className="display-4">{badges.map(badge => (
+                            <Badge badge={badge}></Badge>
+                        ))}</h6>
         </div>
             <div className="aboutMe">
                 <p>
@@ -19,6 +24,7 @@ const UserHeader = props => (
             </div>
         </div>
     </header>
-);
+    )
+};
 
 export default UserHeader;

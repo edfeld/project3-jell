@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const TopPostCard = props => {
+const SearchPostCard = props => {
     console.log('userposts ', props)
     const key = props.data.id
     return (
-    <Link to={'/fullpost/' + key} key={key}>
+    <Link to={'/api/post/' + key} key={key}>
          <header className="card" style={{display: 'inline-flex', width: '47%', margin: '1rem'}}>
          <div className="card-body">
              <h6>Title:</h6>
@@ -19,4 +19,4 @@ const TopPostCard = props => {
     );
 };
 
-export default TopPostCard;
+export default SearchPostCard;

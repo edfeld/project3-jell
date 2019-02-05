@@ -1,4 +1,3 @@
-// App.js
 import React, { Component } from 'react'
 import axios from 'axios'
 import { BrowserRouter , Route, Link } from 'react-router-dom'
@@ -14,6 +13,7 @@ import TitleBar from './components/titleBar'
 import FullPost from './pages/FullPost/FullPost'
 import UserPage from './pages/UserPage/UserPage'
 import TopDebates from './pages/TopDebates/TopDebates'
+import SearchResults from './pages/SearchResults/SearchResults'
 import { promises } from 'fs';
 // import socketIOClient from 'socket.io-client'
 // import Chat from './components/Chat/Chat'
@@ -76,7 +76,7 @@ class App extends Component {
 	}
 
 	_logout = () => {
-		// event.preventDefault()
+		//event.preventDefault()
 		console.log('logging out')
 		axios.post('/auth/logout').then(response => {
 			console.log(response.data)
@@ -121,8 +121,7 @@ class App extends Component {
 			.then(response => {
 				console.log('this is the response: ', response.data);
 				this.setState({
-					searchBar: "",
-					searchResults: response.data
+					searchBar: ""
 				})
 		})
 	}
@@ -210,7 +209,6 @@ class App extends Component {
 		   })
 		})
 	}
-
 	// update the radio buttons on the quiz
 	answerClicked = (key, answerSelect) => {
 		// console.log("<  answer selected================================");
@@ -235,31 +233,31 @@ class App extends Component {
 		this.setState({ ArrPosterQuiz: this.state.ArrPosterQuiz });
 	}
 
-	updateUserToPoster = (id) => {
-		console.log("setting UserType to Poster here");	
-		axios
-			.put("/api/update/user/" + this.state.user.id, 
-				{
-					userType: "poster"
-				}
-			)
-			.then(response => {
-				console.log('this is the response for User Update to poster: ', response.data);
-				this.setState({
-					user: this.state.user
-				})
-			})
-			.catch(err => {
-				console.log("UpdateUserToPost error: ", err);
-			})
-		// db.users.update({UserType: "poster"}, {where: {username: this.user.username}})
-        // .then(function (result) {
-        //     console.log("Updated:", result);
-        // }).catch(function(error) {
-        //     console.log("Error: ", error);
-        // });
+	updateUserToPoster = (id) => {	
+		console.log("setting UserType to Poster here");	      	
+		axios	
+			.put("/api/update/user/" + this.state.user.id, 	
+				{	
+					userType: "poster"	
+				}	
+			)	
+			.then(response => {	
+				console.log('this is the response for User Update to poster: ', response.data);	
+				this.setState({	
+					user: this.state.user	
+				})	
+			})	
+			.catch(err => {	
+				console.log("UpdateUserToPost error: ", err);	
+			})	
+		// db.users.update({UserType: "poster"}, {where: {username: this.user.username}})	
+        // .then(function (result) {	
+        //     console.log("Updated:", result);	
+        // }).catch(function(error) {	
+        //     console.log("Error: ", error);	
+        // });	
 	}
-	
+
 	// Handle the submit button event on the quiz page
 	submitQuiz = () => {
 		const arrQuiz = this.state.ArrPosterQuiz;
@@ -284,13 +282,13 @@ class App extends Component {
 		} else {
 			alert('Not all questions have been answered');
 		}
-		console.log(this.state.user);
-		if (quizGrade >= 60  && this.state.user.userType === 'basic') {
-			console.log('call to updateUserToPost User:', this.state.user.id);
-			this.updateUserToPoster(this.state.user.id);
-			alert("you passed the quiz with " + quizGrade + '%');
-		} else if (quizGrade < 60) {
-			alert("you failed the quiz with " + quizGrade + '%');
+		console.log(this.state.user);	
+		if (quizGrade >= 60  && this.state.user.userType === 'basic') {	
+			console.log('call to updateUserToPost User:', this.state.user.id);	
+			this.updateUserToPoster(this.state.user.id);	
+			alert("you passed the quiz with " + quizGrade + '%');	
+		} else if (quizGrade < 60) {	
+			alert("you failed the quiz with " + quizGrade + '%');	
 		}
 	}
 
@@ -324,9 +322,7 @@ class App extends Component {
 					exact 
 					path="/" 
 					render={() => 
-						
 						<div>
-							
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -381,14 +377,13 @@ class App extends Component {
 					path="/posterquiz" 
 					render={() => 
 						<div>
-						{/* <h3>Debate Poster Quiz</h3> */}
+						<h3>Debate Poster Quiz</h3>
 						<SideDrawer 
 							show={this.state.sideOpen} 
-							toggleHandle={this.drawerToggle}
-							value={this.state.searchBar}
+							toggleHandle={this.drawerToggle} 
 							search={this.searchDb}
-							handleChange={this.handleChange}
-							changeModal={this.changeModal}
+							handleChange={this.handleChange}	
+							changeModal={this.changeModal}	
 							_logout={this._logout}
 						/>
 						<PosterQuiz 
@@ -404,34 +399,9 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/api/post/:id"
-					render={() =>
-						<div>
-						<SideDrawer 
-								show={this.state.sideOpen} 
-								toggleHandle={this.drawerToggle} 
-								value={this.state.searchBar} 
-								search={this.searchDb} 
-								handleChange={this.handleChange} 
-								changeModal={this.changeModal}
-								_logout={this._logout}
-							/>
-						<FullPost 
-							upvote={this.upvote}
-							downvote={this.downvote} 
-							changeModal={this.changeModal}
-							user={this.state.user}
-							commentFunction={this.commentRoute}
-						/>
-						</div>
-					}  
-					/>
-
-
-				<Route 
-					exact 
-					path="/api/user/:id"
-					render={() =>
+					path="/fullpost/:id?"
+					render={(props) => {
+						return (
 						<div>
 							<SideDrawer 
 								show={this.state.sideOpen} 
@@ -440,13 +410,45 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								logout={this._logout}
 							/>
-							<UserPage />
+							<FullPost 
+								upvote={this.upvote}
+								downvote={this.downvote} 
+								changeModal={this.changeModal}
+								user={this.state.user}
+								commentFunction={this.commentRoute}
+								propsId={props}
+							/>
+						</div>
+						)
+					}
+					}  
+					/>
+
+
+				<Route 
+					exact 
+					path="/user/:id"
+					render={(props) =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+								
+							/>
+							<UserPage 
+								userId={props}
+							/>
 						</div>
 					} 
 					/>
 
-<Route 
+				<Route 
 					exact 
 					path="/topdebates"
 					render={() =>
@@ -460,6 +462,26 @@ class App extends Component {
 								changeModal={this.changeModal}
 							/>
 							<TopDebates />
+						</div>
+					}  
+					/>
+
+				<Route 
+					exact 
+					path="/api/search/:tags"
+					render={() =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+							/>
+							<SearchResults
+								results={this.state.searchResults}	
+							/>
 						</div>
 					}  
 					/>

@@ -1,21 +1,29 @@
 const db = require("../models");
 
 module.exports = function(app) {
-
     //Searches for all posts with requested tags
     app.get("/api/search/:tags", function(req, res) {
         console.log(req.params.tags)
+        let paramsArr = [];
+        if(req.params.tags.includes(' ')){
+         paramsArr = req.params.tags.split(' ')
+        console.log(paramsArr);
+        }else if(req.params.tags.includes(',')){
+                paramsArr = req.params.tags.split(',')
+                console.log(paramsArr);
+                }else if(req.params.tags.includes(', ')){
+                    paramsArr = req.params.tags.split(',')
+                }
         db.posts
             .findAll({
                 where: {
-                    tags: req.params.tags
+                    tags: paramsArr
                 },
                 include: [{model: db.comments, as: 'comments'}]    
             })
             .then(function(searchResults){
                 console.log(searchResults);
                 res.json(searchResults);
-                
             });
     });
 
@@ -119,7 +127,10 @@ module.exports = function(app) {
                 include: [{
                     model: db.users, as: 'user', 
                     attributes: ['username', 'userType', 'badges', 'createdAt']
-                }]
+                }],
+                order: [
+                    ['upVotes', 'DESC'], // Order by upvotes descending
+                    ]
             }).then(function(result) {
                 res.json(result);
             })
