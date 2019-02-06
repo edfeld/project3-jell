@@ -48,6 +48,7 @@ class UserPage extends Component {
 				{this.state.user.posts.map(posts => (
 						<UserPosts 
 							data={posts}
+							selectPostID={this.props.selectPostID}
 						/>
 				))}
             </div>
