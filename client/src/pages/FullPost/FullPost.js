@@ -106,7 +106,7 @@ class FullPost extends Component {
             downvote={this.downvote}
             changeModal={this.state.changeModal}
             renderChatroom={this.renderChatroom}
-            
+            selectUserID={this.props.selectUserID}
          />
          {commentArr.map(comments => (
                         <PostComments 

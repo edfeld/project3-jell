@@ -7,7 +7,7 @@ class TopDebates extends Component {
 	constructor() {
 		super()
 		this.state = {
-			topPosts: []
+			topPosts: [],
 		}
 	}
 
@@ -22,8 +22,6 @@ class TopDebates extends Component {
 			)
 			
 		}
-	
-
 		componentDidMount(){
 			this.getTopFour()
 		}
@@ -37,6 +35,7 @@ class TopDebates extends Component {
                  {this.state.topPosts.map(posts => (
                         <TopPostCard 
 							  data={posts}
+							  selectPostID={this.props.selectPostID}
                               // upvote={props.upvote}
                               // downvote={props.downvote}
                               // changeModal={props.changeModal}
