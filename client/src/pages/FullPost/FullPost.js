@@ -30,6 +30,7 @@ renderChatroom = (key) => {
       })
    }
 
+
    fullpost = (id) => {
       axios
          .get('/api/post/' + id)

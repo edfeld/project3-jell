@@ -429,7 +429,7 @@ class App extends Component {
 
 				<Route 
 					exact 
-					path="/user/:id"
+					path="/user/:id?"
 					render={(props) =>
 						<div>
 							<SideDrawer 
