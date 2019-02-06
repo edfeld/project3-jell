@@ -466,6 +466,7 @@ class App extends Component {
 							<UserPage 
 								userId={props}
 								selectedUserID={this.state.selectedUserID}
+								selectPostID={this.selectPostID}
 							/>
 						</div>
 					} 
