@@ -13,15 +13,26 @@ function getChildren (children) {
 }
 
 
-const PostComments = props =>{
-   const key = props.data.id;
-   const badges = props.data.user.badges.split(':');
-   const children = props.data.children;
+class PostComments extends React.Component {
 
-    if(props.data.isRebuttal === true){
+    Constructor(props) {
+        super(props);
+
+        this.state = {
+            key : props.data.id,
+            badges : props.data.user.badges.split(':'),
+            children : props.data.children,
+            isRebuttal: props.data.isRebuttal
+        }
+    }
+
+    
+   
+
+    if(this.state.isRebuttal === true){
 
         return (
-            <div key={key}>
+            <div key={this.state.key}>
                 <header className="card" style={{display: 'inline-flex', width: '75%', margin: '1rem',  backgroundImage: 'linear-gradient(to bottom right,rgba(221, 18, 18, 0.855), rgba(17, 10, 51, 0.89))'}}>
                     <div className="card-body">
                         <h6 className="type">Rebuttal</h6>
