@@ -18,7 +18,7 @@ const PostComments = props =>{
    const key = props.data.id;
    const badges = props.data.user.badges.split(':');
    const children = props.data.children;
-    console.log()
+
     if(props.data.isRebuttal === true){
 
         return (
