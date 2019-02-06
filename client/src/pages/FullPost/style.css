@@ -15,7 +15,10 @@ hr {
 }
 
 .card {
-    display: 'inline-flex';
-    width: '75%';
-    margin: '1rem';
+    display: inline-flex;
+    width: 95% !important;
+    margin: .5rem !important;
+    position: relative;
+    left: 2rem;
+    background-image: linear-gradient(to right bottom, rgba(221, 109, 18, 0.855), rgba(0, 0, 0, 0.753));
 }

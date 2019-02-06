@@ -6,6 +6,7 @@ import TitleBar from '../components/titleBar'
 // TODO - add proptypes
 
 const Home = props => {
+      // console.log("props.selectPostID: ", props.selectPostID);
 	if (props.user && props.posts !== null) {
             // props.allposts()
 		return (
@@ -17,6 +18,7 @@ const Home = props => {
                     upvote={props.upvote}
                     downvote={props.downvote}
                     fullpost={props.fullpost}
+                    selectPostID={props.selectPostID}
                     />
               ))}
 
@@ -40,6 +42,7 @@ const Home = props => {
                     upvote={props.upvote}
                     downvote={props.downvote}
                     fullpost={props.fullpost}
+                    selectPostID={props.selectPostID}
                     />
               ))}
 

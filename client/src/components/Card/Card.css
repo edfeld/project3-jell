@@ -13,13 +13,19 @@
     text-shadow:-2px -1px 0 black;
 }
 
-
+.card-subtitle{
+    margin-top: -.375rem;
+    margin-bottom: 0;
+    font-size: 1.36rem;
+    /* overflow-wrap: break-word; */
+    word-wrap: normal;
+    position: relative;
+}
 
 .card-body{
     font-family: 'cairo', cursive;
     border: none;
     color: white;
-    
 }
 
 a:hover{
