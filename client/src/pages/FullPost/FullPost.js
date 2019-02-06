@@ -23,7 +23,7 @@ class FullPost extends Component {
       // console.log("these are the props in full post id ", id)
    }
 
-renderChatroom = (key) => {
+   renderChatroom = (key) => {
       //This method is not responsible for updating chat room to false
       // console.log("render chat roooooooooooooooooooom")
       this.setState({
@@ -91,7 +91,7 @@ renderChatroom = (key) => {
          
       }
 
-   render(){
+   render(props){
       // console.log('PROPPPPPS object',this.state.singlePost.id)
    if(this.state.singlePost.comments === undefined){
       return (<div/>)
@@ -111,6 +111,7 @@ renderChatroom = (key) => {
          {commentArr.map(comments => (
                         <PostComments 
                               data={comments}
+                              selectUserID={this.props.selectUserID}
                               // upvote={props.upvote}
                               // downvote={props.downvote}
                               // changeModal={props.changeModal}

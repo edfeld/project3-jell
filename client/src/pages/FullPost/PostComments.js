@@ -14,10 +14,11 @@ function getChildren (children) {
 
 
 const PostComments = props =>{
+    console.log("=========== props.data: ", props.data);
    const key = props.data.id;
    const badges = props.data.user.badges.split(':');
    const children = props.data.children;
-
+    console.log()
     if(props.data.isRebuttal === true){
 
         return (
@@ -25,7 +26,7 @@ const PostComments = props =>{
                 <header className="card" style={{display: 'inline-flex', width: '75%', margin: '1rem',  backgroundImage: 'linear-gradient(to bottom right,rgba(221, 18, 18, 0.855), rgba(17, 10, 51, 0.89))'}}>
                     <div className="card-body">
                         <h6 className="type">Rebuttal</h6>
-                        <Link to={'/user/' + props.data.userId}><h4 className="card-title">{props.data.user.username}</h4></Link>
+                        <Link to='/user' onClick={() => {console.log("user data:==============>> ", props.data.userId); props.selectUserID(props.data.userId)}}><h4 className="card-title">{props.data.user.username}</h4></Link>
                         {badges.map(badge => (
                             <Badge badge={badge}></Badge>
                         ))}
@@ -50,7 +51,7 @@ const PostComments = props =>{
                 <header className="card" style={{display: 'inline-flex', width: '75%', margin: '1rem', backgroundImage: 'linear-gradient(to bottom right,rgba(221, 109, 18, 0.856), rgba(0, 0, 0, 0.753))'}}>
                 <div className="card-body">
                     <h6 className="type">Concurrence</h6>
-                    <Link to={'/user/' + props.data.userId}><h4 className="card-title">{props.data.user.username}</h4></Link>
+                    <Link to='/user' onClick={() => {console.log("user data:==============>> ", props.data.user); props.selectUserID(props.data.user.id)}}><h4 className="card-title">{props.data.user.username}</h4></Link>
                     {badges.map(badge => (
                         <Badge badge={badge}></Badge>
                     ))}
