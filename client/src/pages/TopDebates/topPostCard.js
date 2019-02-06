@@ -12,6 +12,7 @@ const TopPostCard = props => {
              <h2 className="card-title">{props.data.title}</h2>
              <h6>Context:</h6>
              <h4 className="card-text">{props.data.content}</h4>
+             <span>Tags: {props.data.tags}</span>
              <p><button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}>+</button>Up Votes: {props.data.upVotes}/<button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>Down Votes: {props.data.downVotes}</p>
          </div>
      </header>
