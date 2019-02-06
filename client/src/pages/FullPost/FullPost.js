@@ -15,9 +15,11 @@ class FullPost extends Component {
          DownVoteCount: 0,
          chatRoom: false,
          chatRoomId:'',
-         propsId: props.propsId
+         propsId: props.propsId,
+         selectedPostID: props.selectedPostID // [ERE] 20190205
       }
-		
+      console.log("props.selectedPostID: ", props.selectedPostID);
+		console.log("in FullPost - selectedPostID: ", this.state.selectedPostID)
       // console.log("these are the props in full post id ", id)
    }
 
@@ -30,6 +32,7 @@ renderChatroom = (key) => {
       })
    }
 
+
    fullpost = (id) => {
       axios
          .get('/api/post/' + id)
@@ -38,7 +41,7 @@ renderChatroom = (key) => {
                singlePost: response.data
             })
          })
-      }
+   }
 
       upvote = (key) => {
             if(this.state.singlePost.post.id === key){
@@ -73,13 +76,17 @@ renderChatroom = (key) => {
       }
 
       componentDidMount(){
-         let id = parseInt(this.state.propsId.match.params.id)
+         let id = this.state.selectedPostID
+         // console.log("fullpost.js - component did mount ID:", id)
+         // let id = parseInt(this.state.propsId.match.params.id)
          this.fullpost(id)
          
       }
 
       componentWillReceiveProps = () => {
-         let id = parseInt(this.state.propsId.match.params.id)
+         let id = this.state.selectedPostID
+         // console.log("fullpost.js - componentWillReceiveProps ID:", id)
+         // let id = parseInt(this.state.propsId.match.params.id)
          this.fullpost(id)
          
       }
