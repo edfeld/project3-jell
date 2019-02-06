@@ -473,7 +473,7 @@ class App extends Component {
 				<Route 
 					exact 
 					path="/topdebates"
-					render={() =>
+					render={(props) =>
 						<div>
 							<SideDrawer 
 								show={this.state.sideOpen} 
@@ -483,7 +483,9 @@ class App extends Component {
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
 							/>
-							<TopDebates />
+							<TopDebates 
+								selectPostID={this.selectPostID}
+							/>
 						</div>
 					}  
 					/>
