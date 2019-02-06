@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PostHeader from './PostHeader'
-import PostComments from './PostComments'
+import PostComments from './comment'
 import axios from 'axios';
-import Chat from '../../components/Chat/Chat'
+import Chat from '../../components/Chat/Chat';
 import "./style.css";
 
 class FullPost extends Component {
