@@ -55,8 +55,13 @@ module.exports = function (sequelize, DataTypes) {
             notNull: false,
             validate: {
                 isEmail: true
-            }
-        }
+			}
+			
+		},
+		aboutMe: {
+			type: DataTypes.STRING,
+			notNull: false
+		}
 
 	}, 
 	{

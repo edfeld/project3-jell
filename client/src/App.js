@@ -34,10 +34,19 @@ class App extends Component {
 			debateContext: "",
 			debateTags: "",
 			isRebuttal: "",
-			commentContent: ""
+			commentContent: "",
+			selectedPostID: "",
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
+		
+	}
+
+	selectPostID = (id) => { // [ERE] 20190205
+		id = id.toString();
+		console.log("The passed in id: ", id);
+		this.setState({selectedPostID: id});
+		console.log("setting the selected PostId Here ====>>>>>: ", this.state.selectedPostID);
 	}
 	
 	componentDidMount() {
@@ -341,6 +350,7 @@ class App extends Component {
 								downvote={this.downvote}
 								fullpost={this.fullpost}
 								allposts={this.getAllPosts}
+								selectPostID={this.selectPostID}
 							/>
 						</div>
 					}
@@ -399,7 +409,7 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/fullpost/:id?"
+					path="/fullpost"
 					render={(props) => {
 						return (
 						<div>
@@ -419,6 +429,7 @@ class App extends Component {
 								user={this.state.user}
 								commentFunction={this.commentRoute}
 								propsId={props}
+								selectedPostID={this.state.selectedPostID}
 							/>
 						</div>
 						)
