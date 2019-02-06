@@ -31,23 +31,9 @@ function getIndent(props) {
 
 class PostComments extends React.Component {
 
-    Constructor(props) {
-        let bkg = findBkgType(props.data.isRebuttal);
-        let indent = getIndent(props);
-        let type= getType(props.data.isRebuttal);
+    Constructor() {
         this.state = {
-            key : props.data.id,
-            badges : props.data.user.badges.split(':'),
-            username: props.data.username,
-            userID: props.data.userID,
-            upvotes: props.data.upVotes,
-            downvotes: props.data.downVotes,
-            childrenArr : props.data.children,
-            isRebuttal: props.data.isRebuttal,
-            children: [],
-            bkg: bkg,
-            indent: indent,
-            tpye: type
+            children: []
         }
     }
 
@@ -55,6 +41,7 @@ class PostComments extends React.Component {
         axios.get('/api/comments/children/'+ children)
         .then(function (result) {
             let comps = []
+            console.log("Children",result);
             result.map(comment => {
                 comps.push(<PostComments data={comment} indent={this.state.indent++}></PostComments>);
             });
@@ -62,30 +49,11 @@ class PostComments extends React.Component {
         })
     }
 
-    componentWillReceiveProps(props) {
-        let bkg = findBkgType(props.data.isRebuttal);
-        let indent = getIndent(props);
-        let type= getType(props.data.isRebuttal);
-        this.setState = {
-            key : props.data.id,
-            badges : props.data.user.badges.split(':'),
-            username: props.data.username,
-            userID: props.data.userID,
-            upvotes: props.data.upVotes,
-            downvotes: props.data.downVotes,
-            childrenArr : props.data.children,
-            isRebuttal: props.data.isRebuttal,
-            children: [],
-            bkg: bkg,
-            indent: indent,
-            tpye: type
-        }
-    }
-   
-
     render () {
-        const bkg = this.state.bkg;
-        const indent = this.state.indent;
+        const bkg = findBkgType(this.props.data.isRebuttal);
+        const indent = getIndent(this.props);
+        const type= getType(this.props.data.isRebuttal);
+        const badges= this.props.data.user.badges.split(':')
         const style = {
             display: 'inline-flex', 
             width: '75%',
@@ -94,32 +62,59 @@ class PostComments extends React.Component {
             backgroundImage: bkg
         };
 
-       return( 
-         <div key={this.state.key}>
-            <header className="card" style={style}>
-                <div className="card-body">
-                    <h6 className="type">Rebuttal</h6>
-                    <Link to={'/user/' + this.state.userId}><h4 className="card-title">{this.state.username}</h4></Link>
-                    {this.state.badges.map(badge => (
-                        <Badge badge={badge}></Badge>
-                    ))}
-                    <hr></hr>
-                    <h5 className="card-text">{props.data.content}</h5>
-                    <p>
-                        <button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}>+</button>
-                        Up Votes: {this.state.upvotes}/
-                        <button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>
-                        Down Votes: {this.state.downvotes}
-                    </p>
-                    <button>View Children</button>
-                    <button>Reply</button>
-                </div>
-                <div>
-                    {this.state.children}
-                </div>
-            </header>
-          </div>
-       );
+       if (this.state) {
+        return( 
+            <div key={this.props.data.key}>
+               <header className="card" style={style}>
+                   <div className="card-body">
+                       <h6 className="type">{type}</h6>
+                       <Link to={'/user/' + this.props.data.userId}><h4 className="card-title">{this.props.data.username}</h4></Link>
+                       {badges.map(function(badge, i) { 
+                           <Badge key={i} badge={badge}></Badge>
+                       })}
+                       <hr></hr>
+                       <h5 className="card-text">{this.props.data.content}</h5>
+                       <p>
+                           <button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}>+</button>
+                           Up Votes: {this.props.data.upvotes}/
+                           <button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>
+                           Down Votes: {this.props.data.downvotes}
+                       </p>
+                       <button onClick={() => getChildren(this.props.data.children)}>View Children</button>
+                       <button>Reply</button>
+                   </div>
+                   <div>
+                       {this.state.children}
+                   </div>
+               </header>
+             </div>
+          );
+       } else {
+        return( 
+            <div key={this.props.data.key}>
+               <header className="card" style={style}>
+                   <div className="card-body">
+                       <h6 className="type">{type}</h6>
+                       <Link to={'/user/' + this.props.data.userId}><h4 className="card-title">{this.props.data.username}</h4></Link>
+                       {badges.map(badge => (
+                           <Badge badge={badge}></Badge>
+                       ))}
+                       <hr></hr>
+                       <h5 className="card-text">{this.props.data.content}</h5>
+                       <p>
+                           <button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}>+</button>
+                           Up Votes: {this.props.data.upvotes}/
+                           <button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>
+                           Down Votes: {this.props.data.downvotes}
+                       </p>
+                       <button onClick={() => this.getChildren(this.props.data.children)}>View Children</button>
+                       <button>Reply</button>
+                   </div>
+               </header>
+             </div>
+          );
+       }
+       
     }
 
 };
