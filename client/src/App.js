@@ -335,6 +335,7 @@ class App extends Component {
 					post={this.postRoute}
 					comment={this.commentRoute}
 					postData={this.state.singlePost}
+					postId ={this.state.selectedPostID}
 				/>
 				<Route 
 					exact 
