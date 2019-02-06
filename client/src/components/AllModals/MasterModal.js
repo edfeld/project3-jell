@@ -22,6 +22,7 @@ const MasterModal = (props) => {
                                 handleChange={props.handleChange}
                                 comment={props.comment}
                                 postData={props.postData}
+                                postId={props.postId}
                             />
             break;
         case 'MakePost':

@@ -34,8 +34,8 @@ const PostComments = props =>{
                         <h5 className="card-text">{props.data.content}</h5>
                         <p>
                             <button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}>+</button>
-                            Up Votes: {props.data.upVotes}/
-                            <button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>
+                            Up Votes: {props.data.upVotes}
+                            <button onClick={() => props.commentdownvote(key)} style={{background: 'none', border: 'none'}}>-</button>
                             Down Votes: {props.data.downVotes}
                         </p>
                         <button>View Children</button>
