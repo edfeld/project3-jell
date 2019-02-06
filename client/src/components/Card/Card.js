@@ -10,7 +10,7 @@ return(
     <header className="card">
         <div className="card-body">
             <h1 className="card-title">{props.data.title}</h1>
-            <h3 className="card-subtitle mb-2">{props.data.context}</h3>
+            <p className="card-subtitle mb-2">{props.data.context}</p>
             <p className="card-text">Tags: {props.data.tags}</p>
             <span>Up Votes: {props.data.upVotes}/Down Votes: {props.data.downVotes}</span>
             {/* <div> 
