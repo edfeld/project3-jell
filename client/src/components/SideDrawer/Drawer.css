@@ -8,13 +8,14 @@
     width: 70%;
     max-width: 400px;
     z-index: 600;
+    color: whitesmoke;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
     -webkit-transition: -webkit-transform 0.3s ease-out;
     transition: -webkit-transform 0.3s ease-out;
     transition: transform 0.3s ease-out;
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
-    background: rgb(206, 167, 116);
+    background: rgb(109, 63, 3);
     font-family: 'Libre Baskerville', serif;
     
 }
@@ -26,6 +27,23 @@
     width: 96%;
     font-family: 'Libre Baskerville', serif;
 }
+
+.searchBtn{
+    color: black !important;
+    background: saddlebrown;
+    width: 6em;
+    top: -3%;
+    border: 1px;
+    position: relative;
+    left: -32px;
+    border-style: solid;
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  .searchBtn:hover{
+      background: whitesmoke;
+      color: red;
+  }
 
 .drawerHead{
     text-align: center;
@@ -54,7 +72,7 @@
 .side-drawer a:hover,
 .side-drawer a:active,
 .side-drawer li:hover{
-    color: red;
+    color: rgb(255, 103, 1);
 }
 
 
@@ -65,7 +83,7 @@
 
 
 .side-drawer a {
-    color: black;
+    color: whitesmoke;
     text-decoration: none;
     font-size: 1.2rem
 }
@@ -77,9 +95,3 @@
     
 }
 
-.searchBtn{
-  width: 6em;  
-  top: 50px;
-  left: -32px;
-  font-family: 'Libre Baskerville', serif;
-}
