@@ -92,14 +92,6 @@ app.get(
 	}
 )
 
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.get('/', function(req, res) {
-// 	res.sendFile(('public/index.html'), function(err) {
-// 	  if (err) {
-// 		res.status(500).send(err)
-// 	  }
-// 	})
-//   })
 
 console.log("process.env.NODE_ENV:+:+>  ", process.env.NODE_ENV);
 // ==== if its production environment!
@@ -112,12 +104,16 @@ if (process.env.NODE_ENV === 'production') {
 	})
 }
 
+
 /* Express app ROUTING */
 app.use('/auth', require('./auth'))
 require('./routes/getRoutes')(app)
 require('./routes/postroutes')(app)
 require('./routes/put-routes')(app)
 require('./routes/del-routes')(app)
+
+
+
 
 // ====== Error handler ====
 app.use(function(err, req, res, next) {

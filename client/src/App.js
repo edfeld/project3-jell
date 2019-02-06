@@ -322,9 +322,7 @@ class App extends Component {
 					exact 
 					path="/" 
 					render={() => 
-						
 						<div>
-							
 							<SideDrawer 
 								show={this.state.sideOpen} 
 								toggleHandle={this.drawerToggle} 
@@ -401,34 +399,9 @@ class App extends Component {
 				/>
 				<Route 
 					exact 
-					path="/api/post/:id"
-					render={() =>
-						<div>
-						<SideDrawer 
-								show={this.state.sideOpen} 
-								toggleHandle={this.drawerToggle} 
-								value={this.state.searchBar} 
-								search={this.searchDb} 
-								handleChange={this.handleChange} 
-								changeModal={this.changeModal}
-								logout={this._logout}
-							/>
-						<FullPost 
-							upvote={this.upvote}
-							downvote={this.downvote} 
-							changeModal={this.changeModal}
-							user={this.state.user}
-							commentFunction={this.commentRoute}
-						/>
-						</div>
-					}  
-					/>
-
-
-				<Route 
-					exact 
-					path="/api/user/:id"
-					render={() =>
+					path="/fullpost/:id?"
+					render={(props) => {
+						return (
 						<div>
 							<SideDrawer 
 								show={this.state.sideOpen} 
@@ -437,8 +410,40 @@ class App extends Component {
 								search={this.searchDb} 
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
+								logout={this._logout}
 							/>
-							<UserPage />
+							<FullPost 
+								upvote={this.upvote}
+								downvote={this.downvote} 
+								changeModal={this.changeModal}
+								user={this.state.user}
+								commentFunction={this.commentRoute}
+								propsId={props}
+							/>
+						</div>
+						)
+					}
+					}  
+					/>
+
+
+				<Route 
+					exact 
+					path="/user/:id?"
+					render={(props) =>
+						<div>
+							<SideDrawer 
+								show={this.state.sideOpen} 
+								toggleHandle={this.drawerToggle} 
+								value={this.state.searchBar} 
+								search={this.searchDb} 
+								handleChange={this.handleChange} 
+								changeModal={this.changeModal}
+								
+							/>
+							<UserPage 
+								userId={props}
+							/>
 						</div>
 					} 
 					/>
