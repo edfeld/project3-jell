@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PostHeader from './PostHeader'
-import PostComments from './comment.js'
+import PostComments from './comment'
 import axios from 'axios';
 import Chat from '../../components/Chat/Chat'
 import "./style.css";
