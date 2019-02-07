@@ -1,4 +1,30 @@
-.chatCard{
-    width: 500px;
-    height: auto;
+/* Add styles to the form container */
+.chatCard {
+    max-width: 300px;
+    max-height: 300px;
+    padding: 10px;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    right: -15px;
+    border: 3px solid #f1f1f1;
+    z-index: 900;
+    overflow: scroll;
+}
+
+/* Full-width textarea */
+.card-footer {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+    resize: none;
+    min-height: 200px;
+}
+
+/* When the textarea gets focus, do something */
+.chatCard-body:focus {
+    background-color: #ddd;
+    outline: none;
 }
