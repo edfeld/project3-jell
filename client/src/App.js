@@ -36,12 +36,21 @@ class App extends Component {
 			isRebuttal: "",
 			commentContent: "",
 			selectedPostID: "",
+			selectedUserID: ""
 		}
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
 		
 	}
 
+	// Used to get to the User page - Set the state of the user ID
+	selectUserID = (id) => {
+		id = id.toString();
+		console.log("The passed in User id::::===:::> ", id);
+		this.setState({selectedUserID: id});
+		console.log("the state of SelectedUserID: ", this.state.selectedUserID);
+	}
+	// Used to get to the Single post page. Set the state of the parent Post ID
 	selectPostID = (id) => { // [ERE] 20190205
 		id = id.toString();
 		console.log("The passed in id: ", id);
@@ -326,6 +335,7 @@ class App extends Component {
 					post={this.postRoute}
 					comment={this.commentRoute}
 					postData={this.state.singlePost}
+					postId ={this.state.selectedPostID}
 				/>
 				<Route 
 					exact 
@@ -430,6 +440,7 @@ class App extends Component {
 								commentFunction={this.commentRoute}
 								propsId={props}
 								selectedPostID={this.state.selectedPostID}
+								selectUserID={this.selectUserID}
 							/>
 						</div>
 						)
@@ -440,7 +451,7 @@ class App extends Component {
 
 				<Route 
 					exact 
-					path="/user/:id?"
+					path="/user"  // [ere] 20190205-1900
 					render={(props) =>
 						<div>
 							<SideDrawer 
@@ -454,6 +465,8 @@ class App extends Component {
 							/>
 							<UserPage 
 								userId={props}
+								selectedUserID={this.state.selectedUserID}
+								selectPostID={this.selectPostID}
 							/>
 						</div>
 					} 
@@ -462,7 +475,7 @@ class App extends Component {
 				<Route 
 					exact 
 					path="/topdebates"
-					render={() =>
+					render={(props) =>
 						<div>
 							<SideDrawer 
 								show={this.state.sideOpen} 
@@ -472,7 +485,9 @@ class App extends Component {
 								handleChange={this.handleChange} 
 								changeModal={this.changeModal}
 							/>
-							<TopDebates />
+							<TopDebates 
+								selectPostID={this.selectPostID}
+							/>
 						</div>
 					}  
 					/>

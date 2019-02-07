@@ -11,6 +11,7 @@ class SignupForm extends Component {
 			email: '',
 			username: '',
 			password: '',
+			aboutMe: '',
 			confirmPassword: '',
 			redirectTo: null
 		}
@@ -82,6 +83,13 @@ class SignupForm extends Component {
 					type="text"
 					name="username"
 					value={this.state.username}
+					onChange={this.handleChange}
+				/>
+				<label htmlFor="about">About: </label>
+				<input
+					type="text"
+					name="about"
+					value={this.state.aboutMe}
 					onChange={this.handleChange}
 				/>
 				<label htmlFor="password">Password: </label>

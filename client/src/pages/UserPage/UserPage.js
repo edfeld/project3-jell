@@ -8,7 +8,8 @@ class UserPage extends Component {
 		super(props)
 		this.state = {
 			user: {},
-			userId: props.userId
+			userId: props.userId,
+			selectedUserID: props.selectedUserID
 		}
 		
 	}
@@ -27,8 +28,10 @@ class UserPage extends Component {
 }
 
 	componentDidMount(){
-		let id = this.state.userId.match.params.id;
+		let id = this.state.selectedUserID
+		// let id = this.state.userId.match.params.id;
 		this.getUser(id)
+		console.log("UserPage UserID:=-=-=-=-=-=-=-> ", id)
 	}
 
 	render() {
@@ -45,6 +48,7 @@ class UserPage extends Component {
 				{this.state.user.posts.map(posts => (
 						<UserPosts 
 							data={posts}
+							selectPostID={this.props.selectPostID}
 						/>
 				))}
             </div>

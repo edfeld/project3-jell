@@ -5,7 +5,7 @@ const TopPostCard = props => {
     console.log('userposts ', props)
     const key = props.data.id
     return (
-    <Link to={'/fullpost/' + key} key={key}>
+    <Link to='/fullpost' key={key} onClick={() => props.selectPostID(key)}>
          <header className="card" style={{display: 'inline-flex', width: '47%', margin: '1rem', position: 'relative', left: '1%'}}>
          <div className="card-body">
              <h6>Title:</h6>
