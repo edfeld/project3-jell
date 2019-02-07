@@ -5,17 +5,17 @@ use project3_db;
 -- drop table posts IF EXISTS;
 -- drop table users IF EXISTS;
 
-INSERT INTO users (username, userType, firstName, lastName, googleId, email)
-VALUES ("dardin-dale", "admin", "Logan", "Crecraft", "5c3bcfc11f47fc8c57a5e868", "dardinsouffle@gmail.com");
+INSERT INTO users (username, userType, firstName, lastName, googleId, email, badges)
+VALUES ("dardin-dale", "admin", "Logan", "Crecraft", "5c3bcfc11f47fc8c57a5e868", "dardinsouffle@gmail.com", "basic");
 
-INSERT INTO users (username, userType, firstName, lastName, googleId, email)
-VALUES ("hamburder", "basic", "dave", "hamberder", "5c3bcfc11f47fc8c57a5e868", "fakeyfake@gmail.com");
+INSERT INTO users (username, userType, firstName, lastName, googleId, email, badges)
+VALUES ("hamburder", "basic", "dave", "hamberder", "5c3bcfc11f47fc8c57a5e868", "fakeyfake@gmail.com", "basic");
 
-INSERT INTO users (username, userType, firstName, lastName, googleId, email)
-VALUES ("gaffney", "basic", "jeff", "foxworthy", "5c3bcfc11f47fc8c57a5e868", "applehorsepie@gmail.com");
+INSERT INTO users (username, userType, firstName, lastName, googleId, email, badges)
+VALUES ("gaffney", "basic", "jeff", "foxworthy", "5c3bcfc11f47fc8c57a5e868", "applehorsepie@gmail.com", "basic");
 
-INSERT INTO users (username, userType, firstName, lastName, googleId, email)
-VALUES ("ussrbotnet", "basic", "petrov", "usbladevik", "5c3bcfc11f47fc8c57a5e868", "bitiditls@gmail.com");
+INSERT INTO users (username, userType, firstName, lastName, googleId, email, badges)
+VALUES ("ussrbotnet", "basic", "petrov", "usbladevik", "5c3bcfc11f47fc8c57a5e868", "bitiditls@gmail.com","basic");
 
 INSERT INTO posts (title, context, userID)
 VALUES ("crunchy peanutbutter is best", "there are several forms of peanutbutter. Stir vs. non-stir, refrigerated vs. non-refrigerated.", 1);
