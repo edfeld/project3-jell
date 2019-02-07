@@ -70,7 +70,7 @@ class PostComments extends React.Component {
                <header className="card" style={style}>
                    <div className="card-body">
                        <h6 className="type">{type}</h6>
-                       <Link to={'/user/' + this.props.data.userId}><h4 className="card-title">{this.props.data.username}</h4></Link>
+                       <Link to='/user' onClick={() => {this.props.selectUserID(this.props.data.userId)}}><h4 className="card-title">{this.props.data.user.username}</h4></Link>
                        {badges.map(badge => ( 
                            <Badge badge={badge}></Badge>
                        ))}
@@ -97,7 +97,7 @@ class PostComments extends React.Component {
                <header className="card" style={style}>
                    <div className="card-body">
                        <h6 className="type">{type}</h6>
-                       <Link to={'/user/' + this.props.data.userId}><h4 className="card-title">{this.props.data.username}</h4></Link>
+                       <Link to='/user' onClick={() => {this.props.selectUserID(this.props.data.userId)}}><h4 className="card-title">{this.props.data.user.username}</h4></Link>
                        {badges.map(badge => (
                            <Badge badge={badge}></Badge>
                        ))}
