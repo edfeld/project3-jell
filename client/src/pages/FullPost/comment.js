@@ -82,7 +82,7 @@ class PostComments extends React.Component {
                            <button onClick={() => this.props.downvote(this.props.key)} style={{background: 'none', border: 'none'}}>-</button>
                            Down Votes: {this.props.data.downvotes}
                        </p>
-                       <button onClick={() => this.getChildren(this.props.data.children)}>View Children</button>
+                       <button onClick={() => this.getChildren(this.props.data.children)}>View Responses</button>
                        <button>Reply</button>
                    </div>
                    <div>
@@ -109,7 +109,7 @@ class PostComments extends React.Component {
                            <button onClick={() => this.props.downvote(this.props.key)} style={{background: 'none', border: 'none'}}>-</button>
                            Down Votes: {this.props.data.downvotes}
                        </p>
-                       <button onClick={() => this.getChildren(this.props.data.children)}>View Children</button>
+                       <button onClick={() => this.getChildren(this.props.data.children)}>View Responses</button>
                        <button>Reply</button>
                    </div>
                </header>

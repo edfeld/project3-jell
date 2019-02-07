@@ -1,13 +1,15 @@
 /* Add styles to the form container */
 .chatCard {
     max-width: 300px;
+    max-height: 300px;
     padding: 10px;
     background-color: white;
     position: fixed;
     bottom: 0;
-    right: 15px;
+    right: -15px;
     border: 3px solid #f1f1f1;
-    z-index: 9;
+    z-index: 900;
+    overflow: scroll;
 }
 
 /* Full-width textarea */
@@ -25,27 +27,4 @@
 .chatCard-body:focus {
     background-color: #ddd;
     outline: none;
-}
-
-/* Set a style for the submit/login button */
-.form-container .btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 10px;
-    opacity: 0.8;
-}
-
-/* Add a red background color to the cancel button */
-.form-container .cancel {
-    background-color: red;
-}
-
-/* Add some hover effects to buttons */
-.form-container .btn:hover,
-.open-button:hover {
-    opacity: 1;
 }

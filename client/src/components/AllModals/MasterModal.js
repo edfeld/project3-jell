@@ -1,6 +1,6 @@
 import React from 'react';
 import SignUp from './SignUp'
-import Challenge from './Challenge'
+//import Challenge from './Challenge'
 import MakePost from './MakePost'
 import Comment from './Comment'
 import './masterModal.css'
@@ -12,9 +12,9 @@ const MasterModal = (props) => {
         case 'SignUp':
             currentModal = <SignUp />
             break;
-        case 'Challenge':
-            currentModal = <Challenge />
-            break;
+        // case 'Challenge':
+        //     currentModal = <Challenge />
+        //     break;
         case 'Comment':
             currentModal = <Comment 
                                 value4={props.value}
