@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 // TODO - add proptypes
 const PosterQuiz = props => {
+      console.log("Current User:", JSON.stringify(props.user))
 	if (props.user) {
 		return (
             <div style={{backgroundImage: "inherit"}}>
@@ -15,10 +16,10 @@ const PosterQuiz = props => {
                   lead={"Take this quiz to qualify to post debate topics and post concurrences and rebuttals."}
                   />
                   <div className="Home">
-                        <p>Current User:</p>
+                        {/* <p>Current User:</p>
                         <code>
                               {JSON.stringify(props.user)}
-                        </code>
+                        </code> */}
                   </div>
                   {props.ArrPosterQuiz.map(quiz => (
                         < QuizCard 
@@ -51,10 +52,10 @@ const PosterQuiz = props => {
                               </div>
                         </div>
                         <div className="Home">
-                              <p>Current User:</p>
+                              {/* <p>Current User:</p>
                               <code>
                                     {JSON.stringify(props.user)}
-                              </code>
+                              </code> */}
                         </div>
                         
                   </div>
