@@ -13,11 +13,17 @@
                 notNull: true
             },
 
-            //determines content type
-            isRebuttal: {
-                type: DataTypes.BOOLEAN,
+            commentType: {
+                type: DataTypes.STRING,
                 notNull: true
             },
+
+            //depreciated - changed to comment Type
+            // //determines content type
+            // isRebuttal: {
+            //     type: DataTypes.BOOLEAN,
+            //     notNull: true
+            // },
 
             //determines if post is a child
             isChild: {
