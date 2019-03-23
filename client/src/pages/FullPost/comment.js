@@ -22,7 +22,7 @@ function findBkgType(isRebuttal) {
 }
 
 function getIndent(props) {
-    if (!props.indent) {
+    if (!props || !props.indent) {
         return 0;
     } else {
         return props.indent;
@@ -32,20 +32,22 @@ function getIndent(props) {
 class PostComments extends React.Component {
 
     Constructor() {
-        this.state = {
+        this.setState = {
             children: []
         }
     }
 
     getChildren (children) {
+        let obj = this;
         axios.get('/api/comments/children/'+ children)
         .then(function (result) {
             let comps = []
             console.log("Children",result);
-            result.map(comment => {
-                comps.push(<PostComments data={comment} indent={this.state.indent++}></PostComments>);
+            let indent = getIndent(obj.state);
+            result.data.map(comment => {
+                comps.push(<PostComments data={comment} indent={indent++}></PostComments>);
             });
-            this.setState({children: comps});
+            obj.setState({children: comps});
         })
     }
 
@@ -53,7 +55,7 @@ class PostComments extends React.Component {
         const bkg = findBkgType(this.props.data.isRebuttal);
         const indent = getIndent(this.props);
         const type= getType(this.props.data.isRebuttal);
-        const badges= this.props.data.user.badges.split(':')
+        const badges= this.props.data.user.badges.split(':');
         const style = {
             display: 'inline-flex', 
             width: '75%',
@@ -68,19 +70,19 @@ class PostComments extends React.Component {
                <header className="card" style={style}>
                    <div className="card-body">
                        <h6 className="type">{type}</h6>
-                       <Link to={'/user/' + this.props.data.userId}><h4 className="card-title">{this.props.data.username}</h4></Link>
-                       {badges.map(function(badge, i) { 
-                           <Badge key={i} badge={badge}></Badge>
-                       })}
+                       <Link to='/user' onClick={() => {this.props.selectUserID(this.props.data.userId)}}><h4 className="card-title">{this.props.data.user.username}</h4></Link>
+                       {badges.map(badge => ( 
+                           <Badge badge={badge}></Badge>
+                       ))}
                        <hr></hr>
                        <h5 className="card-text">{this.props.data.content}</h5>
                        <p>
-                           <button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}>+</button>
+                           <button onClick={() => this.props.upvote(this.props.key)} style={{background: 'none',border: 'none'}}>+</button>
                            Up Votes: {this.props.data.upvotes}/
-                           <button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>
+                           <button onClick={() => this.props.downvote(this.props.key)} style={{background: 'none', border: 'none'}}>-</button>
                            Down Votes: {this.props.data.downvotes}
                        </p>
-                       <button onClick={() => getChildren(this.props.data.children)}>View Children</button>
+                       <button onClick={() => this.getChildren(this.props.data.children)}>View Responses</button>
                        <button>Reply</button>
                    </div>
                    <div>
@@ -95,19 +97,19 @@ class PostComments extends React.Component {
                <header className="card" style={style}>
                    <div className="card-body">
                        <h6 className="type">{type}</h6>
-                       <Link to={'/user/' + this.props.data.userId}><h4 className="card-title">{this.props.data.username}</h4></Link>
+                       <Link to='/user' onClick={() => {this.props.selectUserID(this.props.data.userId)}}><h4 className="card-title">{this.props.data.user.username}</h4></Link>
                        {badges.map(badge => (
                            <Badge badge={badge}></Badge>
                        ))}
                        <hr></hr>
                        <h5 className="card-text">{this.props.data.content}</h5>
                        <p>
-                           <button onClick={() => props.upvote(key)} style={{background: 'none',border: 'none'}}>+</button>
+                           <button onClick={() => this.props.upvote(this.props.key)} style={{background: 'none',border: 'none'}}>+</button>
                            Up Votes: {this.props.data.upvotes}/
-                           <button onClick={() => props.downvote(key)} style={{background: 'none', border: 'none'}}>-</button>
+                           <button onClick={() => this.props.downvote(this.props.key)} style={{background: 'none', border: 'none'}}>-</button>
                            Down Votes: {this.props.data.downvotes}
                        </p>
-                       <button onClick={() => this.getChildren(this.props.data.children)}>View Children</button>
+                       <button onClick={() => this.getChildren(this.props.data.children)}>View Responses</button>
                        <button>Reply</button>
                    </div>
                </header>

@@ -43,53 +43,69 @@ class FullPost extends Component {
          })
    }
 
-      upvote = (key) => {
-            if(this.state.singlePost.post.id === key){
-               const plusOne = this.state.singlePost.post.upVotes + 1;
-            axios
-               .put('/api/upvote', {
-                  post: this.state.singlePost.post.id,
-                  upvotes: plusOne
+   upvote = (key) => {
+         if(this.state.singlePost.post.id === key){
+            const plusOne = this.state.singlePost.post.upVotes + 1;
+         axios
+            .put('/api/upvote', {
+               post: this.state.singlePost.post.id,
+               upvotes: plusOne
+            })
+            .then(response => {
+                  this.fullpost(key);
+                  console.log(response);
                })
-               .then(response => {
-                     this.fullpost(key);
-                     console.log(response);
-                  })
-         }
       }
+   }
    
-      downvote = (key) => {
-            if(this.state.singlePost.post.id === key){
-               console.log(this.state.singlePost.post.downVotes);
-               const minusOne = this.state.singlePost.post.downVotes + 1;
-               console.log(this.state.singlePost.post.downVotes);
-            axios
-               .put('/api/downvote', {
-                  post: this.state.singlePost.post.id,
-                  downvotes: minusOne
+   downvote = (key) => {
+         if(this.state.singlePost.post.id === key){
+            console.log(this.state.singlePost.post.downVotes);
+            const minusOne = this.state.singlePost.post.downVotes + 1;
+            console.log(this.state.singlePost.post.downVotes);
+         axios
+            .put('/api/downvote', {
+               post: this.state.singlePost.post.id,
+               downvotes: minusOne
+            })
+            .then(response => {
+                  this.fullpost(key)
+                  console.log(response);
                })
-               .then(response => {
-                     this.fullpost(key)
-                     console.log(response);
-                  })
-         }
       }
+   }
 
-      componentDidMount(){
-         let id = this.state.selectedPostID
-         // console.log("fullpost.js - component did mount ID:", id)
-         // let id = parseInt(this.state.propsId.match.params.id)
-         this.fullpost(id)
-         
-      }
+   commentDownVote = (key) => {
+      if(this.state.singlePost.comments.id === key){
+         console.log(this.state.singlePost.comments.downVotes);
+         const commentminusOne = this.state.singlePost.comments.downVotes + 1;
+         console.log(this.state.singlePost.comments.downVotes);
+      axios
+         .put('/api/commentdownvote', {
+            comment:key,
+            commnetdownvotes: commentminusOne
+         })
+         .then(response => {
+               this.fullpost(key)
+               console.log(response);
+            })
+   }
+}
 
-      componentWillReceiveProps = () => {
-         let id = this.state.selectedPostID
-         // console.log("fullpost.js - componentWillReceiveProps ID:", id)
-         // let id = parseInt(this.state.propsId.match.params.id)
-         this.fullpost(id)
-         
-      }
+   componentDidMount(){
+      let id = this.state.selectedPostID
+      // console.log("fullpost.js - component did mount ID:", id)
+      // let id = parseInt(this.state.propsId.match.params.id)
+      this.fullpost(id)
+   }
+
+   componentWillReceiveProps = () => {
+      let id = this.state.selectedPostID
+      // console.log("fullpost.js - componentWillReceiveProps ID:", id)
+      // let id = parseInt(this.state.propsId.match.params.id)
+      this.fullpost(id)
+      
+   }
 
    render(props){
       // console.log('PROPPPPPS object',this.state.singlePost.id)
@@ -112,6 +128,7 @@ class FullPost extends Component {
                         <PostComments 
                               data={comments}
                               selectUserID={this.props.selectUserID}
+                              commentdownvote={this.commentDownVote}
                               // upvote={props.upvote}
                               // downvote={props.downvote}
                               // changeModal={props.changeModal}

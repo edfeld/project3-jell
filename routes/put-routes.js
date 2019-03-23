@@ -62,5 +62,20 @@ module.exports = function(app) {
         });
       });
 
+      app.put("/api/commentdownvote", function(req, res) {
+        const {comment, downvotes} = req.body;
+        db.comments.update({
+          commnetdownVotes: downvotes
+        }, {
+          where: {
+            id: comment
+          }
+        })
+          .then(function(result) {
+            console.log("DownVoteAdded ", req.body);
+            res.json(result);
+        });
+      });
+
 
 }

@@ -3,7 +3,7 @@ import './post.css';
 
 
 const Comment = props => {
- const postId = parseInt(window.location.href.split('post/')[1]);
+ let postId = props.postId
 
     return(
     <div className="postBackground">

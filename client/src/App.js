@@ -335,6 +335,7 @@ class App extends Component {
 					post={this.postRoute}
 					comment={this.commentRoute}
 					postData={this.state.singlePost}
+					postId ={this.state.selectedPostID}
 				/>
 				<Route 
 					exact 
@@ -465,6 +466,7 @@ class App extends Component {
 							<UserPage 
 								userId={props}
 								selectedUserID={this.state.selectedUserID}
+								selectPostID={this.selectPostID}
 							/>
 						</div>
 					} 
