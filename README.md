@@ -9,9 +9,8 @@ This is the link to elevate debate on Heroku: <http://pacific-garden-47429.herok
 Elevate debate was built from a MERN starter kit but was converted from Mongo to MySQL in order to make use of the relational
 database features.  Elevate Debate was written with JavaScript, MySQL, Express, React, Node.js, Passport and Socket.io
 
+** User Stories **
+
 * Any user can log in and view debate content.
 * A user must be logged in and pass a competancy quiz in order to be able to post resolutions, agreements, disagreements, rebuttals and comments.
 * Users can log in using Google Authentication (User can use there Google account information to log into Elevate).
-
-** User Stories **
-To be added soon.
