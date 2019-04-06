@@ -14,3 +14,4 @@ database features.  Elevate Debate was written with JavaScript, MySQL, Express, 
 * Users can log in using Google Authentication (User can use there Google account information to log into Elevate).
 
 ** User Stories **
+To be added soon.
